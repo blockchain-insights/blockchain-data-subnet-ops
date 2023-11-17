@@ -1,12 +1,7 @@
 version: '3.8'
 
 services:
-  btcli:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "tail", "-f", "/dev/null" ]
-    volumes:
-      - bittensor:/root/.bittensor
-
+  
   validator:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/run_validator_mainnet.sh" ]
@@ -19,6 +14,12 @@ services:
       - bittensor:/root/.bittensor
     depends_on:
       - btcli
+
+  btcli:
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    command: [ "tail", "-f", "/dev/null" ]
+    volumes:
+      - bittensor:/root/.bittensor
 
   dozzle:
     container_name: dozzle
