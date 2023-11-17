@@ -8,7 +8,7 @@ services:
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - NETUID=15     
-      - WALLET_NAME=${WALLET_NAME:-validator}
+      - WALLET_NAME=${WALLET_NAME:-miner}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - BLOCKCHAIR_API_KEY=${BLOCKCHAIR_API_KEY}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
