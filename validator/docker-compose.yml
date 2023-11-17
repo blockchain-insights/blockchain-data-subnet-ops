@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  btcli:
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    command: [ "tail", "-f", "/dev/null" ]
+    volumes:
+      - bittensor:/root/.bittensor
+
+  validator:
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    command: [ "./scripts/run_validator_mainnet.sh" ]
+    environment:
+      - NETUID=15
+      - WALLET_NAME=${WALLET_NAME:-validator}
+      - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
+      - BLOCKCHAIR_API_KEY=${BLOCKCHAIR_API_KEY}
+    volumes:
+      - bittensor:/root/.bittensor
+    depends_on:
+      - btcli
+
+  dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9999:8080"
+
+volumes:
+  bittensor:
+    driver: local
