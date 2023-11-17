@@ -7,6 +7,8 @@ services:
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
+      - GRAPH_DB_USER={GRAPH_DB_USER}
+      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15     
       - WALLET_NAME=${WALLET_NAME:-miner}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
@@ -23,6 +25,8 @@ services:
     command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
+      - GRAPH_DB_USER={GRAPH_DB_USER}
+      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NODE_RPC_URL=${NODE_RPC_URL}
     depends_on:
       - memgraph-funds-flow
@@ -39,6 +43,9 @@ services:
       - "7687:7687"
       - "7444:7444"
       - "3000:3000"
+    environment:
+      - MEMGRAPH_USER=${GRAPH_DB_USER}
+      - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
 
