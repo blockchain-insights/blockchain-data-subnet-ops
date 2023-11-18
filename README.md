@@ -1,79 +1,155 @@
-
 # Blockchain Data Subnet Operations
 
-Welcome to the Blockchain Data Subnet Operations repository! This repository contains Docker configurations and scripts for running various blockchain analysis tools and nodes. Each service in this repository is part of a larger effort to provide insights into blockchain data and operations.
+Welcome to the Blockchain Data Subnet Operations repository! This repository hosts Docker configurations and scripts for running a variety of blockchain analysis tools and nodes, all aimed at providing in-depth insights into blockchain data and operations.
+
+Table of Contents
+=================
+  - [Overview](#overview)
+  - [Hardware Requirements](#hardware-requirements)
+  - [Prerequisites](#prerequisites)
+  - [Pre-Installation](#pre-installation)
+  - [Docker Compose Configuration](#docker-compose-configuration)
+    - [Bitcoin Node](#bitcoin-node)
+    - [Subnet Miner and Indexer](#subnet-miner-and-indexer)
+    - [Subnet Validator](#subnet-validator)
 
 ## Hardware Requirements
-The services in this repository are designed to run on a machine with the following specifications:
-- Bitcoin full node: 1TB SSD, 64GB RAM, 8 CPU cores
+The services in this repository are tailored for machines with the following specifications:
+- Bitcoin Full Node: 1TB SSD, 64GB RAM, 8 CPU cores
 - Subnet Miner and Indexer: 1TB SSD, 256GB RAM, 16 CPU cores
 - Subnet Validator: 256GB SSD, 16GB RAM, 4 CPU cores
 
-Recommended provider: [Scaleway](https://www.scaleway.com/) ( Bare Metal Servers )
+Recommended Provider: [Scaleway](https://www.scaleway.com/) (Bare Metal Servers)
 
 ## Prerequisites
-Foreach server you will need to install the following:
+For each server, you'll need to install:
 - [Docker](https://docs.docker.com/get-docker/)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 - [Python 3](https://www.python.org/downloads/)
-
+- [Blockchair](https://blockchair.com/) API Key (cheap for miners, expensive for validators)
+ 
 ## Pre-Installation
 
-On each machine clone this repo ``git clone https://github.com/blockchain-insights/blockchain-data-subnet-ops``
+Clone the repository on each machine using: 
 
-Docker base image for running the subnet miner, indexer, bittensor-cli, validator is located in [Registry](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base)
-and it will be automatically downloaded when you run docker-compose up -d when starting particular service.
+```
+git clone https://github.com/blockchain-insights/blockchain-data-subnet-ops
+```
 
-## Docker compose configuration
+The Docker base image for running the subnet miner, indexer, bittensor-cli, and validator is available in the [Registry](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base). It will automatically download when you run \`docker-compose up -d\` for starting a specific service.
+
+## Docker Compose Configuration
 
 ### Bitcoin Node
 
-Code is located in ```miners\bitcoin-node``` directory of the cloned repository.
-Execute cd into the directory and execute ```cp .env.example .env``` 
-and edit file with ```nano .env``` to set the following variables:
+The code resides in the ```miners/bitcoin-node``` directory of the cloned repository.
+Change to this directory and execute 
+```
+cp .env.example .env
+```
+Then, edit the file with 
+```
+nano .env
+```
+and set the following variables:
 
 #### Variables
-- RPC_USER=set_this_to_a_random_string
-- RPC_PASSWORD=set_this_to_a_random_string
-- RPC_ALLOW_IP=this should point to the ip address of your subnet miner server
-- RPC_BIND=this should point to the network interface used for communiaction with the subnet miner server
-- VERSION=latest
+```ini
+RPC_USER=your_secret_user_name
+RPC_PASSWORD=your_secret_password
+RPC_ALLOW_IP=Ip address of your miner server
+RPC_BIND=network interface to bind to
+VERSION=latest
+```
 
-To start the bitcoin node execute ```docker-compose up -d```
-Synchorization of the blockchain will take a while. You can check the progress by executing ```docker-compose logs -f```
+
+To start the Bitcoin node, execute:
+```
+docker-compose up -d
+```
+The synchronization of the blockchain will take some time. Monitor the progress with 
+```
+docker-compose logs -f
+```
 
 ### Subnet Miner and Indexer
 
-Code is located in ```miners\funds_flow``` directory of the cloned repository.
-Execute cd into the directory and execute ```cp .env.example .env``` 
-and edit file with ```nano .env``` to set the following variables:
+This code is found in the ```miners/funds_flow``` directory of the cloned repository.
+Change to this directory and execute 
+```
+cp .env.example .env
+```
+Then, edit the file with 
+```
+nano .env
+```
+to set the following variables:
 
 #### Variables
-VERSION=v0.1.1  # version of the miner and indexer 
-WALLET_NAME=miner|validator
+```ini
+# Version numbers can be found here: https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base
+# use the latest version number
+VERSION=v0.1.1
+
+# by convention, wallet name should be miner; and the hotkey should be default
+# this setting can be skipped as its set in the docker-compose.yml file
+WALLET_NAME=miner
 WALLET_HOTKEY=default
-BLOCKCHAIR_API_KEY=you have to obtain api key from [Blockchair](https://blockchair.com/), if you are a validator use the key allowing the most requests; miners can use the cheapest key
-NODE_RPC_URL=http://username:password@bitcoin-node:8332 # this should point to the bitcoin node and rpc credentials
-GRAPH_DB_URL=connection to  memgraph database, can be skipped
-GRAPH_DB_USER=set this to a random string
-GRAPH_DB_PASSWORD=set this to a random string
-WAIT_FOR_SYNC=by default its set to True, its being used for miner to wait for 95% sync with the bitcoin node before starting the miner
 
-To start the miner and indexer execute ```docker-compose up -d```
-Attach to btcli container ```docker-compose exec btcli bash``` and to create subnet cold key and hotkey by executing commands
-btcli w create_coldkey and set 'miner' as wallet name; store your wallet password in a safe place
-then create a hotkey named default for the miner wallet by executing btcli w create_hotkey
-check the wallet by executing btcli w list
-deposit somefunds to the wallet address (coldkey) and register your hotkey for the subnet by executing
-btcli subnet recycle_register --netuid 15 --subtensor.network finney --wallet.name miner --wallet.hotkey default
-exit docker interactive
+BLOCKCHAIR_API_KEY=your blockchair key
 
-now run docker-compose down and docker-compose up -d to restart the miner and indexer
-wait a bit for memgraph to start, you can check the logs by executing docker-compose logs -f
-when memgraph is ready you can check the status of the miner by executing
+# Point to the Bitcoin node RPC credentials
+NODE_RPC_URL=http://username:password@bitcoin-node:8332 
 
-or access your server public address on port 9999 from the browser to check the docker logs via dozzle log viewer
+# this setting can be skipped as its set in the docker-compose.yml file
+GRAPH_DB_URL=connection_string_to_memgraph_database
 
-consider setting up a firewall rules as your public ip of the miner server is publicly know
-setup some ufw rules (put link to configuring ufw)
- 
+GRAPH_DB_USER=random_string
+GRAPH_DB_PASSWORD=random_string
+
+# The following variables are only required for the miner
+# Miner waits for 95% sync with the Bitcoin node before starting
+WAIT_FOR_SYNC=True
+```
+
+To start the miner and indexer, execute 
+```
+docker-compose up -d
+```
+
+Attach to the btcli container with 
+```
+docker-compose exec btcli bash
+``` 
+and create a cold and hot keys for the miner wallet with 
+```
+btcli wallet new_coldkey --wallet.name miner
+btcli wallet new_hotkey --wallet.name miner --wallet.hotkey default
+```
+Remember to store the wallet seeds securely.
+
+Get the coldkey address with 
+```
+btcli w list
+```
+and send funds to this address. They will be needed for registering the miner on the subnet.
+To register the miner on the subnet, execute 
+```
+btcli subnet register --netuid 15 --subtensor.network finney --wallet.name miner --wallet.hotkey default
+```
+
+Exit Docker interactive mode. Restart the miner and indexer with 
+```
+docker-compose up -d
+```
+
+Wait for Memgraph to start; you can check the logs with 
+```
+docker-compose logs -f
+```
+
+Once Memgraph is ready, you can monitor the status of the miner.
+
+Consider setting up firewall rules as your miner server's public IP is exposed. 
+For UFW configuration, refer to [Configuring UFW](https://link_to_ufw_configuration_guide).
+
