@@ -210,9 +210,6 @@ docker-compose logs -f
 
 Once Memgraph is ready, you can monitor the status of the miner.
 
-Consider setting up firewall rules as your miner server's public IP is exposed. 
-For UFW configuration, refer to [Configuring UFW](https://link_to_ufw_configuration_guide).
-
 ### Validator
 
 The code is found in the ```validators``` directory of the cloned repository.
