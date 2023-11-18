@@ -16,11 +16,10 @@ Table of Contents
 ## Hardware Requirements
 The services in this repository are tailored for machines with the following specifications:
 - Bitcoin Full Node: 1TB SSD, 64GB RAM, 8 CPU cores
-- Subnet Miner and Indexer: 1TB SSD, 256GB RAM, 8 CPU cores
-  - (recommended) Subnet Miner and Indexer: 1TB SSD, 512GB RAM, 8 CPU cores
+- Subnet Miner and Indexer: 1TB SSD, 512GB-1T RAM, 16 CPU cores, later some NVDA GPU
 - Subnet Validator: 256GB SSD, 16GB RAM, 4 CPU cores
 
-Recommended Provider: [Scaleway](https://www.scaleway.com/) (Bare Metal Servers)
+ 
 
 ## Prerequisites
 For each server, you'll need to install:
