@@ -10,13 +10,14 @@ Table of Contents
   - [Pre-Installation](#pre-installation)
   - [Docker Compose Configuration](#docker-compose-configuration)
     - [Bitcoin Node](#bitcoin-node)
-    - [Subnet Miner and Indexer](#subnet-miner-and-indexer)
-    - [Subnet Validator](#subnet-validator)
+    - [Miner and Indexer](#miner-and-indexer)
+    - [Subnet Validator](#validator)
 
 ## Hardware Requirements
 The services in this repository are tailored for machines with the following specifications:
 - Bitcoin Full Node: 1TB SSD, 64GB RAM, 8 CPU cores
-- Subnet Miner and Indexer: 1TB SSD, 256GB RAM, 16 CPU cores
+- Subnet Miner and Indexer: 1TB SSD, 256GB RAM, 8 CPU cores
+  - (recommended) Subnet Miner and Indexer: 1TB SSD, 512GB RAM, 8 CPU cores
 - Subnet Validator: 256GB SSD, 16GB RAM, 4 CPU cores
 
 Recommended Provider: [Scaleway](https://www.scaleway.com/) (Bare Metal Servers)
@@ -29,6 +30,7 @@ For each server, you'll need to install:
 - [Blockchair](https://blockchair.com/) API Key (cheap for miners, expensive for validators)
  
 ## Pre-Installation
+#### Configure Max Map Count
 Configure max_map_count on machine running the Memgraph docker container (not inside!)
 
 ```
@@ -39,6 +41,54 @@ add line ```vm.max_map_count = 262144```
 ```
 sudo sysctl -p
 ```
+#### Configure Docker Memory Limit
+
+The default memory limit for Docker is 2GB. This is not enough for running the Memgraph database.
+You can increase the memory limit by following the steps below.
+Edit the Docker daemon configuration file:
+
+```
+sudo nano /lib/systemd/system/docker.service
+```
+In section **[Service]** add the following line:
+```
+MemoryLimit=255G
+```
+Reload the daemon and restart the Docker service:
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+Verify the changes:
+```
+docker info | grep -i memory
+```
+#### Configure Docker Swap Memory
+
+By default, Docker does not use swap memory. This can cause issues when running the Memgraph database.
+You can enable swap memory by following the steps below.
+Edit the Docker daemon configuration file:
+
+```
+sudo nano /lib/systemd/system/docker.service
+```
+Locate the line starting with **ExecStart=**. This line defines the command used to start the Docker daemon. Add the following option to the end of the line:
+
+```
+--memory-swap=-1
+```
+Example:
+```
+ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --memory-swap=-1
+```
+
+Reload the daemon and restart the Docker service:
+```
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```
+ 
+#### Clone the Repository
 
 Clone the repository on each machine using: 
 
@@ -72,7 +122,6 @@ RPC_BIND=network interface to bind to
 VERSION=latest
 ```
 
-
 To start the Bitcoin node, execute:
 ```
 docker-compose up -d
@@ -82,7 +131,7 @@ The synchronization of the blockchain will take some time. Monitor the progress 
 docker-compose logs -f
 ```
 
-### Subnet Miner and Indexer
+### Miner and Indexer
 
 This code is found in the ```miners/funds_flow``` directory of the cloned repository.
 Change to this directory and execute 
@@ -150,6 +199,7 @@ btcli subnet register --netuid 15 --subtensor.network finney --wallet.name miner
 
 Exit Docker interactive mode. Restart the miner and indexer with 
 ```
+docker-compose down
 docker-compose up -d
 ```
 
@@ -162,4 +212,65 @@ Once Memgraph is ready, you can monitor the status of the miner.
 
 Consider setting up firewall rules as your miner server's public IP is exposed. 
 For UFW configuration, refer to [Configuring UFW](https://link_to_ufw_configuration_guide).
+
+### Validator
+
+The code is found in the ```validators``` directory of the cloned repository.
+Change to this directory and execute 
+``` 
+cp .env.example .env
+```
+Then, edit the file with 
+``` 
+nano .env
+```
+to set the following variables:
+
+#### Variables
+```ini
+# Version numbers can be found here: https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base
+# use the latest version number
+VERSION=v0.1.1
+
+# by convention, wallet name should be miner; and the hotkey should be default
+# this setting can be skipped as its set in the docker-compose.yml file
+WALLET_NAME=miner
+WALLET_HOTKEY=default
+
+BLOCKCHAIR_API_KEY=your blockchair key
+```
+
+To start the validator, execute 
+```
+docker-compose up -d
+```
+
+Attach to the btcli container with 
+```
+docker-compose exec btcli bash
+```
+and create a cold and hot keys for the validator wallet with 
+```
+btcli wallet new_coldkey --wallet.name validator
+btcli wallet new_hotkey --wallet.name validator --wallet.hotkey default
+```
+
+Remember to store the wallet seeds securely.
+
+Get the coldkey address with 
+```
+btcli w list
+```
+and send funds to this address. They will be needed for registering the validator on the subnet.
+
+To register the validator on the subnet, execute 
+```
+btcli subnet register --netuid 15 --subtensor.network finney --wallet.name validator --wallet.hotkey default
+```
+
+Exit Docker interactive mode. Restart the validator with 
+```
+docker-compose down
+docker-compose up -d
+```
 
