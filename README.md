@@ -29,6 +29,16 @@ For each server, you'll need to install:
 - [Blockchair](https://blockchair.com/) API Key (cheap for miners, expensive for validators)
  
 ## Pre-Installation
+Configure max_map_count on machine running the Memgraph docker container (not inside!)
+
+```
+sudo nano /etc/sysctl.conf
+```
+add line ```vm.max_map_count = 262144```
+
+```
+sudo sysctl -p
+```
 
 Clone the repository on each machine using: 
 
