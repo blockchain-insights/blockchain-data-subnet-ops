@@ -15,11 +15,22 @@ Table of Contents
 
 ## Hardware Requirements
 The services in this repository are tailored for machines with the following specifications:
+
+### Miner
+#### with seperated Bitcoin Node:
 - Bitcoin Full Node: 1TB SSD, 64GB RAM, 8 CPU cores
-- Subnet Miner and Indexer: 1TB SSD, 512GB-1T RAM, 16 CPU cores, later some NVDA GPU
+- Memgraph + Subnet Miner and Indexer: 1TB+ SSD, 384GB+ RAM, 16 CPU cores, later some NVDA GPU
+
+#### all in one:
+- Bitcoin Full Node + Memgraph + Subnet Miner and Indexer: ~2TB SSD, 512GB-1T RAM, +16 CPU cores, later some NVDA GPU
+
+### Validator
 - Subnet Validator: 256GB SSD, 16GB RAM, 4 CPU cores
 
- 
+### Server hosting
+- https://contabo.com/en/dedicated-servers/
+- https://www.hetzner.com/dedicated-rootserver/matrix-ax
+- https://www.scaleway.com/
 
 ## Prerequisites
 For each server, you'll need to install:
