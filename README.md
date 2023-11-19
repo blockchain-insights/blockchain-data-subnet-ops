@@ -46,7 +46,7 @@ Configure max_map_count on machine running the Memgraph docker container (not in
 ```
 sudo nano /etc/sysctl.conf
 ```
-add line ```vm.max_map_count = 262144```
+add line ```vm.max_map_count = 862144```
 
 ```
 sudo sysctl -p
