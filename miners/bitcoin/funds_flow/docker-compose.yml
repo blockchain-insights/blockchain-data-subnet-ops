@@ -44,7 +44,7 @@ services:
       - "7444:7444"
       - "3000:3000"
     environment:
-      - MGCONSOLE="--username ${GRAPH_DB_USER} --password ${GRAPH_DB_PASSWORD}" --storage-mode=${GRAPH_DB_STORAGE_MODE:IN_MEMORY_TRANSACTIONAL}
+      - MGCONSOLE="--username ${GRAPH_DB_USER} --password ${GRAPH_DB_PASSWORD} --storage-mode=${GRAPH_DB_STORAGE_MODE:IN_MEMORY_TRANSACTIONAL}"
       - MEMGRAPH_USER=${GRAPH_DB_USER}
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
     volumes:
