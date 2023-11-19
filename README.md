@@ -28,7 +28,7 @@ In case of running on the same machine as the miner and indexer, the machine nee
 
     ! Remember to set env variable in .env file !
     ```ini
-    STORAGE=ON_DISK_TRANSACTIONAL
+    GRAPH_DB_STORAGE_MODE=ON_DISK_TRANSACTIONAL
     ```
 
 #### In-memory mode:
@@ -188,7 +188,7 @@ GRAPH_DB_USER=random_string
 GRAPH_DB_PASSWORD=random_string
 
 # use ON_DISK_TRANSACTIONAL on servers with less than 768GB RAM
-STORAGE_MODE=IN_MEMORY_TRANSACTIONAL|ON_DISK_TRANSACTIONAL
+GRAPH_DB_STORAGE_MODE=IN_MEMORY_TRANSACTIONAL|ON_DISK_TRANSACTIONAL
 # The following variables are only required for the miner
 # Miner waits for 95% sync with the Bitcoin node before starting
 WAIT_FOR_SYNC=True
