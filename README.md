@@ -16,13 +16,24 @@ Table of Contents
 ## Hardware Requirements
 The services in this repository are tailored for machines with the following specifications:
 
-### Miner
-#### with seperated Bitcoin Node:
-- Bitcoin Full Node: 1TB SSD, 64GB RAM, 8 CPU cores
-- Memgraph + Subnet Miner and Indexer: 1TB+ SSD, 384GB+ RAM, 16 CPU cores, later some NVDA GPU
 
-#### all in one:
-- Bitcoin Full Node + Memgraph + Subnet Miner and Indexer: ~2TB SSD, 512GB-1T RAM, +16 CPU cores, later some NVDA GPU
+### Miner
+
+Each miner configuration requires to run bitcoin full node, which needs **1TB+ SSD, 64GB+ RAM, 8 CPU cores**.
+The full node can be installed on a separate machine or on the same machine as the miner and indexer.
+In case of running on the same machine as the miner and indexer, the machine needs to have accordingly more resources **(  at least +1TB SSD )**
+
+#### On-disk mode:
+- Subnet Miner and Indexer: **1TB SSD, 256GB RAM, 8 CPU cores**
+
+    ! Remember to set env variable in .env file !
+    ```ini
+    STORAGE=ON_DISK_TRANSACTIONAL
+    ```
+
+#### In-memory mode:
+- Subnet Miner and Indexer: **2TB SSD, 768GB-1TB RAM, +16 CPU cores**
+
 
 ### Validator
 - Subnet Validator: 256GB SSD, 16GB RAM, 4 CPU cores
@@ -176,6 +187,8 @@ GRAPH_DB_URL=connection_string_to_memgraph_database
 GRAPH_DB_USER=random_string
 GRAPH_DB_PASSWORD=random_string
 
+# use ON_DISK_TRANSACTIONAL on servers with less than 768GB RAM
+STORAGE_MODE=IN_MEMORY_TRANSACTIONAL|ON_DISK_TRANSACTIONAL
 # The following variables are only required for the miner
 # Miner waits for 95% sync with the Bitcoin node before starting
 WAIT_FOR_SYNC=True
