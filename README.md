@@ -48,10 +48,28 @@ _**Note**: Indexing and querying data in on-disk mode is much slower than runnin
 - https://www.scaleway.com/
 
 ## Prerequisites
+Update the package manager:
+```
+sudo apt update
+``` 
+
 For each server, you'll need to install:
 - [Docker](https://docs.docker.com/get-docker/)
+    ```
+    sudo apt-get install docker
+    ```
 - [Docker Compose](https://docs.docker.com/compose/install/)
+    ```
+    sudo apt-get install docker-compose
+    ```
 - [Python 3](https://www.python.org/downloads/)
+    ```
+    sudo apt update
+    sudo apt install python3 python3-pip
+    echo "alias python=python3" >> ~/.bashrc
+    source ~/.bashrc
+    python --version
+    ```
 - [Blockchair](https://blockchair.com/) API Key (cheap for miners, expensive for validators)
  
 ## Pre-Installation
