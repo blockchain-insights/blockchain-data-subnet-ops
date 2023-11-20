@@ -16,6 +16,8 @@ services:
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
       - bittensor:/root/.bittensor
+    networks:
+      - shared-network
     depends_on:
       - btcli
       - memgraph-funds-flow
@@ -52,6 +54,8 @@ services:
       - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL}
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
+    networks:
+      - shared-network
 
   dozzle:
     container_name: dozzle
