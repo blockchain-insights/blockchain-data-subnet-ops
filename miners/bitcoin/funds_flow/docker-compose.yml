@@ -28,6 +28,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NODE_RPC_URL=${NODE_RPC_URL}
+    networks:
+      - shared-network
     depends_on:
       - memgraph-funds-flow
 
@@ -63,3 +65,7 @@ volumes:
   memgraph-funds-flow-data:
   bittensor:
     driver: local
+
+networks:
+  shared-network:
+    external: true

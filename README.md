@@ -142,6 +142,10 @@ git clone https://github.com/blockchain-insights/blockchain-data-subnet-ops
 The Docker base image for running the subnet miner, indexer, bittensor-cli, and validator is available in the [Registry](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base). It will automatically download when you run \`docker-compose up -d\` for starting a specific service.
 
 ## Docker Compose Configuration
+Create shared network for the services:
+```
+docker network create shared-network
+```
 
 ### Bitcoin Node
 

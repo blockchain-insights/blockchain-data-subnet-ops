@@ -16,7 +16,13 @@ services:
       - "8333:8333" # peer to peer mainnet
     volumes:
       - "bitcoin-data:/home/bitcoin/.bitcoin"
+    networks:
+      - shared-network
     restart: unless-stopped 
 
 volumes:
   bitcoin-data:
+
+networks:
+  shared-network:
+    external: true
