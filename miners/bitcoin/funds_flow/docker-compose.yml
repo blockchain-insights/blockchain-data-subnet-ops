@@ -47,6 +47,7 @@ services:
       - MGCONSOLE="--username ${GRAPH_DB_USER} --password ${GRAPH_DB_PASSWORD}"
       - MEMGRAPH_USER=${GRAPH_DB_USER}
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
+      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL}
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
 

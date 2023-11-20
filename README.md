@@ -33,10 +33,7 @@ In case of running on the same machine as the miner and indexer, the machine nee
 
 #### In-memory mode:
 - Subnet Miner and Indexer: **2TB SSD, 768GB-1TB RAM, +16 CPU cores**
-    ! Remember to set env variable in .env file !
-    ```ini
-    GRAPH_DB_STORAGE_MODE=IN_MEMORY_TRANSACTIONAL
-    ```
+
 
 ### Validator
 - Subnet Validator: 256GB SSD, 16GB RAM, 4 CPU cores
