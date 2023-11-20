@@ -34,6 +34,10 @@ In case of running on the same machine as the miner and indexer, the machine nee
 #### In-memory mode:
 - Subnet Miner and Indexer: **2TB SSD, 768GB-1TB RAM, +16 CPU cores**
 
+The corrected text would be: 
+
+_**Note**: Indexing and querying data in on-disk mode is much slower than running in in-memory mode._
+
 
 ### Validator
 - Subnet Validator: 256GB SSD, 16GB RAM, 4 CPU cores
