@@ -53,7 +53,6 @@ services:
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
       - ./memgraph/create_user.txt:/home/create_user.txt
-      - ./memgraph/snapshots:/var/lib/memgraph/snapshots
     networks:
       - shared-network
 
