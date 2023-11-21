@@ -182,6 +182,17 @@ docker-compose logs -f
 
 This code is found in the ```miners/funds_flow``` directory of the cloned repository.
 Change to this directory and execute 
+
+```
+cp memgraph/create_user.txt.example memgraph/create_user.txt
+```
+edit file and set memgraph creadentials
+```
+nano memgraph/create_user.txt
+```
+those user creadentials will be used later in .env file for `GRAPH_DB_USER` and `GRAPH_DB_PASSWORD`
+After tht execute:
+
 ```
 cp .env.example .env
 ```
