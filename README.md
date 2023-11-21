@@ -79,58 +79,12 @@ Configure max_map_count on machine running the Memgraph docker container (not in
 ```
 sudo nano /etc/sysctl.conf
 ```
-add line ```vm.max_map_count = 862144```
+add line ```vm.max_map_count = 262144```
 
 ```
 sudo sysctl -p
 ```
-#### Configure Docker Memory Limit
 
-The default memory limit for Docker is 2GB. This is not enough for running the Memgraph database.
-You can increase the memory limit by following the steps below.
-Edit the Docker daemon configuration file:
-
-```
-sudo nano /lib/systemd/system/docker.service
-```
-In section **[Service]** add the following line:
-```
-MemoryLimit=255G
-```
-Reload the daemon and restart the Docker service:
-```
-sudo systemctl daemon-reload
-sudo systemctl restart docker
-```
-Verify the changes:
-```
-docker info | grep -i memory
-```
-#### Configure Docker Swap Memory
-
-By default, Docker does not use swap memory. This can cause issues when running the Memgraph database.
-You can enable swap memory by following the steps below.
-Edit the Docker daemon configuration file:
-
-```
-sudo nano /lib/systemd/system/docker.service
-```
-Locate the line starting with **ExecStart=**. This line defines the command used to start the Docker daemon. Add the following option to the end of the line:
-
-```
---memory-swap=-1
-```
-Example:
-```
-ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --memory-swap=-1
-```
-
-Reload the daemon and restart the Docker service:
-```
-sudo systemctl daemon-reload
-sudo systemctl restart docker
-```
- 
 #### Clone the Repository
 
 Clone the repository on each machine using: 
