@@ -9,7 +9,7 @@ services:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-      - NETUID=15     
+      - NETUID=15
       - WALLET_NAME=${WALLET_NAME:-miner}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - BLOCKCHAIR_API_KEY=${BLOCKCHAIR_API_KEY}
@@ -48,12 +48,11 @@ services:
       - "7444:7444"
       - "3000:3000"
     environment:
-      - MGCONSOLE="--username ${GRAPH_DB_USER} --password ${GRAPH_DB_PASSWORD}"
-      - MEMGRAPH_USER=${GRAPH_DB_USER}
-      - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
+      - MEMGRAPH_PASSFILE=/home/create_user.txt
       - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL}
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
+      - ./memgraph/create_user.txt:/home/create_user.txt
     networks:
       - shared-network
 
