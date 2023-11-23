@@ -32,6 +32,7 @@ services:
       - NODE_RPC_URL=${NODE_RPC_URL}
       - BLOCK_PROCESSING_TRANSACTION_THRESHOLD=${BLOCK_PROCESSING_TRANSACTION_THRESHOLD:-10}
       - BLOCK_PROCESSING_DELAY=${BLOCK_PROCESSING_DELAY:-0.1}
+      - START_BLOCK_HEIGHT=${START_BLOCK_HEIGHT:-765000}
     networks:
       - shared-network
     depends_on:
@@ -50,7 +51,6 @@ services:
       - "7444:7444"
       - "3000:3000"
     environment:
-      - MEMGRAPH_PASSFILE=/home/create_user.txt
       - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL}
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph

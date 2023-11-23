@@ -160,7 +160,7 @@ to set the following variables:
 ```ini
 # Version numbers can be found here: https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base
 # use the latest version number
-VERSION=v0.1.1
+VERSION=latest
 
 # by convention, wallet name should be miner; and the hotkey should be default
 # this setting can be skipped as its set in the docker-compose.yml file
@@ -183,6 +183,9 @@ GRAPH_DB_STORAGE_MODE=IN_MEMORY_TRANSACTIONAL|ON_DISK_TRANSACTIONAL
 # The following variables are only required for the miner
 # Miner waits for 95% sync with the Bitcoin node before starting
 WAIT_FOR_SYNC=True
+
+# The following variables are only required for the indexer, use defaults from docker compose
+START_BLOCK_HEIGHT=1
 ```
 
 To start the miner and indexer, execute 
