@@ -10,16 +10,19 @@ services:
       - WALLET_NAME=${WALLET_NAME:-validator}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - BLOCKCHAIR_API_KEY=${BLOCKCHAIR_API_KEY}
+      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-765000}
     volumes:
       - bittensor:/root/.bittensor
     depends_on:
       - btcli
+    restart: unless-stopped
 
   btcli:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "tail", "-f", "/dev/null" ]
     volumes:
       - bittensor:/root/.bittensor
+    restart: unless-stopped
 
   dozzle:
     container_name: dozzle
@@ -28,6 +31,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "9999:8080"
+    restart: unless-stopped
 
 volumes:
   bittensor:

@@ -248,10 +248,11 @@ VERSION=v0.1.1
 
 # by convention, wallet name should be miner; and the hotkey should be default
 # this setting can be skipped as its set in the docker-compose.yml file
-WALLET_NAME=miner
+WALLET_NAME=validator
 WALLET_HOTKEY=default
 
 BLOCKCHAIR_API_KEY=your blockchair key
+BITCOIN_START_BLOCK_HEIGHT=765000
 ```
 
 To start the validator, execute 

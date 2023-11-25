@@ -21,6 +21,7 @@ services:
     depends_on:
       - btcli
       - memgraph-funds-flow
+    restart: unless-stopped
 
   bitcoin-funds-flow-indexer:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
@@ -32,17 +33,19 @@ services:
       - NODE_RPC_URL=${NODE_RPC_URL}
       - BLOCK_PROCESSING_TRANSACTION_THRESHOLD=${BLOCK_PROCESSING_TRANSACTION_THRESHOLD:-10}
       - BLOCK_PROCESSING_DELAY=${BLOCK_PROCESSING_DELAY:-0.1}
-      - START_BLOCK_HEIGHT=${START_BLOCK_HEIGHT:-765000}
+      - START_BLOCK_HEIGHT=${START_BLOCK_HEIGHT:-818250}
     networks:
       - shared-network
     depends_on:
       - memgraph-funds-flow
+    restart: unless-stopped
 
   btcli:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "tail", "-f", "/dev/null" ]
     volumes:
       - bittensor:/root/.bittensor
+    restart: unless-stopped
 
   memgraph-funds-flow:
     image: memgraph/memgraph-platform
@@ -58,6 +61,7 @@ services:
       - ./memgraph/create_user.txt:/home/create_user.txt
     networks:
       - shared-network
+    restart: unless-stopped
 
   dozzle:
     container_name: dozzle
@@ -66,6 +70,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "9999:8080"
+    restart: unless-stopped
 
 volumes:
   memgraph-funds-flow-data:
