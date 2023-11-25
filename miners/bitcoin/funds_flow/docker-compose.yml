@@ -54,7 +54,7 @@ services:
       - "7444:7444"
       - "3000:3000"
     environment:
-      - MEMGRAPH_PASSFILE=/memgraph/create_user.txt
+      - MEMGRAPH_PASSFILE=/home/create_user.txt
       - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL}
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
