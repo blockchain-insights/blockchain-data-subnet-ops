@@ -70,7 +70,6 @@ For each server, you'll need to install:
     source ~/.bashrc
     python --version
     ```
-- [Blockchair](https://blockchair.com/) API Key (cheap for miners, expensive for validators)
  
 ## Pre-Installation
 #### Configure Max Map Count
@@ -167,10 +166,8 @@ VERSION=latest
 WALLET_NAME=miner
 WALLET_HOTKEY=default
 
-BLOCKCHAIR_API_KEY=your blockchair key
-
 # Point to the Bitcoin node RPC credentials
-NODE_RPC_URL=http://username:password@bitcoin-node:8332 
+BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-node:8332 
 
 # this setting can be skipped as its set in the docker-compose.yml file
 GRAPH_DB_URL=connection_string_to_memgraph_database

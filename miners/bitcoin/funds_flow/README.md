@@ -18,7 +18,7 @@ This guide provides instructions for setting up a Bitcoin funds flow miner and i
      - `WALLET_HOTKEY`: Hotkey for your wallet (default is unset).
      - `BLOCKCHAIR_API_KEY`: API key for Blockchair services (default is unset).
      - `GRAPH_DB_URL`: URL for the graph database service (default is unset).
-     - `NODE_RPC_URL`: URL for the node's RPC interface (default is unset).
+     - `BITCOIN_NODE_RPC_URL`: URL for the node's RPC interface (default is unset).
      - `WAIT_FOR_SYNC`: Flag to wait for synchronization (default is unset).
 3. **Start the Services**:
    - Run `docker-compose up -d` in the directory with the `docker-compose.yml` file. This command starts the services in detached mode.
