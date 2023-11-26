@@ -9,7 +9,7 @@ services:
       - NETUID=15
       - WALLET_NAME=${WALLET_NAME:-validator}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
-      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-769787}
+      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
     volumes:
       - bittensor:/root/.bittensor
     depends_on:
