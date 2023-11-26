@@ -254,6 +254,7 @@ BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-node:8332
 
 # this setting can be skipped as its set in the docker-compose.yml file
 BITCOIN_START_BLOCK_HEIGHT=769787
+BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=256
 ```
 
 To start the validator, execute 
