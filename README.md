@@ -228,7 +228,7 @@ http://{your machine ipaddress}:9999
 
 ### Validator
 
-The code is found in the ```validators``` directory of the cloned repository.
+The code is found in the ```validator``` directory of the cloned repository.
 Change to this directory and execute 
 ``` 
 cp .env.example .env
