@@ -16,6 +16,8 @@ services:
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
       - bittensor:/root/.bittensor
+    ports:
+      - "8091:8091"
     networks:
       - shared-network
     depends_on:
