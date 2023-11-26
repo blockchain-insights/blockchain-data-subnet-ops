@@ -19,8 +19,8 @@ The services in this repository are tailored for machines with the following spe
 
 ### Miner
 
-Each miner configuration requires to run bitcoin full node, which needs **1TB+ SSD, 64GB+ RAM, 8 CPU cores**.
-The full node can be installed on a separate machine or on the same machine as the miner and indexer.
+Each **miner** OR **validator** configuration requires to run bitcoin full node, which needs a server with **1TB+ SSD, 64GB+ RAM, 8 CPU cores**.
+The full node can be installed on a separate machine or on the same machine as the miner and indexer. If you plan to run more than one miner, you can run a single full node for all miners.
 In case of running on the same machine as the miner and indexer, the machine needs to have accordingly more resources **(  at least +1TB SSD )**
 
 #### On-disk mode:
@@ -30,17 +30,14 @@ In case of running on the same machine as the miner and indexer, the machine nee
     ```ini
     GRAPH_DB_STORAGE_MODE=ON_DISK_TRANSACTIONAL
     ```
+_**Note**: Indexing and querying data in on-disk mode is extremely slower than running in in-memory mode._
 
 #### In-memory mode:
 - Subnet Miner and Indexer: **2TB SSD, 768GB-1TB RAM, +16 CPU cores**
 
-The corrected text would be: 
-
-_**Note**: Indexing and querying data in on-disk mode is much slower than running in in-memory mode._
-
 
 ### Validator
-- Subnet Validator: 256GB SSD, 16GB RAM, 4 CPU cores
+- Subnet Validator: **256GB SSD, 16GB RAM, 4 CPU cores**
 
 ### Server hosting
 - https://contabo.com/en/dedicated-servers/
@@ -139,11 +136,11 @@ Change to this directory and execute
 ```
 cp memgraph/create_user.txt.example memgraph/create_user.txt
 ```
-edit file and set memgraph creadentials
+edit file and set memgraph lab credentials
 ```
 nano memgraph/create_user.txt
 ```
-those user creadentials will be used later in .env file for `GRAPH_DB_USER` and `GRAPH_DB_PASSWORD`
+
 After tht execute:
 
 ```
@@ -177,12 +174,13 @@ GRAPH_DB_PASSWORD=random_string
 
 # use ON_DISK_TRANSACTIONAL on servers with less than 768GB RAM
 GRAPH_DB_STORAGE_MODE=IN_MEMORY_TRANSACTIONAL|ON_DISK_TRANSACTIONAL
+
 # The following variables are only required for the miner
 # Miner waits for 95% sync with the Bitcoin node before starting
 WAIT_FOR_SYNC=True
 
 # The following variables are only required for the indexer, use defaults from docker compose
-START_BLOCK_HEIGHT=1
+START_BLOCK_HEIGHT=769787
 ```
 
 To start the miner and indexer, execute 
@@ -192,7 +190,8 @@ docker-compose up -d
 
 Attach to the btcli container with 
 ```
-docker-compose exec btcli bash
+docker container ls #get {container name} from results
+docker-compose exec -it {container name} bash
 ``` 
 and create a cold and hot keys for the miner wallet with 
 ```
@@ -222,7 +221,10 @@ Wait for Memgraph to start; you can check the logs with
 docker-compose logs -f
 ```
 
-Once Memgraph is ready, you can monitor the status of the miner.
+Once Memgraph is ready, you can monitor the status of your containers via web browser, just navigate to 
+```
+http://{your machine ipaddress}:9999
+```
 
 ### Validator
 
@@ -241,15 +243,17 @@ to set the following variables:
 ```ini
 # Version numbers can be found here: https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base
 # use the latest version number
-VERSION=v0.1.1
+VERSION=latest
 
-# by convention, wallet name should be miner; and the hotkey should be default
+# by convention, wallet name should be validator; and the hotkey should be default
 # this setting can be skipped as its set in the docker-compose.yml file
 WALLET_NAME=validator
 WALLET_HOTKEY=default
 
-BLOCKCHAIR_API_KEY=your blockchair key
-BITCOIN_START_BLOCK_HEIGHT=765000
+BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-node:8332
+
+# this setting can be skipped as its set in the docker-compose.yml file
+BITCOIN_START_BLOCK_HEIGHT=769787
 ```
 
 To start the validator, execute 
