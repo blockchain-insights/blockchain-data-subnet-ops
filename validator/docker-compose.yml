@@ -9,7 +9,6 @@ services:
       - NETUID=15
       - WALLET_NAME=${WALLET_NAME:-validator}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
-      - BLOCKCHAIR_API_KEY=${BLOCKCHAIR_API_KEY}
       - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-769787}
     volumes:
       - bittensor:/root/.bittensor
