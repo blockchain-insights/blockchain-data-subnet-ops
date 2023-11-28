@@ -10,10 +10,10 @@ services:
       - WALLET_NAME=${WALLET_NAME:-validator}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
-      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-769787}
       - BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=${BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE:-256}
     volumes:
       - bittensor:/root/.bittensor
+      - miner_db:/data
     depends_on:
       - btcli
     restart: unless-stopped
@@ -35,5 +35,7 @@ services:
     restart: unless-stopped
 
 volumes:
+  miner_db:
+    driver: local
   bittensor:
     driver: local
