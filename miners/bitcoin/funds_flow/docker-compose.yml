@@ -54,7 +54,6 @@ services:
     ports:
       - "7687:7687"
       - "7444:7444"
-      - "3000:3000"
     environment:
       - MEMGRAPH_PASSFILE=/home/create_user.txt
       - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL}
@@ -70,8 +69,6 @@ services:
     image: amir20/dozzle:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "9999:8080"
     restart: unless-stopped
 
 volumes:

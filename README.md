@@ -221,22 +221,41 @@ Wait for Memgraph to start; you can check the logs with
 docker-compose logs -f
 ```
 
-Once Memgraph is ready, you can monitor the status of your containers via web browser, just navigate to 
+#### Debug mode
+In order to run miner in debug mode, execute 
 ```
-http://{your machine ipaddress}:9999
+docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d
 ```
+This will expose port 9999 for docker log viewer and port 3000 for memgraph lab.
+Keep in mind that this will expose those ports to the public internet, so use it only for debugging purposes.
+It is worth protecting the miner with a firewall rule, check ```scripts/uwf.sh``` as an example.
+
+**Be careful to do not deny ssh access to your server!**
+ 
 
 #### Notes
 for **GRAPH_DB_STORAGE_MODE = IN_MEMORY_TRANSACTIONAL** only
 
 There is a possibility to restore the memgraph database from a snapshot ( starting block = 769787; ~current block = 818937 ). To do so, you need to:
-- stop the memgraph container ```docker container stop funds_flow_memgraph-funds-flow_1```
-- navigate to the memgraph docker volume directory ```cd /var/lib/docker/volumes/funds_flow_memgraph-funds-flow-data/_data/```
+- stop the memgraph container 
+```
+- docker container stop funds_flow_memgraph-funds-flow_1
+```
+- navigate to the memgraph docker volume directory 
+```
+-cd /var/lib/docker/volumes/funds_flow_memgraph-funds-flow-data/_data/
+```
 - remove content of the ```snapshots``` directory ```rm -rf snapshots/*```
 - remove content of the ```wal``` directory ```rm -rf wal/*```
  
-- navigate to the memgraph docker volume directory ```cd /var/lib/docker/volumes/funds_flow_memgraph-funds-flow-data/_data/snapshots```
-- curl the snapshot file from the server where it is stored ```curl -O https://blockchain-insights-snapshots.s3.fr-par.scw.cloud/bitcoin-funds-flow/20231129054952436318_timestamp_107073```
+- navigate to the memgraph docker volume directory 
+```
+cd /var/lib/docker/volumes/funds_flow_memgraph-funds-flow-data/_data/snapshots
+```
+- curl the snapshot file from the server where it is stored 
+```
+curl -O https://blockchain-insights-snapshots.s3.fr-par.scw.cloud/bitcoin-funds-flow/20231129054952436318_timestamp_107073
+```
 - set file permissions ```chmod +rwx *```
 - start the memgraph container again ```docker container start funds_flow_memgraph-funds-flow_1```
 
@@ -309,4 +328,13 @@ Exit Docker interactive mode. Restart the validator with
 docker-compose down
 docker-compose up -d
 ```
+#### Debug mode
+In order to run validator in debug mode, execute 
+```
+docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d
+```
+This will expose port 9999 for docker log viewer and port 9998 for sqlite3 database viewer.
+Keep in mind that this will expose the validator to the public internet, so use it only for debugging purposes.
+It is worth protecting the validator with a firewall rule, check ```scripts/uwf.sh``` as an example.
 
+**Be careful to do not deny ssh access to your server!**
