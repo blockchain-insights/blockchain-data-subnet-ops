@@ -226,6 +226,25 @@ Once Memgraph is ready, you can monitor the status of your containers via web br
 http://{your machine ipaddress}:9999
 ```
 
+#### Notes
+for **GRAPH_DB_STORAGE_MODE = IN_MEMORY_TRANSACTIONAL** only
+
+There is a possibility to restore the memgraph database from a snapshot ( starting block = 769787; ~current block = 818937 ). To do so, you need to:
+- stop the memgraph container ```docker container stop funds_flow_memgraph-funds-flow_1```
+- navigate to the memgraph docker volume directory ```cd /var/lib/docker/volumes/funds_flow_memgraph-funds-flow-data/_data/```
+- remove content of the ```snapshots``` directory ```rm -rf snapshots/*```
+- remove content of the ```wal``` directory ```rm -rf wal/*```
+ 
+- navigate to the memgraph docker volume directory ```cd /var/lib/docker/volumes/funds_flow_memgraph-funds-flow-data/_data/snapshots```
+- curl the snapshot file from the server where it is stored ```curl -O https://blockchain-insights-snapshots.s3.fr-par.scw.cloud/bitcoin-funds-flow/20231129054952436318_timestamp_107073```
+- set file permissions ```chmod +rwx *```
+- start the memgraph container again ```docker container start funds_flow_memgraph-funds-flow_1```
+
+
+
+
+
+
 ### Validator
 
 The code is found in the ```validator``` directory of the cloned repository.
