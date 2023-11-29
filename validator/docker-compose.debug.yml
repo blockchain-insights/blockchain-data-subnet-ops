@@ -5,5 +5,10 @@ services:
     ports:
       - "9999:8080"
   sqliteweb:
+    image: tomdesinto/sqliteweb
+    volumes:
+      - miner_db:/data
+    command: ./data/miner_registry.db
     ports:
       - "9998:8080"
+

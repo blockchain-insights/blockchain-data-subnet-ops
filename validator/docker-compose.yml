@@ -32,11 +32,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
-  sqliteweb:
-    image: tomdesinto/sqliteweb
-    volumes:
-      - miner_db:/data
-    command: ./data/miner_registry.db
+
 
 volumes:
   miner_db:
