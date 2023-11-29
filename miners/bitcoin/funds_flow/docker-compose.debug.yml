@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  memgraph-funds-flow:
+    ports:
+      - "3000:3000"
+  dozzle:
+    ports:
+      - "9999:8080"
+
