@@ -30,14 +30,10 @@ services:
     image: amir20/dozzle:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "9999:8080"
     restart: unless-stopped
 
   sqliteweb:
     image: tomdesinto/sqliteweb
-    ports:
-      - "9998:8080"
     volumes:
       - miner_db:/data
     command: ./data/miner_registry.db
