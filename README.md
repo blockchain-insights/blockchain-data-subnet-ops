@@ -12,6 +12,7 @@ Table of Contents
     - [Bitcoin Node](#bitcoin-node)
     - [Miner and Indexer](#miner-and-indexer)
     - [Subnet Validator](#validator)
+  - [How to update container images](#how-to-update-container-images)
 
 ## Hardware Requirements
 The services in this repository are tailored for machines with the following specifications:
@@ -338,3 +339,15 @@ Keep in mind that this will expose the validator to the public internet, so use 
 It is worth protecting the validator with a firewall rule, check ```scripts/uwf.sh``` as an example.
 
 **Be careful to do not deny ssh access to your server!**
+
+## How to update container images
+- check the latest base package version here:
+```https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base```
+- navigate to the directory where you cloned repository ```blockchain-data-subnet-ops``` repository
+- execute ```git pull```
+- execute ```docker pull ghcr.io/blockchain-insights/blockchain_insights_base:v0.1.29``` where ```v0.1.29``` is the latest version
+- execute ```docker pull ghcr.io/blockchain-insights/blockchain_insights_base:latest``` we need this to overwrite the latest tag
+- do custom changes to .env files if needed ( this will be announced at discord channel )
+- navigate to miner or validator directory depending on which service you run
+- execute ```docker-compose up -d``` to restart containers
+
