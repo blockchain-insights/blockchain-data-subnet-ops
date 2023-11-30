@@ -8,3 +8,7 @@ services:
     ports:
       - "9999:8080"
 
+volumes:
+  memgraph-funds-flow-data:
+  bittensor:
+    driver: local

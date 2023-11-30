@@ -12,3 +12,8 @@ services:
     ports:
       - "9998:8080"
 
+volumes:
+  miner_db:
+    driver: local
+  bittensor:
+    driver: local
