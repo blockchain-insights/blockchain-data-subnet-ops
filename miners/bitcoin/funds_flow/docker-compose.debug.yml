@@ -12,3 +12,7 @@ volumes:
   memgraph-funds-flow-data:
   bittensor:
     driver: local
+
+networks:
+  shared-network:
+    external: true
