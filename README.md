@@ -54,19 +54,29 @@ sudo apt update
 For each server, you'll need to install:
 - [Docker](https://docs.docker.com/get-docker/)
     ```
-    sudo apt-get install docker
+    sudo apt-get install \
+          apt-transport-https \
+          ca-certificates \
+          curl \
+          gnupg \
+          lsb-release
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+    
+    echo \
+      "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+      $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    sudo apt-get update
+    
+    sudo apt-get install docker-ce docker-ce-cli containerd.io
+    sudo docker run hello-world
+
+    sudo usermod -aG docker $USER
+    newgrp docker
+    docker --version
     ```
 - [Docker Compose](https://docs.docker.com/compose/install/)
     ```
     sudo apt-get install docker-compose
-    ```
-- [Python 3](https://www.python.org/downloads/)
-    ```
-    sudo apt update
-    sudo apt install python3 python3-pip
-    echo "alias python=python3" >> ~/.bashrc
-    source ~/.bashrc
-    python --version
     ```
  
 ## Pre-Installation
@@ -100,7 +110,7 @@ docker network create shared-network
 
 ### Bitcoin Node
 
-The code resides in the ```miners/bitcoin-node``` directory of the cloned repository.
+The code resides in the ```miners/bitcoin``` directory of the cloned repository.
 Change to this directory and execute 
 ```
 cp .env.example .env
@@ -160,14 +170,14 @@ to set the following variables:
 VERSION=latest
 
 # by convention, wallet name should be miner; and the hotkey should be default
-# this setting can be skipped as its set in the docker-compose.yml file
+# this setting can be skipped as its set in the docker-compose.indexer.yml file
 WALLET_NAME=miner
 WALLET_HOTKEY=default
 
 # Point to the Bitcoin node RPC credentials
 BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-node:8332 
 
-# this setting can be skipped as its set in the docker-compose.yml file
+# this setting can be skipped as its set in the docker-compose.indexer.yml file
 GRAPH_DB_URL=connection_string_to_memgraph_database
 
 GRAPH_DB_USER=random_string
@@ -285,13 +295,13 @@ to set the following variables:
 VERSION=latest
 
 # by convention, wallet name should be validator; and the hotkey should be default
-# this setting can be skipped as its set in the docker-compose.yml file
+# this setting can be skipped as its set in the docker-compose.indexer.yml file
 WALLET_NAME=validator
 WALLET_HOTKEY=default
 
 BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-node:8332
 
-# this setting can be skipped as its set in the docker-compose.yml file
+# this setting can be skipped as its set in the docker-compose.indexer.yml file
 BITCOIN_START_BLOCK_HEIGHT=769787
 BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=256
 ```
