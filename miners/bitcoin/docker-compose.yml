@@ -9,8 +9,8 @@ services:
       -rpcbind=${RPC_BIND:-0.0.0.0}
       -server=1
       -txindex=1
-      -rpcuser=${RPC_USER:-bitcoinrpc}
-      -rpcpassword=${RPC_PASSWORD:-rpcpassword}
+      -rpcuser=${RPC_USER}
+      -rpcpassword=${RPC_PASSWORD}
     ports:
       - "8332:8332" # rpc mainnet
       - "8333:8333" # peer to peer mainnet

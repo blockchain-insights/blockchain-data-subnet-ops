@@ -4,7 +4,13 @@ services:
   memgraph-funds-flow:
     ports:
       - "3000:3000"
+
   dozzle:
+    container_name: dozzle
+    image: amir20/dozzle:v5.5.0
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
     ports:
       - "9999:8080"
 
