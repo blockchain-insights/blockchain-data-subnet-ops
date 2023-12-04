@@ -46,8 +46,8 @@ For each server, you'll need to install:
  
 ## Installation Guides
 - **Miners and Indexers**: 
-  - [Funds Flow Model](miners/bitcoin/funds_flow/INSTALLATION.md)
-  - [Bitcoin Indexer and Miner](miners/bitcoin/funds_flow/INSTALLATION.md)
+  - Funds Flow Model
+    - [Bitcoin Indexer and Miner](miners/bitcoin/funds_flow/INSTALLATION.md)
 - **Validator Installation**: 
   - [Validator Installation Guide](validator/INSTALLATION.md)
 
