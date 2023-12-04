@@ -15,7 +15,7 @@
     git clone https://github.com/blockchain-insights/blockchain-data-subnet-ops
     ```
 
-    The Docker base image for running the miner, indexer and bittensor-cli is available in the [Registry](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base). It will be automatically downloaded when you run services with **docker-compose** .
+    The Docker base image for running the validator and bittensor-cli is available in the [Registry](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base). It will be automatically downloaded when you run services with **docker-compose** .
 
 #### Validator and Bitcoin Node
 
@@ -44,7 +44,7 @@
 - **Running Validator**
   - **Configure Validator**
   
-    Navigate to ```validator``` and run the following commands:
+      Navigate to ```validator``` and run the following commands:
 
   - **Setup variables in .env file.**
     ```ini
@@ -59,7 +59,7 @@
     ```
     docker-compose -f docker-compose.yml up -d
     ```
-    Note: you can dozzle docker log viewer by running 
+    Note: you can start dozzle docker log viewer by running 
     ```
     docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d
     ```
@@ -74,7 +74,7 @@
   ```
 ### Monitoring
 
-To monitor your containers, ensure that you run debug compose files, and then navigate to ```http://your_server_ip:9999```
+To monitor your containers, ensure that you run debug compose files (```docker-compose.debug.yml```), and then navigate to ```http://your_server_ip:9999```
 
 ### Upgrading
 

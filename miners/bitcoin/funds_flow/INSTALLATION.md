@@ -137,7 +137,7 @@ This can be omitted by setting ```WAIT_FOR_SYNC=False``` in ```.env``` file, but
     
 ### Monitoring
 
-To monitor your containers, ensure that you run debug compose files, and then navigate to ```http://your_server_ip:9999```
+To monitor your containers, ensure that you run debug compose files (```docker-compose.debug.yml```), and then navigate to ```http://your_server_ip:9999```
 
 ### Upgrading
 
