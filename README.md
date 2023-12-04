@@ -56,7 +56,7 @@ Consider these providers for server hosting:
 - [Contabo](https://contabo.com/en/dedicated-servers/)
 - [Hetzner](https://www.hetzner.com/dedicated-rootserver/matrix-ax)
 - [Keyhost](https://www.keyhost.com/)
-- 
+
 ## Updating Container Images
 To update container images:
 1. Check the latest version at `https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base`.
