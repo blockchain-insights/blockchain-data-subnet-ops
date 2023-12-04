@@ -74,6 +74,8 @@
     nano memgraph/create_user.txt
     ```
   - **Setup variables in .env file.**
+  
+    _(you can copy reference variables by executing ```cp .env.example .env```)_
     ```ini
     GRAPH_DB_USER=your_secret_user_name
     GRAPH_DB_PASSWORD=your_secret_password
