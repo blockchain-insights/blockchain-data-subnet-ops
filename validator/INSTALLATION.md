@@ -54,6 +54,7 @@
     ```ini
     WALLET_NAME=validator
     WALLET_HOTKEY=default
+    BITTENSOR_VOLUME_PATH=~/.bittensor
     ```
   - **Start Validator**
     ```
@@ -65,7 +66,7 @@
     ```
     
 - **Configure Validator Hotkey**
-
+  If you don't already have validator keys configured in the default bittensor directory, or in the overridden $BITTENSOR_VOLUME_PATH set in .env, then you can create one using the ready docker with the below commands 
   ```
   docker-compose -f docker-compose.yml -up -d
   docker exec -it validator_btcli_1 bash
