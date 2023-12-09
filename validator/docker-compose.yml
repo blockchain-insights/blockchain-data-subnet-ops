@@ -10,7 +10,6 @@ services:
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=${BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE:-256}
-      - SUBTENSOR_CHAIN_ENDPOINT=${SUBTENSOR_CHAIN_ENDPOINT:-ws://node-subtensor:9944}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-/bittensor}:/root/.bittensor
       - miner_db:/blockchain-data-subnet/neurons/validators
