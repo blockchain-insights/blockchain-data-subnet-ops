@@ -30,15 +30,6 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 
-  sqliteweb:
-    image: tomdesinto/sqliteweb
-    volumes:
-      - miner_db:/miner_registry.db
-    command: miner_registry.db
-    depends_on:
-      - validator
-    restart: unless-stopped
-
 volumes:
   miner_db:
     driver: local
