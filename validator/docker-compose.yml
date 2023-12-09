@@ -11,7 +11,7 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=${BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE:-256}
     volumes:
-      - ${BITTENSOR_VOLUME_PATH:-/bittensor}:/root/.bittensor
+      - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/blockchain-data-subnet/neurons/validators
     depends_on:
       - btcli
@@ -21,7 +21,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "tail", "-f", "/dev/null" ]
     volumes:
-      - ${BITTENSOR_VOLUME_PATH:-/bittensor}:/root/.bittensor
+      - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
     restart: unless-stopped
 
   dozzle:
