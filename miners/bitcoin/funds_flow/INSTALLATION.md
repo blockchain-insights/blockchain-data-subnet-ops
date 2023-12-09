@@ -89,6 +89,7 @@
     BLOCK_PROCESSING_TRANSACTION_THRESHOLD=1000
     BLOCK_PROCESSING_DELAY=1
     BITCOIN_START_BLOCK_HEIGHT=769787
+    BITTENSOR_VOLUME_PATH=~/.bittensor
     ```
   - **Start Indexer & Memgraph**
     ```
@@ -104,6 +105,7 @@
 This can be omitted by setting ```WAIT_FOR_SYNC=False``` in ```.env``` file, but be aware that this might impact the miner's rewards.
 - **Configure Miner Hotkey**
 
+  If you don't already have validator keys configured in the default bittensor directory, or in the overridden $BITTENSOR_VOLUME_PATH set in .env, then you can create one using the ready docker with the below commands
   ```
   docker-compose -f docker-compose.miner.yml -up -d
   docker exec -it funds_flow_btcli_1 bash
