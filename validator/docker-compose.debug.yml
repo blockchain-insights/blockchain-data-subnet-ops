@@ -8,8 +8,8 @@ services:
 
   sqliteweb:
     image: tomdesinto/sqliteweb
-    ports:
-      - "9998:8080"
+    #ports:
+    #- "9998:8080"
 
 volumes:
   miner_db:

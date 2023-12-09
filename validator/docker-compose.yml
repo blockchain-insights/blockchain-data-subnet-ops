@@ -33,7 +33,7 @@ services:
   sqliteweb:
     image: tomdesinto/sqliteweb
     volumes:
-      - miner_db:/miner_registry.db
+      - miner_db:/db
     command: miner_registry.db
     depends_on:
       - validator
