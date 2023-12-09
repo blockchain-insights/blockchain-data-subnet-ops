@@ -10,7 +10,7 @@ services:
     image: tomdesinto/sqliteweb
     volumes:
       - miner_db:/data
-    command: [ "-d", "data/miner_registry.db" ]
+    command: [ "-d", "/data/miner_registry.db" ]
     ports:
       - "9998:8080"
     depends_on:

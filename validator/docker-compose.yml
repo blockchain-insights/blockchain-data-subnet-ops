@@ -12,7 +12,7 @@ services:
       - BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=${BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE:-256}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
-      - miner_db:/blockchain-data-subnet/neurons/validators
+      - miner_db:/data
     depends_on:
       - btcli
     restart: unless-stopped
