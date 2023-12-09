@@ -6,6 +6,11 @@ services:
     ports:
       - "9999:8080"
 
+  sqliteweb:
+    image: tomdesinto/sqliteweb
+    ports:
+      - "9998:8080"
+
 volumes:
   miner_db:
     driver: local
