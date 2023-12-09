@@ -2,14 +2,15 @@ version: '3.8'
 
 services:
   dozzle:
+    image: amir20/dozzle:v5.5.0
     ports:
       - "9999:8080"
   sqliteweb:
+    image: tomdesinto/sqliteweb
     ports:
       - "9998:8080"
 
 volumes:
-  node_subtensor_data:
   miner_db:
     driver: local
   bittensor:

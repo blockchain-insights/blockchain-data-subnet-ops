@@ -1,39 +1,6 @@
 version: '3.8'
 
 services:
-
-  node-subtensor:
-    image: ghcr.io/blockchain-insights/subtensor:latest
-    cpu_count: 4
-    mem_limit: 40000000000
-    memswap_limit: 80000000000
-    ports:
-      - "9944:9944"
-      - "30333:30333"
-      - "9933:9933"
-    expose:
-      - "9944"
-      - "30333"
-      - "9933"
-    environment:
-      - CARGO_HOME=/var/www/node-subtensor/.cargo
-    volumes:
-      - node_subtensor_data:/var/lib/node-subtensor
-    command:
-      - /bin/bash
-      - -c
-      - |
-        mkdir -p /var/lib/node-subtensor && \
-        ./node-subtensor \
-          --base-path /var/lib/node-subtensor \
-          --chain ./raw_spec.json \
-          --rpc-external --rpc-cors all \
-          --ws-external --no-mdns \
-          --ws-max-connections 10000 --in-peers 500 --out-peers 500 \
-          --bootnodes /dns/bootnode.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC
-
-
-
   validator:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/run_validator_mainnet.sh" ]
@@ -43,12 +10,12 @@ services:
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=${BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE:-256}
+      - SUBTENSOR_CHAIN_ENDPOINT=${SUBTENSOR_CHAIN_ENDPOINT:-ws://node-subtensor:9944}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-/bittensor}:/root/.bittensor
       - miner_db:/blockchain-data-subnet/neurons/validators
     depends_on:
       - btcli
-      - node-subtensor
     restart: unless-stopped
 
   btcli:
@@ -59,10 +26,11 @@ services:
     restart: unless-stopped
 
   dozzle:
-    container_name: dozzle
     image: amir20/dozzle:v5.5.0
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - "9999:8080"
     restart: unless-stopped
 
   sqliteweb:
@@ -70,12 +38,13 @@ services:
     volumes:
       - miner_db:/data
     command: ["-d", "data/miner_registry.db"]
+    ports:
+      - "9998:8080"
     depends_on:
       - validator
     restart: unless-stopped
 
 volumes:
-  node_subtensor_data:
   miner_db:
     driver: local
   bittensor:
