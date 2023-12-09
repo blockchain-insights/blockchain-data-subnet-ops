@@ -28,8 +28,6 @@ services:
     image: amir20/dozzle:v5.5.0
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - "9999:8080"
     restart: unless-stopped
 
   sqliteweb:
@@ -37,8 +35,6 @@ services:
     volumes:
       - miner_db:/data
     command: ["-d", "data/miner_registry.db"]
-    ports:
-      - "9998:8080"
     depends_on:
       - validator
     restart: unless-stopped
