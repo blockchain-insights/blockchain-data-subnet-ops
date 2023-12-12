@@ -105,7 +105,7 @@ This can be omitted by setting ```WAIT_FOR_SYNC=False``` in ```.env``` file, but
 - **Configure Miner Hotkey**
 
   ```
-  docker-compose -f docker-compose.indexer.yml -f docker-compose.miner.yml -up -d
+  docker-compose -f docker-compose.indexer.yml -f docker-compose.miner.yml up -d
   docker exec -it funds_flow_btcli_1 bash
   btcli wallet new_coldkey --wallet.name miner
   btcli wallet new_hotkey --wallet.name miner --wallet.hotkey default
