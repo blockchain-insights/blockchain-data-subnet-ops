@@ -10,6 +10,8 @@ services:
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=${BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE:-256}
+    networks:
+      - shared-network
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -44,3 +46,7 @@ volumes:
     driver: local
   bittensor:
     driver: local
+
+networks:
+  shared-network:
+    external: true

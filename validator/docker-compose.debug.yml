@@ -16,3 +16,7 @@ volumes:
     driver: local
   bittensor:
     driver: local
+
+networks:
+  shared-network:
+    external: true
