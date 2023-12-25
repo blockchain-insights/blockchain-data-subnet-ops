@@ -7,7 +7,8 @@ services:
       -printtoconsole
       -rpcallowip=${RPC_ALLOW_IP:-172.17.0.0/16}
       -rpcbind=${RPC_BIND:-0.0.0.0}
-      -maxconnections=${MAX_CONNECTIONS:-1024}
+      -maxconnections=${MAX_CONNECTIONS:-512}
+      -rpcworkqueue=4086
       -server=1
       -txindex=1
       -rpcuser=${RPC_USER}
