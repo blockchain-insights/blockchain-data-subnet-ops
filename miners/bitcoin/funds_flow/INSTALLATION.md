@@ -55,7 +55,7 @@
     add line
 
     ```
-    vm.max_map_count = 2621440
+    vm.max_map_count = 8621440
     ```
     save changes and run
     ```
