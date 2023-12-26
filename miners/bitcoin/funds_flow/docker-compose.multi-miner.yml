@@ -14,6 +14,7 @@ services:
       - WALLET_HOTKEY=default1
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8191
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -38,6 +39,7 @@ services:
       - WALLET_HOTKEY=default2
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8291
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -62,6 +64,7 @@ services:
       - WALLET_HOTKEY=default3
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8391
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -86,6 +89,7 @@ services:
       - WALLET_HOTKEY=default4
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8491
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -110,6 +114,7 @@ services:
       - WALLET_HOTKEY=default5
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8591
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -134,6 +139,7 @@ services:
       - WALLET_HOTKEY=default6
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8691
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -158,6 +164,7 @@ services:
       - WALLET_HOTKEY=default7
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8791
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -182,6 +189,7 @@ services:
       - WALLET_HOTKEY=default8
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8891
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -206,6 +214,7 @@ services:
       - WALLET_HOTKEY=default9
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
+      - BT_AXON_PORT=8991
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
