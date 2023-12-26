@@ -230,7 +230,7 @@ services:
     network_mode: host
     privileged: true
     depends_on:
-      - bitcoin-funds-flow-miner
+      - bitcoin-funds-flow-miner1
     restart: unless-stopped
 
   btcli:
