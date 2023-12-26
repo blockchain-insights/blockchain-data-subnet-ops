@@ -10,8 +10,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default1}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default1
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
@@ -34,8 +34,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default2}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default2
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
@@ -58,8 +58,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default3}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default3
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
@@ -82,8 +82,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default4}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default4
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
@@ -106,8 +106,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default5}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default5
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
@@ -130,8 +130,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default6}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default6
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
@@ -154,8 +154,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default7}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default7
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
@@ -178,8 +178,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default8}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default8
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
@@ -202,8 +202,8 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-miner}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default9}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=default9
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
     volumes:
