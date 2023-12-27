@@ -19,7 +19,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8191:8091"
+      - "8191:8191"
     networks:
       - shared-network
     depends_on:
@@ -44,7 +44,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8291:8091"
+      - "8291:8291"
     networks:
       - shared-network
     depends_on:
@@ -69,7 +69,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8391:8091"
+      - "8391:8391"
     networks:
       - shared-network
     depends_on:
@@ -94,7 +94,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8491:8091"
+      - "8491:8491"
     networks:
       - shared-network
     depends_on:
@@ -119,7 +119,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8591:8091"
+      - "8591:8591"
     networks:
       - shared-network
     depends_on:
@@ -144,7 +144,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8691:8091"
+      - "8691:8691"
     networks:
       - shared-network
     depends_on:
@@ -169,7 +169,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8791:8091"
+      - "8791:8791"
     networks:
       - shared-network
     depends_on:
@@ -194,7 +194,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8891:8091"
+      - "8891:8891"
     networks:
       - shared-network
     depends_on:
@@ -219,7 +219,7 @@ services:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
     ports:
-      - "8991:8091"
+      - "8991:8991"
     networks:
       - shared-network
     depends_on:
