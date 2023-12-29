@@ -1,8 +1,8 @@
 version: '3.8'
 
 services:
-  dogecoin-core:
-    image: evaluationcopy/dogecoin-node:${VERSION-latest}
+  dogecoin:
+    image: um1st/dogecoind
     command:
       -printtoconsole
       -rpcallowip=${RPC_ALLOW_IP:-172.17.0.0/16}
@@ -17,13 +17,13 @@ services:
       - "22555:22555" # rpc mainnet
       - "22556:22556" # p2p
     volumes:
-      - "dogecoin-data:/home/.dogecoin"
+      - "dogecoin:/home/dogecoin/.dogecoin"
     networks:
       - shared-network
-    restart: unless-stopped 
+    restart: unless-stopped
 
 volumes:
-  dogecoin-data:
+  dogecoin:
 
 networks:
   shared-network:
