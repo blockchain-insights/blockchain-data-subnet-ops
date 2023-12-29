@@ -17,6 +17,7 @@ services:
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
+      - ${MINER_SETTINGS:-miner_settings}:/neurons/miners
     ports:
       - "8091:8091"
     networks:
@@ -52,6 +53,8 @@ volumes:
   miner_db:
     driver: local
   bittensor:
+    driver: local
+  miner_settings:
     driver: local
 
 networks:
