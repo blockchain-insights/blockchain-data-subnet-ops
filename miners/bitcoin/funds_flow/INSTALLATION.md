@@ -39,7 +39,7 @@
   ```
     To run the node execute the following command:
     ```
-    docker-compose up -d
+    docker compose up -d
     ```
 
 - **Running Indexer and MemGraph**
@@ -93,11 +93,11 @@
     ```
   - **Start Indexer & Memgraph**
     ```
-    docker-compose -f docker-compose.indexer.yml up -d
+    docker compose -f docker-compose.indexer.yml up -d
     ```
     Note: you can expose memgraph lab ui and dozzle docker log viewer by running 
     ```
-    docker-compose -f docker-compose.indexer.yml -f docker-compose.debug.yml up -d
+    docker compose -f docker-compose.indexer.yml -f docker-compose.debug.yml up -d
     ```
 
 #### Miner
@@ -107,7 +107,7 @@ This can be omitted by setting ```WAIT_FOR_SYNC=False``` in ```.env``` file, but
 
   If you don't already have validator keys configured in the default bittensor directory, or in the overridden $BITTENSOR_VOLUME_PATH set in .env, then you can create one using the ready docker with the below commands
   ```
-  docker-compose -f docker-compose.miner.yml -up -d
+  docker compose -f docker-compose.miner.yml -up -d
   docker exec -it funds_flow_btcli_1 bash
   btcli wallet new_coldkey --wallet.name miner
   btcli wallet new_hotkey --wallet.name miner --wallet.hotkey default
@@ -132,11 +132,11 @@ This can be omitted by setting ```WAIT_FOR_SYNC=False``` in ```.env``` file, but
   ```
 - **Start Miner**
   ```
-  docker-compose -f docker-compose.miner.yml up -d
+  docker compose -f docker-compose.miner.yml up -d
   ```
   Note: you can expose dozzle docker log viewer by running 
   ```
-  docker-compose -f docker-compose.miner.yml -f docker-compose.debug.yml up -d
+  docker compose -f docker-compose.miner.yml -f docker-compose.debug.yml up -d
   ```
     
 ### Monitoring
