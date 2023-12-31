@@ -15,6 +15,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8191
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -40,6 +42,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8291
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -65,6 +69,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8391
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -90,6 +96,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8491
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -115,6 +123,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8591
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -140,6 +150,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8691
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -165,6 +177,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8791
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -190,6 +204,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8891
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -215,6 +231,8 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - BT_AXON_PORT=8991
+      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-wss://51.158.60.18:9946}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
