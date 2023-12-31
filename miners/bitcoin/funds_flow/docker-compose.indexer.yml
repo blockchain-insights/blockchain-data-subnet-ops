@@ -38,7 +38,6 @@ volumes:
 
 networks:
   shared-network:
-    external: true
 
 
 
