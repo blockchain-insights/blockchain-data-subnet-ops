@@ -134,10 +134,6 @@ This can be omitted by setting ```WAIT_FOR_SYNC=False``` in ```.env``` file, but
   ```
   docker compose -f docker-compose.miner.yml up -d
   ```
-  Note: you can expose dozzle docker log viewer by running 
-  ```
-  docker compose -f docker-compose.miner.yml -f docker-compose.debug.yml up -d
-  ```
     
 ### Monitoring
 
