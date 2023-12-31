@@ -79,7 +79,7 @@
     ```ini
     GRAPH_DB_USER=your_secret_user_name
     GRAPH_DB_PASSWORD=your_secret_password
-    BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-node:8332
+    BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-core:8332
     ```
     There are also optional variables that can be set:
     ```ini
