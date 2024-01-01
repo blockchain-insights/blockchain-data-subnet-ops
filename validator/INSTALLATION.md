@@ -79,6 +79,12 @@
   btcli wallet new_coldkey --wallet.name validator
   btcli wallet new_hotkey --wallet.name validator --wallet.hotkey default
   ```
+
+  **Whitelist Validator Hotkey**
+  
+  You should whitelist your validator hotkey by reaching aphex5 on Discord.
+  Currently whitelisted and blacklisted hotkeys can be found [here](https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json).
+  
 ### Monitoring
 
 To monitor your containers, ensure that you run debug compose files (```docker-compose.debug.yml```), and then navigate to ```http://your_server_ip:9999```
