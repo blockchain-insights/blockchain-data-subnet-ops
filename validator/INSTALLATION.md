@@ -56,6 +56,11 @@
     WALLET_HOTKEY=default
     BITTENSOR_VOLUME_PATH=~/.bittensor
     ```
+    By default validators use the public SN15 subtensor. You can override this by the optional variables:
+    ```ini
+    SUBTENSOR_NETWORK=local
+    SUBTENSOR_URL=ws://<IP>:<PORT>
+    ```
   - **Start Validator**
     ```
     docker-compose -f docker-compose.yml up -d

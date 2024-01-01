@@ -130,6 +130,11 @@ This can be omitted by setting ```WAIT_FOR_SYNC=False``` in ```.env``` file, but
   GRAPH_DB_URL=connection_string_to_memgraph_database
   WAIT_FOR_SYNC=True
   ```
+  By default miners use the public SN15 subtensor. You can override this by the optional variables:
+  ```ini
+  SUBTENSOR_NETWORK=local
+  SUBTENSOR_URL=ws://<IP>:<PORT>
+  ```
 - **Start Miner**
   ```
   docker-compose -f docker-compose.miner.yml up -d
