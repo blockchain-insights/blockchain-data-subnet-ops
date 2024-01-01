@@ -80,7 +80,7 @@
   btcli wallet new_hotkey --wallet.name validator --wallet.hotkey default
   ```
 
-  **Whitelist Validator Hotkey**
+- **Whitelist Validator Hotkey**
   
   You should whitelist your validator hotkey by reaching aphex5 on Discord.
   Currently whitelisted and blacklisted hotkeys can be found [here](https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json).
