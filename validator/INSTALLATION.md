@@ -56,6 +56,11 @@
     WALLET_HOTKEY=default
     BITTENSOR_VOLUME_PATH=~/.bittensor
     ```
+    By default validators use the public SN15 subtensor. You can override this by the optional variables:
+    ```ini
+    SUBTENSOR_NETWORK=local
+    SUBTENSOR_URL=ws://<IP>:<PORT>
+    ```
   - **Start Validator**
     ```
     docker-compose -f docker-compose.yml up -d
@@ -74,6 +79,12 @@
   btcli wallet new_coldkey --wallet.name validator
   btcli wallet new_hotkey --wallet.name validator --wallet.hotkey default
   ```
+
+- **Whitelist Validator Hotkey**
+  
+  You should whitelist your validator hotkey by reaching aphex5 on Discord.
+  Currently whitelisted and blacklisted hotkeys can be found [here](https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json).
+  
 ### Monitoring
 
 To monitor your containers, ensure that you run debug compose files (```docker-compose.debug.yml```), and then navigate to ```http://your_server_ip:9999```

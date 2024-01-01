@@ -79,7 +79,7 @@
     ```ini
     GRAPH_DB_USER=your_secret_user_name
     GRAPH_DB_PASSWORD=your_secret_password
-    BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-node:8332
+    BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-core:8332
     ```
     There are also optional variables that can be set:
     ```ini
@@ -129,6 +129,11 @@ This can be omitted by setting ```WAIT_FOR_SYNC=False``` in ```.env``` file, but
   WALLET_HOTKEY=default
   GRAPH_DB_URL=connection_string_to_memgraph_database
   WAIT_FOR_SYNC=True
+  ```
+  By default miners use the public SN15 subtensor. You can override this by the optional variables:
+  ```ini
+  SUBTENSOR_NETWORK=local
+  SUBTENSOR_URL=ws://<IP>:<PORT>
   ```
 - **Start Miner**
   ```
