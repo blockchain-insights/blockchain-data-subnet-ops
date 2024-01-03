@@ -57,7 +57,7 @@ docker run hello-world
 - **Miners and Indexers**: 
   - Funds Flow Model
     - [Bitcoin Indexer and Miner](miners/bitcoin/funds_flow/INSTALLATION.md)
-- **Validator Installation**: 
+- **Validators**: 
   - [Validator Installation Guide](validator/INSTALLATION.md)
 
 ## Server Hosting Options
