@@ -25,7 +25,7 @@ services:
       - "7444:7444"
     environment:
       - MEMGRAPH_PASSFILE=/home/create_user.txt
-      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --log-level=INFO --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=3600 --storage-snapshot-retention-count=3 --storage-wal-enabled=false --isolation-level=READ_COMMITTED
+      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --log-level=DEBUG --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=7200 --storage-snapshot-retention-count=3 --storage-wal-enabled=true --isolation-level=READ_COMMITTED --replication-restore-state-on-startup=true
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
       - ./memgraph/create_user.txt:/home/create_user.txt
