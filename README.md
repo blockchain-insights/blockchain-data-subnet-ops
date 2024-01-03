@@ -64,7 +64,6 @@ docker run hello-world
 Consider these providers for server hosting:
 - [Contabo](https://contabo.com/en/dedicated-servers/)
 - [Hetzner](https://www.hetzner.com/dedicated-rootserver/matrix-ax)
-- [Keyhost](https://www.keyhost.com/)
 
 ## Updating Container Images
 To update container images:
