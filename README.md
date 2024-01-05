@@ -53,6 +53,24 @@ newgrp docker
 docker run hello-world
 ```
 
+## Bittensor and wallet creation
+You will also need to [install Bittensor](https://docs.bittensor.com/getting-started/installation) and create or import wallets.
+The easiest way to install bittensor is via the following command:
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/opentensor/bittensor/master/scripts/install.sh)"
+```
+You can then create new coldkey and hotkey:
+```bash
+btcli w new_coldkey
+btcli w new_hotkey
+```
+Or import them:
+```bash
+btcli w regen_coldkey
+btcli w regen_hotkey
+```
+For more information you can refer to the Bittensor [documentation](https://docs.bittensor.com/getting-started/wallets).
+
 ## Installation Guides
 - **Miners and Indexers**: 
   - Funds Flow Model
