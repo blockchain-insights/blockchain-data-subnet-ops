@@ -56,7 +56,7 @@ docker run hello-world
 ## Installation Guides
 - **Miners and Indexers**: 
   - Funds Flow Model
-    - [Bitcoin Indexer and Miner](miners/bitcoin/funds_flow/INSTALLATION.md)
+    - [Bitcoin Indexer and Miner](miners/bitcoin-funds-flow/)
 - **Validators**: 
   - [Validator Installation Guide](validator/INSTALLATION.md)
 
@@ -64,20 +64,3 @@ docker run hello-world
 Consider these providers for server hosting:
 - [Contabo](https://contabo.com/en/dedicated-servers/)
 - [Hetzner](https://www.hetzner.com/dedicated-rootserver/matrix-ax)
-
-## Updating Container Images
-To update container images:
-1. Check the latest version at `https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base`.
-2. Navigate to the cloned `blockchain-data-subnet-ops` directory.
-3. Update your setup:
-   ```bash
-   git pull
-   docker pull ghcr.io/blockchain-insights/blockchain_insights_base:<version>
-   docker pull ghcr.io/blockchain-insights/blockchain_insights_base:latest
-   ```
-   Replace `<version>` with the current version number.
-4. Modify `.env` files if necessary (updates announced on Discord).
-5. Navigate to the miner or validator directory based on the service you operate.
-6. Restart containers with `docker-compose up -d`.
-
-
