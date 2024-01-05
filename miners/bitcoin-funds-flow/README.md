@@ -10,7 +10,10 @@
 
 ## System Configuration
 
+**NOTE**: Most users will probably need only what is explained in this documentation. Editing the docker-compose files and the optional variables may create problems and is for advanced users only.
+
 ### Setup
+
 - Clone this repository:
     ```bash
     git clone https://github.com/blockchain-insights/blockchain-data-subnet-ops
