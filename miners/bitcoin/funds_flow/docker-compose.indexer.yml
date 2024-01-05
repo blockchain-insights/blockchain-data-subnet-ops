@@ -23,9 +23,10 @@ services:
     ports:
       - "7687:7687"
       - "7444:7444"
+      - "10000:10000"
     environment:
       - MEMGRAPH_PASSFILE=/home/create_user.txt
-      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --log-level=DEBUG --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=7200 --storage-snapshot-retention-count=3 --storage-wal-enabled=true --isolation-level=READ_COMMITTED --replication-restore-state-on-startup=true
+      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --storage-parallel-schema-recovery=true --storage-recovery-thread-count=24  --log-level=TRACE --also-log-to-stderr --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=3600 --storage-snapshot-retention-count=4 --storage-wal-enabled=false --isolation-level=READ_COMMITTED --replication-restore-state-on-startup=true
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
       - ./memgraph/create_user.txt:/home/create_user.txt
