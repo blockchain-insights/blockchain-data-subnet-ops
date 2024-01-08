@@ -33,6 +33,8 @@ services:
       - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-769787}
     depends_on:
       - memgraph
+    volumes:
+      - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
 
   memgraph:
@@ -86,5 +88,7 @@ services:
 
 volumes:
   bitcoin-data:
+    name: "bitcoin_bitcoin-data"
   memgraph-funds-flow-data:
+    name: "funds_flow_memgraph-funds-flow-data"
   miner_db:
