@@ -16,6 +16,7 @@ services:
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data

@@ -17,6 +17,7 @@ services:
       - BT_AXON_PORT=8191
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -44,6 +45,7 @@ services:
       - BT_AXON_PORT=8291
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -71,6 +73,7 @@ services:
       - BT_AXON_PORT=8391
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -98,6 +101,7 @@ services:
       - BT_AXON_PORT=8491
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -125,6 +129,7 @@ services:
       - BT_AXON_PORT=8591
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -152,6 +157,7 @@ services:
       - BT_AXON_PORT=8691
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -179,6 +185,7 @@ services:
       - BT_AXON_PORT=8791
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -206,6 +213,7 @@ services:
       - BT_AXON_PORT=8891
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
@@ -233,6 +241,7 @@ services:
       - BT_AXON_PORT=8991
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
       - miner_db:/data
