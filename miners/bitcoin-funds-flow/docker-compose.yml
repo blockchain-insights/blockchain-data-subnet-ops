@@ -86,5 +86,7 @@ services:
 
 volumes:
   bitcoin-data:
+    name: "bitcoin_bitcoin-data"
   memgraph-funds-flow-data:
+    name: "funds_flow_memgraph-funds-flow-data"
   miner_db:
