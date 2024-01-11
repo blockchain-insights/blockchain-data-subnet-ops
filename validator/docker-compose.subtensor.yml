@@ -4,10 +4,7 @@ services:
   node-subtensor:
     container_name: node-subtensor
     image: opentensor/subtensor:latest
-    ports:
-      - "9944:9944"
-      - "30333:30333"
-      - "9933:9933"
+    # Removed the ports section to prevent public exposure
     expose:
       - "9944"
       - "30333"
@@ -23,11 +20,11 @@ services:
         ./node-subtensor \
           --base-path /tmp/blockchain \
           --chain ./raw_spec.json \
-          --rpc-external --rpc-cors all \
-          --ws-external --no-mdns \
+          --rpc-cors all \
           --ws-max-connections 10000 --in-peers 500 --out-peers 500 \
           --bootnodes /dns/bootnode.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC \
           --sync warp
+
 
 networks:
   shared-network:
