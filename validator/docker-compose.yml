@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   validator:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_validator_mainnet.sh" ]
     environment:
       - NETUID=15
@@ -22,7 +22,7 @@ services:
     restart: unless-stopped
 
   btcli:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "tail", "-f", "/dev/null" ]
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor

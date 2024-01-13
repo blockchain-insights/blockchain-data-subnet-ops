@@ -3,7 +3,7 @@ version: '3.8'
 services:
   
   bitcoin-funds-flow-miner1:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -31,7 +31,7 @@ services:
     restart: unless-stopped
 
   bitcoin-funds-flow-miner2:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -59,7 +59,7 @@ services:
     restart: unless-stopped
 
   bitcoin-funds-flow-miner3:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -87,7 +87,7 @@ services:
     restart: unless-stopped
 
   bitcoin-funds-flow-miner4:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -115,7 +115,7 @@ services:
     restart: unless-stopped
 
   bitcoin-funds-flow-miner5:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -143,7 +143,7 @@ services:
     restart: unless-stopped
 
   bitcoin-funds-flow-miner6:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -171,7 +171,7 @@ services:
     restart: unless-stopped
 
   bitcoin-funds-flow-miner7:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -199,7 +199,7 @@ services:
     restart: unless-stopped
 
   bitcoin-funds-flow-miner8:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -227,7 +227,7 @@ services:
     restart: unless-stopped
 
   bitcoin-funds-flow-miner9:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -255,7 +255,7 @@ services:
     restart: unless-stopped
 
   ip-blocker:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_ip_blocker.sh" ]
     environment:
       - NETUID=15
@@ -270,7 +270,7 @@ services:
     restart: unless-stopped
 
   btcli:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "tail", "-f", "/dev/null" ]
     volumes:
     - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
