@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   bitcoin-funds-flow-indexer:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}

@@ -3,7 +3,7 @@ version: '3.8'
 services:
   
   bitcoin-funds-flow-miner:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
@@ -30,7 +30,7 @@ services:
     restart: unless-stopped
 
   ip-blocker:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_ip_blocker.sh" ]
     environment:
       - NETUID=15
@@ -45,7 +45,7 @@ services:
     restart: unless-stopped
 
   btcli:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "tail", "-f", "/dev/null" ]
     volumes:
     - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
