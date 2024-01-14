@@ -48,7 +48,7 @@
 
   - **Setup variables in .env file.**
     ```ini
-    BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-node:8332
+    BITCOIN_NODE_RPC_URL=http://username:password@bitcoin-core:8332
     ```
     There are also optional variables that can be set:
     ```ini
