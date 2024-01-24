@@ -50,7 +50,7 @@ services:
       - 3500:3500
     command:
       - --accept-terms-of-use
-      - --execution-endpoint=http://46.17.103.7:8551
+      - --execution-endpoint=http://${ENDPOINT}
       - --mainnet
       - --jwt-secret=/root/.ethereum/jwt.hex
       - --checkpoint-sync-url=https://beaconstate.info
