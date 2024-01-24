@@ -4,6 +4,7 @@ services:
   ethereum-node:
     image: ethereum/client-go:latest
     container_name: geth-node
+    restart: unless-stopped
     ports:
       - 30303:30303
       - 30303:30303/udp
@@ -49,7 +50,7 @@ services:
       - 3500:3500
     command:
       - --accept-terms-of-use
-      - --execution-endpoint=${ENDPOINT}
+      - --execution-endpoint=http://46.17.103.7:8551
       - --mainnet
       - --jwt-secret=/root/.ethereum/jwt.hex
       - --checkpoint-sync-url=https://beaconstate.info
