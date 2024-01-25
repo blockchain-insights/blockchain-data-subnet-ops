@@ -6,7 +6,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -35,7 +35,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -64,7 +64,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -93,7 +93,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -122,7 +122,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -151,7 +151,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -180,7 +180,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -209,7 +209,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -238,7 +238,7 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
     environment:
-      - VERSION=${VERSION:-latest}
+      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
