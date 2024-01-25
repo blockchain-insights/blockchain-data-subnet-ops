@@ -27,6 +27,7 @@ services:
       - shared-network
     depends_on:
       - btcli
+      - memgraph-funds-flow
     restart: unless-stopped
 
   ip-blocker:
