@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  dogecoin:
+    image: um1st/dogecoind
+    command:
+      -printtoconsole
+      -rpcallowip=${RPC_ALLOW_IP:-172.17.0.0/16}
+      -rpcbind=${RPC_BIND:-0.0.0.0}
+      -maxconnections=${MAX_CONNECTIONS:-512}
+      -rpcworkqueue=4086
+      -server=1
+      -txindex=1
+      -rpcuser=${RPC_USER}
+      -rpcpassword=${RPC_PASSWORD}
+    ports:
+      - "22555:22555" # rpc mainnet
+      - "22556:22556" # p2p
+    volumes:
+      - "dogecoin:/home/dogecoin/.dogecoin"
+    networks:
+      - shared-network
+    restart: unless-stopped
+
+volumes:
+  dogecoin:
+
+networks:
+  shared-network:
+    external: true
