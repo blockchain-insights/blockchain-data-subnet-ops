@@ -51,25 +51,9 @@ services:
     restart: unless-stopped
 
   miner:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
-    environment:
-      - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
-      - GRAPH_DB_USER=${GRAPH_DB_USER}
-      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-      - WALLET_NAME=${WALLET_NAME:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
-      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
-      - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
-      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
-      - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
-      - NETUID=15
-    volumes:
-      - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
-      - miner_db:/data
-    ports:
-      - 8091:8091
-    restart: unless-stopped
+    extends:
+      file: miner-service.yml
+      service: miner
 
   ip-blocker:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
@@ -86,9 +70,20 @@ services:
       - miner
     restart: unless-stopped
 
+  miner2:
+    environment:
+      - WALLET_NAME=${WALLET_NAME2:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY2:-default}
+    ports:
+      - 8092:8092
+    profiles:
+      - optional
+    extends:
+      file: miner-service.yml
+      service: miner
+
 volumes:
   bitcoin-data:
     name: "bitcoin_bitcoin-data"
   memgraph-funds-flow-data:
     name: "funds_flow_memgraph-funds-flow-data"
-  miner_db:
