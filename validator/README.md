@@ -1,0 +1,105 @@
+## Hardware Requirements
+
+- All in one:
+  - 1TB+ SSD, 16+ CPU cores, 128GB RAM
+- Separate:
+  - Validator: 8GB RAM, 4+ CPU cores, ~80GB+ SSD/nvme storage
+  - Bitcoin full node: 1TB+ SSD/nvme storage, 8+ CPU cores, 96GB+ RAM
+
+
+## System Configuration
+
+### Setup
+- Clone the Repository
+    ```
+    git clone https://github.com/blockchain-insights/blockchain-data-subnet-ops
+    ```
+
+#### Bitcoin Node
+
+- **Running Bitcoin node**
+
+    Open the ```.env``` file:
+    ```bash
+    nano .env
+    ```
+    Set the required variables in the ```.env``` file and save it:
+    ```ini
+    RPC_USER=your_secret_user_name
+    RPC_PASSWORD=your_secret_password
+    ```
+    
+    **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
+    ```ini
+    RPC_ALLOW_IP=172.16.0.0/12
+    RPC_BIND=0.0.0.0
+    MAX_CONNECTIONS=512
+    ```
+
+    Start the Bitcoin node:
+    ```bash
+    docker compose up -d bitcoin-core
+    ```
+
+### Validator
+
+- **Running Validator**
+
+    Open the ```.env``` file:
+    ```
+    nano .env
+    ```
+
+    Set the required variables in the ```.env``` file and save it:
+    ```ini
+    WALLET_NAME=default
+    WALLET_HOTKEY=default
+    ```
+
+  **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
+  ```ini
+  BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=256
+  # If you want to use enternal Bitcoin node RPC.
+  BITCOIN_NODE_RPC_URL=http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332
+  # If you have custom bittensor path
+  BITTENSOR_VOLUME_PATH=~/.bittensor
+  # By default validators use the public SN15 subtensor, but you can use other too
+  SUBTENSOR_NETWORK=local
+  SUBTENSOR_URL=ws://51.158.60.18:9944
+  ```
+
+  Start Validator
+  ```
+  docker-compose up -d validator
+  ```
+
+- **Whitelist Validator Hotkey**
+  
+  You should whitelist your validator hotkey by reaching aphex5 on Discord.
+  Currently whitelisted and blacklisted hotkeys can be found [here](https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json).
+  
+### Monitoring
+
+To easily monitor your containers, you can start Dozzle:
+```bash
+docker run -d --name dozzle --restart unless-stopped --volume=/var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest
+```
+Then navigate to ```http://your_server_ip:9999```
+
+### Upgrading
+
+- check the latest base package version [here](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base)
+- update the repository
+    ```bash 
+    git pull
+    ```
+- update the images
+    ```bash
+    docker compose pull
+    ```
+- restart containers
+    ```bash
+    docker compose up -d validator
+    ```
+- if needed restart other containers too
+- when additional changes are needed, they will be announced on Discord
