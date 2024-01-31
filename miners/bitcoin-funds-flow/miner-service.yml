@@ -19,9 +19,4 @@ services:
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
       - miner_db:/data
-    ports:
-      - 8090:8090
     restart: unless-stopped
-
-volumes:
-  miner_db:

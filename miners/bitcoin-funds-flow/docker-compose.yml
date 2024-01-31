@@ -51,6 +51,8 @@ services:
     restart: unless-stopped
 
   miner:
+    ports:
+      - 8091:8091
     extends:
       file: miner-service.yml
       service: miner
@@ -72,10 +74,94 @@ services:
 
   miner2:
     environment:
-      - WALLET_NAME=${WALLET_NAME2:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY2:-default}
+      - WALLET_NAME=${WALLET_NAME2:-default2}
+      - WALLET_HOTKEY=${WALLET_HOTKEY2:-default2}
     ports:
       - 8092:8092
+    profiles:
+      - optional
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner3:
+    environment:
+      - WALLET_NAME=${WALLET_NAME3:-default3}
+      - WALLET_HOTKEY=${WALLET_HOTKEY3:-default3}
+    ports:
+      - 8093:8093
+    profiles:
+      - optional
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner4:
+    environment:
+      - WALLET_NAME=${WALLET_NAME4:-default4}
+      - WALLET_HOTKEY=${WALLET_HOTKEY4:-default4}
+    ports:
+      - 8094:8094
+    profiles:
+      - optional
+    extends:
+      file: miner-service.yml
+      service: miner
+  
+  miner5:
+    environment:
+      - WALLET_NAME=${WALLET_NAME5:-default5}
+      - WALLET_HOTKEY=${WALLET_HOTKEY5:-default5}
+    ports:
+      - 8095:8095
+    profiles:
+      - optional
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner6:
+    environment:
+      - WALLET_NAME=${WALLET_NAME6:-default6}
+      - WALLET_HOTKEY=${WALLET_HOTKEY6:-default6}
+    ports:
+      - 8096:8096
+    profiles:
+      - optional
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner7:
+    environment:
+      - WALLET_NAME=${WALLET_NAME7:-default7}
+      - WALLET_HOTKEY=${WALLET_HOTKEY7:-default7}
+    ports:
+      - 8097:8097
+    profiles:
+      - optional
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner8:
+    environment:
+      - WALLET_NAME=${WALLET_NAME8:-default8}
+      - WALLET_HOTKEY=${WALLET_HOTKEY8:-default8}
+    ports:
+      - 8098:8098
+    profiles:
+      - optional
+    extends:
+      file: miner-service.yml
+      service: miner
+  
+  miner9:
+    environment:
+      - WALLET_NAME=${WALLET_NAME9:-default9}
+      - WALLET_HOTKEY=${WALLET_HOTKEY9:-default9}
+    ports:
+      - 8099:8099
     profiles:
       - optional
     extends:
@@ -87,3 +173,4 @@ volumes:
     name: "bitcoin_bitcoin-data"
   memgraph-funds-flow-data:
     name: "funds_flow_memgraph-funds-flow-data"
+  miner_db:
