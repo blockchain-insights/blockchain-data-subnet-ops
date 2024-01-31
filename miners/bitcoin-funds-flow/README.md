@@ -124,6 +124,11 @@
     SUBTENSOR_URL=ws://51.158.60.18:9944
     ```
 
+    **Run the version-script.sh before starting the miner**
+    ```bash
+    ./version-script.sh
+    ```
+
     Start the Miner & IP blocker
     ```
     docker compose up -d miner ip-blocker
@@ -178,6 +183,10 @@ Then navigate to ```http://your_server_ip:9999```
 - update the images
     ```bash
     docker compose pull
+    ```
+- **run the version-script.sh before restarting the miner**
+    ```bash
+    ./version-script.sh
     ```
 - restart containers
     ```bash
