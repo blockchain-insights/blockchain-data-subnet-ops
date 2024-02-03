@@ -1,54 +1,40 @@
 version: '3.8'
 
 services:
+  bitcoin-core:
+    image: ruimarinho/bitcoin-core:${VERSION-latest}
+    command:
+      -rpcuser=${RPC_USER}
+      -rpcpassword=${RPC_PASSWORD}
+      -rpcallowip=${RPC_ALLOW_IP:-172.16.0.0/12}
+      -rpcbind=${RPC_BIND:-0.0.0.0}
+      -maxconnections=${MAX_CONNECTIONS:-512}
+      -printtoconsole
+      -rpcworkqueue=4086
+      -server=1
+      -txindex=1
+    ports:
+      - "8332:8332"
+      - "8333:8333"
+    volumes:
+      - "bitcoin-data:/home/bitcoin/.bitcoin"
+    restart: unless-stopped
+
   validator:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/run_validator_mainnet.sh" ]
     environment:
       - NETUID=15
-      - WALLET_NAME=${WALLET_NAME:-validator}
+      - WALLET_NAME=${WALLET_NAME:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
-      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL}
+      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
       - BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=${BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE:-256}
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
-    networks:
-      - shared-network
     volumes:
-      - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
-      - miner_db:/data
-    depends_on:
-      - btcli
+      - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
-
-  btcli:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "tail", "-f", "/dev/null" ]
-    volumes:
-      - ${BITTENSOR_VOLUME_PATH:-bittensor}:/root/.bittensor
-    restart: unless-stopped
-
-  dozzle:
-    image: amir20/dozzle:v5.5.0
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    restart: unless-stopped
-
-  sqliteweb:
-    image: tomdesinto/sqliteweb
-    volumes:
-      - miner_db:/db
-    command: miner_registry.db
-    depends_on:
-      - validator
-    restart: unless-stopped
-
+    
 volumes:
-  miner_db:
-    driver: local
-  bittensor:
-    driver: local
-
-networks:
-  shared-network:
-    external: true
+  bitcoin-data:
+    name: "bitcoin_bitcoin-data"

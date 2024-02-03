@@ -1,8 +1,8 @@
 ## Hardware Requirements
 - All in one: 
-  - 2TB+ SSD/nvme storage, 16+ CPU cores, 1TB RAM
+  - 2TB+ SSD/nvme storage, 16+ CPU cores, 1.5TB+ RAM
 - Separate:
-  - Indexer and MemGraph: 768GB-1TB+ RAM, 16+ CPU cores, ~2TB+ SSD/nvme storage
+  - Indexer and MemGraph: 1.5TB+ RAM, 16+ CPU cores, ~2TB+ SSD/nvme storage
   - Bitcoin full node: 1TB+ SSD/nvme storage, 8+ CPU cores, 64GB+ RAM
   - Miner: ~32GB SSD storage, 8+ CPU cores, 64GB+ RAM
 - Custom:
@@ -10,7 +10,9 @@
 
 ## System Configuration
 
-**NOTE**: Most users will probably need only what is explained in this documentation. Editing the docker-compose files and the optional variables may create problems and is for advanced users only.
+```diff
+- Most users need only what is explained in this documentation. Editing the docker-compose files and the optional variables may create problems and is for advanced users only!
+```
 
 ### Setup
 
@@ -122,9 +124,45 @@
     SUBTENSOR_URL=ws://51.158.60.18:9944
     ```
 
+    **Run the version-script.sh before starting the miner**
+    ```bash
+    ./version-script.sh
+    ```
+
     Start the Miner & IP blocker
     ```
     docker compose up -d miner ip-blocker
+    ```
+
+#### Multiple miners
+It's allowed to run a total of 9 miners on a single memgraph instance. You have to first create and register the hotkeys, the procedure is similar to the one for the default miner.
+
+- **Running Multiple Miners**
+
+    Open the ```.env``` file:
+    ```
+    nano .env
+    ```
+
+    Add the required variables for each new miner in the ```.env``` file and save it:
+    ```ini
+    WALLET_NAME2=default
+    WALLET_HOTKEY2=default2
+    WALLET_NAME3=default
+    WALLET_HOTKEY3=default3
+    ...
+    WALLET_NAME9=default
+    WALLET_HOTKEY9=default9
+    ```
+    **NOTE**: It is not required to add all 9 miners, you can add less too.
+
+    Start the additional miners
+    ```
+    docker compose up -d miner2 miner3 ... 
+    ```
+    If you want to start them all, you can use the command:
+    ```
+    docker compose --profile multiminers up -d
     ```
 
 ### Monitoring
@@ -145,6 +183,10 @@ Then navigate to ```http://your_server_ip:9999```
 - update the images
     ```bash
     docker compose pull
+    ```
+- **run the version-script.sh before restarting the miner**
+    ```bash
+    ./version-script.sh
     ```
 - restart containers
     ```bash

@@ -51,25 +51,11 @@ services:
     restart: unless-stopped
 
   miner:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
-    environment:
-      - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
-      - GRAPH_DB_USER=${GRAPH_DB_USER}
-      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-      - WALLET_NAME=${WALLET_NAME:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
-      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
-      - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
-      - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
-      - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
-      - NETUID=15
-    volumes:
-      - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
-      - miner_db:/data
     ports:
       - 8091:8091
-    restart: unless-stopped
+    extends:
+      file: miner-service.yml
+      service: miner
 
   ip-blocker:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
@@ -85,6 +71,102 @@ services:
     depends_on:
       - miner
     restart: unless-stopped
+
+  miner2:
+    environment:
+      - WALLET_NAME=${WALLET_NAME2:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY2:-default2}
+    ports:
+      - 8092:8092
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner3:
+    environment:
+      - WALLET_NAME=${WALLET_NAME3:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY3:-default3}
+    ports:
+      - 8093:8093
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner4:
+    environment:
+      - WALLET_NAME=${WALLET_NAME4:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY4:-default4}
+    ports:
+      - 8094:8094
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+  
+  miner5:
+    environment:
+      - WALLET_NAME=${WALLET_NAME5:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY5:-default5}
+    ports:
+      - 8095:8095
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner6:
+    environment:
+      - WALLET_NAME=${WALLET_NAME6:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY6:-default6}
+    ports:
+      - 8096:8096
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner7:
+    environment:
+      - WALLET_NAME=${WALLET_NAME7:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY7:-default7}
+    ports:
+      - 8097:8097
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner8:
+    environment:
+      - WALLET_NAME=${WALLET_NAME8:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY8:-default8}
+    ports:
+      - 8098:8098
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+  
+  miner9:
+    environment:
+      - WALLET_NAME=${WALLET_NAME9:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY9:-default9}
+    ports:
+      - 8099:8099
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
 
 volumes:
   bitcoin-data:
