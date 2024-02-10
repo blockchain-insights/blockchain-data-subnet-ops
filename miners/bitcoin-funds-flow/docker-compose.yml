@@ -1,8 +1,31 @@
 version: '3.8'
 
 services:
+  node-subtensor:
+    container_name: node-subtensor
+    image: opentensor/subtensor:latest
+    # Removed the ports section to prevent public exposure
+    expose:
+      - "9944"
+      - "30333"
+      - "9933"
+    environment:
+      - CARGO_HOME=/var/www/node-subtensor/.cargo
+    command:
+      - /bin/bash
+      - -c
+      - |
+        ./node-subtensor \
+          --base-path /tmp/blockchain \
+          --chain ./raw_spec.json \
+          --rpc-external --rpc-cors all \
+          --ws-external --no-mdns \
+          --ws-max-connections 10000 --in-peers 500 --out-peers 500 \
+          --bootnodes /dns/bootnode.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC \
+          --sync warp
+
   bitcoin-core:
-    image: ruimarinho/bitcoin-core:${VERSION-latest}
+    image: ruimarinho/bitcoin-core:latest
     command:
       -rpcuser=${RPC_USER}
       -rpcpassword=${RPC_PASSWORD}
@@ -28,49 +51,77 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
-      - BLOCK_PROCESSING_TRANSACTION_THRESHOLD=${BLOCK_PROCESSING_TRANSACTION_THRESHOLD:-1000}
-      - BLOCK_PROCESSING_DELAY=${BLOCK_PROCESSING_DELAY:-1}
       - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-769787}
     depends_on:
       - memgraph
-    volumes:
-      - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
 
+  reverse-indexer:
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    command: [ "./scripts/run_indexer_reverse_bitcoin_funds_flow.sh" ]
+    environment:
+      - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
+      - GRAPH_DB_USER=${GRAPH_DB_USER}
+      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
+      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
+      - BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=${BITCOIN_V2_TX_OUT_HASHMAP_PICKLES:-/data/tx_out_hashmap_pickles}
+      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-820000}
+      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-829000}
+    volumes:
+      - bitcoin-vout-hashtable:/data
+    depends_on:
+      - memgraph
+    restart: no
+
+  block-parser:
+    build:
+      context: ../shared/block-parser
+      dockerfile: Dockerfile
+    command: rusty-blockparser --start 1 --end 100 --blockchain-dir /blockchain csvdump /data
+    environment:
+      - RUST_BACKTRACE=full
+    volumes:
+      - bitcoin-data:/blockchain
+      - bitcoin-vout-hashtable:/data
+    restart: no
+
+  bitcoin-vout-hashtable-builder:
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    command: [ "./scripts/run_bitcoin_vout_hashtable_builder.sh" ]
+    environment:
+      - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
+      - GRAPH_DB_USER=${GRAPH_DB_USER}
+      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
+      - BITCOIN_TX_OUT_HASHMAP_PICKLES=${BITCOIN_TX_OUT_HASHMAP_PICKLES:-/data/tx_out_hashmap_pickles}
+      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-820000}
+      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-829000}
+    volumes:
+      - bitcoin-vout-hashtable:/data
+      - "bitcoin-data:/home/bitcoin/.bitcoin"
+    depends_on:
+      - bitcoin-core
+    restart: no
+
   memgraph:
-    image: memgraph/memgraph-platform:2.13.0-memgraph2.13.0-lab2.10.0-mage1.13
+    image: memgraph/memgraph-platform:2.14.0-memgraph2.14.0-lab2.11.1-mage1.14
     ports:
       - "7687:7687"
       - "7444:7444"
+      - "3000:3000"
     environment:
       - MEMGRAPH_USER=${GRAPH_DB_USER}
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
-      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --storage-parallel-schema-recovery=true --storage-recovery-thread-count=24  --log-level=TRACE --also-log-to-stderr --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=3600 --storage-snapshot-retention-count=4 --storage-wal-enabled=false --isolation-level=READ_COMMITTED --replication-restore-state-on-startup=true
+      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --storage-parallel-schema-recovery=true --storage-recovery-thread-count=120  --storage-gc-cycle-sec=300 --log-level=TRACE --also-log-to-stderr --storage-snapshot-on-exit=false --storage-snapshot-interval-sec=14400 --storage-snapshot-retention-count=2 --storage-wal-enabled=false --isolation-level=READ_COMMITTED --replication-restore-state-on-startup=true
     volumes:
       - memgraph-funds-flow-data:/var/lib/memgraph
     restart: unless-stopped
 
-  miner:
+  miner1:
     ports:
       - 8091:8091
     extends:
       file: miner-service.yml
       service: miner
-
-  ip-blocker:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_ip_blocker.sh" ]
-    environment:
-      - WALLET_NAME=${WALLET_NAME:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
-      - NETUID=15
-    volumes:
-       - miner_db:/data
-    network_mode: host
-    privileged: true
-    depends_on:
-      - miner
-    restart: unless-stopped
 
   miner2:
     environment:
@@ -132,45 +183,23 @@ services:
       file: miner-service.yml
       service: miner
 
-  miner7:
+  ip-blocker:
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    command: [ "./scripts/run_ip_blocker.sh" ]
     environment:
-      - WALLET_NAME=${WALLET_NAME7:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY7:-default7}
-    ports:
-      - 8097:8097
-    profiles:
-      - multiminers
-    extends:
-      file: miner-service.yml
-      service: miner
-
-  miner8:
-    environment:
-      - WALLET_NAME=${WALLET_NAME8:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY8:-default8}
-    ports:
-      - 8098:8098
-    profiles:
-      - multiminers
-    extends:
-      file: miner-service.yml
-      service: miner
-  
-  miner9:
-    environment:
-      - WALLET_NAME=${WALLET_NAME9:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY9:-default9}
-    ports:
-      - 8099:8099
-    profiles:
-      - multiminers
-    extends:
-      file: miner-service.yml
-      service: miner
+      - WALLET_NAME=${WALLET_NAME:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
+      - NETUID=15
+    volumes:
+      - miner_db:/data
+    network_mode: host
+    privileged: true
+    restart: unless-stopped
 
 volumes:
+  bitcoin-vout-hashtable:
   bitcoin-data:
-    name: "bitcoin_bitcoin-data"
+    name: "bitcoin_data"
   memgraph-funds-flow-data:
-    name: "funds_flow_memgraph-funds-flow-data"
+    name: "memgraph-data"
   miner_db:

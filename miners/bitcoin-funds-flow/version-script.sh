@@ -2,7 +2,7 @@
 
 DOCKER_IMAGE="ghcr.io/blockchain-insights/blockchain_insights_base"
 
-# Check if the Docker image is present locally
+# Check if the Dockerfile image is present locally
 if ! docker image inspect "$DOCKER_IMAGE" > /dev/null 2>&1; then
     echo "Image not found locally. Pulling $DOCKER_IMAGE..."
     docker pull "$DOCKER_IMAGE"

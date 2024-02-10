@@ -3,19 +3,19 @@ version: '3.8'
 services:
   miner:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_miner_bitcoin_funds_flow_mainnet.sh" ]
+    command: [ "./scripts/run_miner_bitcoin_funds_flow.sh" ]
     environment:
       - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - NETUID=15
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-      - WALLET_NAME=${WALLET_NAME:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
+      - WALLET_NAME=miner
+      - WALLET_HOTKEY=${WALLET_HOTKEY:-default1}
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
       - WAIT_FOR_SYNC=${WAIT_FOR_SYNC:-True}
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
-      - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
