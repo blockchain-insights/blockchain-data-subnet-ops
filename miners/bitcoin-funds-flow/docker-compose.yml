@@ -77,7 +77,10 @@ services:
     build:
       context: ../shared/block-parser
       dockerfile: Dockerfile
-    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start 1 --end 100 --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump /data"
+    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BITCOIN_START_BLOCK_HEIGHT} --end $${BITCOIN_END_BLOCK_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump /data"
+    environment:
+      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-820000}
+      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-1}
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
       - bitcoin-vout-hashtable:/data
@@ -85,14 +88,10 @@ services:
 
   bitcoin-vout-hashtable-builder:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_bitcoin_vout_hashtable_builder.sh" ]
+    command: /bin/bash -c "ls -al /data && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
-      - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
-      - GRAPH_DB_USER=${GRAPH_DB_USER}
-      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - BITCOIN_TX_OUT_HASHMAP_PICKLES=${BITCOIN_TX_OUT_HASHMAP_PICKLES:-/data/tx_out_hashmap_pickles}
-      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-820000}
-      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-829000}
+      - CSV_FILE=${CSV_FILE:-/data/tx_out_hashmap.csv}
     volumes:
       - bitcoin-vout-hashtable:/data
     depends_on:
