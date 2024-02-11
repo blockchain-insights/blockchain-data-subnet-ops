@@ -92,6 +92,7 @@ services:
     environment:
       - BITCOIN_TX_OUT_HASHMAP_PICKLES=${BITCOIN_TX_OUT_HASHMAP_PICKLES:-/data/tx_out_hashmap_pickles}
       - CSV_FILE=${CSV_FILE:-/data/tx_out_hashmap.csv}
+      - NEW={NEW:-false}
     volumes:
       - bitcoin-vout-hashtable:/data
     depends_on:
