@@ -12,4 +12,3 @@ RUN apt-get update && \
     libssl-dev
 
 RUN cargo install rusty-blockparser
-# ENTRYPOINT ["rusty-blockparser"]

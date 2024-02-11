@@ -77,24 +77,26 @@ services:
     build:
       context: ../shared/block-parser
       dockerfile: Dockerfile
-    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BITCOIN_START_BLOCK_HEIGHT} --end $${BITCOIN_END_BLOCK_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump /data"
+    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BITCOIN_START_BLOCK_HEIGHT} --end $${BITCOIN_END_BLOCK_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${TARGET_PATH}"
     environment:
-      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-820000}
+      - TARGET_PATH=${TARGET_PATH:-/data/csv}
+      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-1000}
       - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-1}
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
-      - bitcoin-vout-hashtable:/data
+      - bitcoin-vout-hashtable:/data/csv
     restart: no
 
   bitcoin-vout-hashtable-builder:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: /bin/bash -c "ls -al /data && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
+    command: /bin/bash -c "ls -al /data/vout && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
-      - BITCOIN_TX_OUT_HASHMAP_PICKLES=${BITCOIN_TX_OUT_HASHMAP_PICKLES:-/data/tx_out_hashmap_pickles}
+      - TARGET_PATH=${TARGET_PATH:-/data/csv}
       - CSV_FILE=${CSV_FILE:-/data/tx_out_hashmap.csv}
-      - NEW={NEW:-false}
+      - INDEXING_THREADS=${INDEXING_THREADS:-64}
+      - NEW=${NEW:-false}
     volumes:
-      - bitcoin-vout-hashtable:/data
+      - bitcoin-vout-hashtable:/data/vout
     depends_on:
       - bitcoin-core
     restart: no
