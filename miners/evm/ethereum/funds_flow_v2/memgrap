@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  memgraph-funds-flow:
+    image: memgraph/memgraph-platform:2.13.0-memgraph2.13.0-lab2.10.0-mage1.13
+    ports:
+      - "7687:7687"
+      - "7444:7444"
+      - "3000:3000"
+    environment:
+      - MEMGRAPH_PASSFILE=/root/memgraph/create_user.txt
+      - MEMGRAPH=--storage-mode=IN_MEMORY_TRANSACTIONAL  --log-level=INFO --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=3600 --storage-snapshot-retention-count=6 --storage-wal-enabled=false --isolation-level=READ_COMMITTED
+    volumes:
+      - memgraph-funds-flow-data:/var/lib/memgraph
+      - ./memgraph/create_user.txt:/root/memgraph/create_user.txt
+    networks:
+      - shared-network
+    restart: unless-stopped
+
+volumes:
+  memgraph-funds-flow-data:
+
+networks:
+  shared-network:
+    external: true

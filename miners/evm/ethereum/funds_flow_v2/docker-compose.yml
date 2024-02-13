@@ -12,7 +12,7 @@ services:
       - 8546:8546
       - 8551:8551
     volumes:
-      - ./:/root/.ethereum
+      - .:/root/.ethereum
     healthcheck:
       test: [ "CMD-SHELL", "geth attach --exec eth.blockNumber" ]
       interval: 10s
@@ -41,7 +41,7 @@ services:
     container_name: prysm-beaconchain
     restart: unless-stopped
     volumes:
-      - ./jwt.hex:/root/.ethereum/jwt.hex
+      - .:/root/.ethereum
     depends_on:
       ethereum-node:
         condition: service_healthy
