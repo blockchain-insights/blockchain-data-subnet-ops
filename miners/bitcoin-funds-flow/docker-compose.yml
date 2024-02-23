@@ -61,8 +61,9 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
-      - TARGET_PATH=${TARGET_PATH:-/data_hashtable}
-      - CSV_FILE=${CSV_FILE:-/data_csv}
+      - CSV_FILE=${CSV_FILE}
+      - TARGET_PATH=${TARGET_PATH}
+      - NEW=${NEW}
       - INDEXING_THREADS=${INDEXING_THREADS:-64}
     volumes:
       - bitcoin-vout-csv:/data_csv
@@ -71,37 +72,32 @@ services:
       - bitcoin-core
     restart: no
 
-  reverse-indexer:
+  indexer:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_indexer_reverse_bitcoin_funds_flow.sh" ]
+    command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
+      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
-      - BITCOIN_TX_OUT_HASHMAP_DIR=${BITCOIN_TX_OUT_HASHMAP_DIR:-/data_hashtable}
-      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-820000}
-      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-829000}
-    volumes:
-      - bitcoin-vout-hashtable:/data_hashtable
+      - BITCOIN_INDEXER_START_BLOCK_HEIGHT=${BITCOIN_INDEXER_START_BLOCK_HEIGHT}
+      - BITCOIN_INDEXER_END_BLOCK_HEIGHT=${BITCOIN_INDEXER_END_BLOCK_HEIGHT}
+      - BITCOIN_INDEXER_IN_REVERSE_ORDER=${BITCOIN_INDEXER_IN_REVERSE_ORDER}
+      - BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=${BITCOIN_V2_TX_OUT_HASHMAP_PICKLES}
     depends_on:
       - memgraph
-      - bitcoin-core
-    restart: no
+    restart: unless-stopped
 
-  indexer:
+  index-checker:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
-      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-769787}
     depends_on:
       - memgraph
     restart: unless-stopped
-
 
   memgraph:
     image: memgraph/memgraph-platform:2.14.0-memgraph2.14.0-lab2.11.1-mage1.14
