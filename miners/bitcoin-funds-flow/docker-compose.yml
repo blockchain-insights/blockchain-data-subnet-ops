@@ -85,7 +85,7 @@ services:
       - BITCOIN_INDEXER_IN_REVERSE_ORDER=${BITCOIN_INDEXER_IN_REVERSE_ORDER}
       - BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=${BITCOIN_V2_TX_OUT_HASHMAP_PICKLES}
     depends_on:
-      - memgraph
+      - bitcoin-core
     restart: unless-stopped
 
   index-checker:
@@ -95,8 +95,6 @@ services:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-    depends_on:
-      - memgraph
     restart: unless-stopped
 
   memgraph:
