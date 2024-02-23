@@ -90,7 +90,7 @@ services:
 
   index-checker:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
+    command: [ "./scripts/check_indexed_block_height_ranges.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
