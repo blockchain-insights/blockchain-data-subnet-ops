@@ -26,7 +26,28 @@
     ```
 - Configure Max Map Count:
     ```bash
-    sudo echo 'vm.max_map_count = 8621440' >> /etc/sysctl.conf && sudo sysctl -p
+    # For 1TB RAM
+    echo "vm.max_map_count=8388608" | sudo tee -a /etc/sysctl.conf
+    
+    # For 1.5TB RAM
+    echo "vm.max_map_count=12582912" | sudo tee -a /etc/sysctl.conf
+    
+    # For 2TB RAM
+    echo "vm.max_map_count=16777216" | sudo tee -a /etc/sysctl.conf
+    
+    # For 2.5TB RAM
+    echo "vm.max_map_count=20971520" | sudo tee -a /etc/sysctl.conf
+    
+    # For 3TB RAM
+    echo "vm.max_map_count=25165824" | sudo tee -a /etc/sysctl.conf
+    
+    # For 3.5TB RAM
+    echo "vm.max_map_count=29360128" | sudo tee -a /etc/sysctl.conf
+    
+    # For 4TB RAM
+    echo "vm.max_map_count=33554432" | sudo tee -a /etc/sysctl.conf
+
+    sudo sysctl -p
     ```
 #### Bitcoin node, Memgraph and Indexer
 
