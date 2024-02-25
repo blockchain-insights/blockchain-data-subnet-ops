@@ -84,6 +84,8 @@ services:
       - BITCOIN_INDEXER_END_BLOCK_HEIGHT=${BITCOIN_INDEXER_END_BLOCK_HEIGHT}
       - BITCOIN_INDEXER_IN_REVERSE_ORDER=${BITCOIN_INDEXER_IN_REVERSE_ORDER}
       - BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=${BITCOIN_V2_TX_OUT_HASHMAP_PICKLES}
+    volumes:
+      - bitcoin-vout-hashtable:/data_hashtable
     depends_on:
       - bitcoin-core
     restart: unless-stopped
