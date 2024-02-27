@@ -11,15 +11,15 @@
 
     Run `docker exec {container_id} bitcoin-cli -rpcuser={RPC_USER} -rpcpassword={RPC_PASSWORD} getblockcount` to see number of blocks indexed.
 
-3. Run block parser to generate tx_in csv file.
+3. Run block parser to generate tx_out csv file.
 
     Run `docker compose run -e BITCOIN_START_BLOCK_HEIGHT={START_HEIGHT} -e BITCOIN_END_BLOCK_HEIGHT={END_HEIGHT} block-parser`
 
-    You can find `tx_in-{START_HEIGHT}-{END_HEIGHT}.csv` generated in `bitcoin-vout-csv` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-csv/_data` and run `ls` to see the generated files.
+    You can find `tx_out-{START_HEIGHT}-{END_HEIGHT}.csv` generated in `bitcoin-vout-csv` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-csv/_data` and run `ls` to see the generated files.
 
 4. Run vout hashtable builder to generate pickle file from csv.
     
-    Run `docker compose run -e CSV_FILE=/data_csv/tx_in-{START_HEIGHT}-{END_HEIGHT}.csv -e TARGET_PATH=/data_hashtable/{START_HEIGHT}-{END_HEIGHT}.pkl -e NEW=true bitcoin-vout-hashtable-builder`
+    Run `docker compose run -e CSV_FILE=/data_csv/tx_out-{START_HEIGHT}-{END_HEIGHT}.csv -e TARGET_PATH=/data_hashtable/{START_HEIGHT}-{END_HEIGHT}.pkl -e NEW=true bitcoin-vout-hashtable-builder`
 
     You can find `{START_HEIGHT}-{END_HEIGHT}.pkl` generated in `bitcoin-vout-hashtable` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-hashtable/_data` and run `ls` to see the generated files.
 
