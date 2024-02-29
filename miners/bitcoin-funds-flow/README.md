@@ -157,7 +157,7 @@ It's allowed to run a total of 9 miners on a single memgraph instance. You have 
 - **Running Multiple Miners**
     While creating bittensor wallet hotkeys, keep the following conventio: default1 ... default6
     
-    **NOTE**: It is not required to add all 9 miners, you can add less too.
+    **NOTE**: It is not required to add all 6 miners, you can add less too.
 
     Start the additional miners
     ```
