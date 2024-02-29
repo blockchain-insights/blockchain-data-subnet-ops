@@ -96,10 +96,6 @@
     GRAPH_DB_URL=bolt://memgraph:7687
     # From which block to start initial indexing. More blocks require more initial time but give better rewards. At least 50000 indexed blocks are preferable.
     BITCOIN_START_BLOCK_HEIGHT=769787
-    BLOCK_PROCESSING_TRANSACTION_THRESHOLD=1000
-    BLOCK_PROCESSING_DELAY=1
-    # Use ON_DISK_TRANSACTIONAL on servers with less than 768GB RAM, but indexing can take 1 month instead of few days.
-    GRAPH_DB_STORAGE_MODE=IN_MEMORY_TRANSACTIONAL
     ```
 
     Start the Indexer & Memgraph
