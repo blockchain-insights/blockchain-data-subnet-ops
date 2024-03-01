@@ -96,10 +96,6 @@
     GRAPH_DB_URL=bolt://memgraph:7687
     # From which block to start initial indexing. More blocks require more initial time but give better rewards. At least 50000 indexed blocks are preferable.
     BITCOIN_START_BLOCK_HEIGHT=769787
-    BLOCK_PROCESSING_TRANSACTION_THRESHOLD=1000
-    BLOCK_PROCESSING_DELAY=1
-    # Use ON_DISK_TRANSACTIONAL on servers with less than 768GB RAM, but indexing can take 1 month instead of few days.
-    GRAPH_DB_STORAGE_MODE=IN_MEMORY_TRANSACTIONAL
     ```
 
     Start the Indexer & Memgraph
@@ -159,27 +155,13 @@
 It's allowed to run a total of 9 miners on a single memgraph instance. You have to first create and register the hotkeys, the procedure is similar to the one for the default miner.
 
 - **Running Multiple Miners**
-
-    Open the ```.env``` file:
-    ```
-    nano .env
-    ```
-
-    Add the required variables for each new miner in the ```.env``` file and save it:
-    ```ini
-    WALLET_NAME2=default
-    WALLET_HOTKEY2=default2
-    WALLET_NAME3=default
-    WALLET_HOTKEY3=default3
-    ...
-    WALLET_NAME9=default
-    WALLET_HOTKEY9=default9
-    ```
-    **NOTE**: It is not required to add all 9 miners, you can add less too.
+    While creating bittensor wallet hotkeys, keep the following conventio: default1 ... default6
+    
+    **NOTE**: It is not required to add all 6 miners, you can add less too.
 
     Start the additional miners
     ```
-    docker compose up -d miner2 miner3 ... 
+    docker compose up -d miner1 miner3 ... miner6
     ```
     If you want to start them all, you can use the command:
     ```
