@@ -47,7 +47,7 @@ services:
     build:
       context: ../shared/block-parser
       dockerfile: Dockerfile
-    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BITCOIN_START_BLOCK_HEIGHT} --end $${BITCOIN_END_BLOCK_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${TARGET_PATH} && find $${TARGET_PATH} -type f ! -name 'tx_in*' -exec rm -f {} ';' && ls -al $${TARGET_PATH}"
+    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BITCOIN_START_BLOCK_HEIGHT} --end $${BITCOIN_END_BLOCK_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${TARGET_PATH} && find $${TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${TARGET_PATH}"
     environment:
       - TARGET_PATH=${TARGET_PATH:-/data_csv}
       - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-1000}
