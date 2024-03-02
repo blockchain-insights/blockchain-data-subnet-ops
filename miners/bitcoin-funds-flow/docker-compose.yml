@@ -26,6 +26,7 @@ services:
 
   bitcoin-core:
     image: ruimarinho/bitcoin-core:latest
+    container_name: bitcoin-code
     command:
       -rpcuser=${RPC_USER}
       -rpcpassword=${RPC_PASSWORD}
@@ -44,6 +45,7 @@ services:
     restart: unless-stopped
 
   block-parser:
+    container_name: block-parser
     build:
       context: ../shared/block-parser
       dockerfile: Dockerfile
@@ -58,6 +60,7 @@ services:
     restart: no
 
   bitcoin-vout-hashtable-builder:
+    container_name: bitcoin-vout-hashtable-builder
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
@@ -73,6 +76,7 @@ services:
     restart: no
 
   indexer:
+    container_name: indexer
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
@@ -91,6 +95,7 @@ services:
     restart: unless-stopped
 
   index-checker:
+    container_name: index-checker
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/check_indexed_block_height_ranges.sh" ]
     environment:
@@ -100,6 +105,7 @@ services:
     restart: unless-stopped
 
   memgraph:
+    container_name: memgraph
     image: memgraph/memgraph-platform:2.14.0-memgraph2.14.0-lab2.11.1-mage1.14
     ports:
       - "7687:7687"
