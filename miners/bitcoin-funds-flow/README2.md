@@ -60,7 +60,7 @@
         - If `END_HEIGHT` is not set, indexer keeps indexing blocks in real-time, starting from `START_HEIGHT`.
         - You can specify multiple pickle files to `BITCOIN_V2_TX_OUT_HASHMAP_PICKLES` variable, splitting each pickle file name by comma. It loads those pickles files into memory and uses them for fast indexing.
 
-    - Run `docker compose run indexer`
+    - Run `docker compose up -d indexer`
 
 7. Check indexing status
 
