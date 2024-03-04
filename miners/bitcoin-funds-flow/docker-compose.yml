@@ -99,18 +99,30 @@ services:
     restart: unless-stopped
 
   memgraph:
-    image: memgraph/memgraph-platform:2.14.0-memgraph2.14.0-lab2.11.1-mage1.14
+    image: memgraph/memgraph-mage:1.15-memgraph-2.15
     ports:
       - "7687:7687"
       - "7444:7444"
-      - "3000:3000"
     environment:
       - MEMGRAPH_USER=${GRAPH_DB_USER}
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
       - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --storage-parallel-schema-recovery=true --storage-recovery-thread-count=${GRAPH_DB_STORAGE_RECOVERY_THREAD_COUNT:-64} --storage-gc-cycle-sec=300 --log-level=TRACE --also-log-to-stderr --storage-snapshot-on-exit=false --storage-snapshot-interval-sec=14400 --storage-snapshot-retention-count=2 --storage-wal-enabled=true --isolation-level=READ_COMMITTED --replication-restore-state-on-startup=true --query-execution-timeout-sec=0
     volumes:
       - memgraph-data:/var/lib/memgraph
+      - memgraph-log:/var/log/memgraph
+      - memgraph-etc:/etc/memgraph
     restart: unless-stopped
+
+  memgraph-lab:
+    image: memgraph/lab:latest
+    container_name: memgraph-lab
+    ports:
+      - "3000:3000"
+    depends_on:
+      - memgraph
+    environment:
+      - QUICK_CONNECT_MG_HOST=memgraph
+      - QUICK_CONNECT_MG_PORT=7687
 
   miner1:
     ports:
@@ -201,4 +213,8 @@ volumes:
     name: bitcoin-data
   memgraph-data:
     name: memgraph-data
+  memgraph-log:
+    name: memgraph-log
+  memgraph-etc:
+    name: memgraph-etc
   miner_db:
