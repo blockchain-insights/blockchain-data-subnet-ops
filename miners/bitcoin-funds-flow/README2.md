@@ -13,13 +13,13 @@
 
 3. Run block parser to generate tx_out csv file.
 
-    Run `docker compose run -e BITCOIN_START_BLOCK_HEIGHT={START_HEIGHT} -e BITCOIN_END_BLOCK_HEIGHT={END_HEIGHT} block-parser`
+    Run `docker compose run --rm -e BITCOIN_START_BLOCK_HEIGHT={START_HEIGHT} -e BITCOIN_END_BLOCK_HEIGHT={END_HEIGHT} block-parser`
 
     You can find `tx_out-{START_HEIGHT}-{END_HEIGHT}.csv` generated in `bitcoin-vout-csv` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-csv/_data` and run `ls` to see the generated files.
 
 4. Run vout hashtable builder to generate pickle file from csv.
     
-    Run `docker compose run -e CSV_FILE=/data_csv/tx_out-{START_HEIGHT}-{END_HEIGHT}.csv -e TARGET_PATH=/data_hashtable/{START_HEIGHT}-{END_HEIGHT}.pkl -e NEW=true bitcoin-vout-hashtable-builder`
+    Run `docker compose run --rm -e CSV_FILE=/data_csv/tx_out-{START_HEIGHT}-{END_HEIGHT}.csv -e TARGET_PATH=/data_hashtable/{START_HEIGHT}-{END_HEIGHT}.pkl -e NEW=true bitcoin-vout-hashtable-builder`
 
     You can find `{START_HEIGHT}-{END_HEIGHT}.pkl` generated in `bitcoin-vout-hashtable` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-hashtable/_data` and run `ls` to see the generated files.
 
@@ -60,7 +60,7 @@
         - If `END_HEIGHT` is not set, indexer keeps indexing blocks in real-time, starting from `START_HEIGHT`.
         - You can specify multiple pickle files to `BITCOIN_V2_TX_OUT_HASHMAP_PICKLES` variable, splitting each pickle file name by comma. It loads those pickles files into memory and uses them for fast indexing.
 
-    - Run `docker compose run indexer`
+    - Run `docker compose up -d indexer`
 
 7. Check indexing status
 
@@ -70,4 +70,4 @@
         - `GRAPH_DB_USER={GRAPH_DB_USER}`
         - `GRAPH_DB_PASSWORD={GRAPH_DB_PASSWORD}`
 
-    - Run `docker compose run index-checker` to see which blocks are indexed in memgraph.
+    - Run `docker compose run --rm index-checker` to see which blocks are indexed in memgraph.
