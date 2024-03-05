@@ -107,7 +107,7 @@ services:
       - MEMGRAPH_USER=${GRAPH_DB_USER}
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
       - GRAPH_DB_STORAGE_MODE=${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL}
-    command: ["--storage-mode=$GRAPH_DB_STORAGE_MODE --storage-parallel-schema-recovery=true --storage-recovery-thread-count=${GRAPH_DB_STORAGE_RECOVERY_THREAD_COUNT:-64} --storage-gc-cycle-sec=300 --log-level=TRACE --also-log-to-stderr --storage-snapshot-on-exit=false --storage-snapshot-interval-sec=14400 --storage-snapshot-retention-count=2 --storage-wal-enabled=true --isolation-level=READ_COMMITTED --replication-restore-state-on-startup=true --query-execution-timeout-sec=0"] 
+    command: ["--storage-mode $GRAPH_DB_STORAGE_MODE --storage-parallel-schema-recovery=true --storage-recovery-thread-count=${GRAPH_DB_STORAGE_RECOVERY_THREAD_COUNT:-64} --storage-gc-cycle-sec=300 --log-level=TRACE --also-log-to-stderr --storage-snapshot-on-exit=false --storage-snapshot-interval-sec=14400 --storage-snapshot-retention-count=2 --storage-wal-enabled=true --isolation-level=READ_COMMITTED --replication-restore-state-on-startup=true --query-execution-timeout-sec=0"] 
     volumes:
       - memgraph-data:/var/lib/memgraph
       - memgraph-log:/var/log/memgraph
