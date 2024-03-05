@@ -17,6 +17,7 @@ services:
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
+      - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
       - miner_db:/data

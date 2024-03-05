@@ -31,6 +31,7 @@ services:
       - BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=${BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE:-256}
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - VALIDATOR_REMOTE_CONFIG_URL=${VALIDATOR_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/validator3.json}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
