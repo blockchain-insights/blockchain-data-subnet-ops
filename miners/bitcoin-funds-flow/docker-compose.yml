@@ -107,7 +107,7 @@ services:
       - MEMGRAPH_USER=${GRAPH_DB_USER}
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
       - GRAPH_DB_STORAGE_RECOVERY_THREAD_COUNT=${GRAPH_DB_STORAGE_RECOVERY_THREAD_COUNT:-64}
-     command: >
+    command: >
       sh -c "
       --storage-mode=IN_MEMORY_TRANSACTIONAL
       --storage-parallel-schema-recovery=true
