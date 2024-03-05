@@ -6,7 +6,7 @@ services:
     command: [ "./scripts/run_miner_bitcoin_funds_flow.sh" ]
     environment:
       - DIGEST_CHARS=${DIGEST_CHARS:-0000}
-      - NETUID=15
+      - NETUID=${NETUID:-15}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
