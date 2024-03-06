@@ -46,11 +46,11 @@ services:
     build:
       context: ../shared/block-parser
       dockerfile: Dockerfile
-    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BITCOIN_START_BLOCK_HEIGHT} --end $${BITCOIN_END_BLOCK_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${TARGET_PATH} && find $${TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${TARGET_PATH}"
+    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${START_HEIGHT} --end $${END_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${TARGET_PATH} && find $${TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${TARGET_PATH}"
     environment:
       - TARGET_PATH=${TARGET_PATH:-/data_csv}
-      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-1000}
-      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-1}
+      - END_HEIGHT=${END_HEIGHT:-1000}
+      - START_HEIGHT=${START_HEIGHT:-1}
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
       - bitcoin-vout-csv:/data_csv
@@ -60,15 +60,13 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
-      - CSV_FILE=${CSV_FILE}
-      - TARGET_PATH=${TARGET_PATH}
-      - NEW=${NEW}
+      - CSV_FILE=${CSV_FILE:-/data_csv/tx_out-{START_HEIGHT}-{END_HEIGHT}.csv}
+      - TARGET_PATH=${TARGET_PATH:-/data_hashtable/{START_HEIGHT}-{END_HEIGHT}.pkl}
+      - NEW=${NEW:-True}
       - INDEXING_THREADS=${INDEXING_THREADS:-64}
     volumes:
       - bitcoin-vout-csv:/data_csv
       - bitcoin-vout-hashtable:/data_hashtable
-    depends_on:
-      - bitcoin-core
     restart: no
 
   indexer:

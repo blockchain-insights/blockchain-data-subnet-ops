@@ -76,9 +76,4 @@ For more information you can refer to the Bittensor [documentation](https://docs
   - Funds Flow Model
     - [Bitcoin Indexer and Miner](miners/bitcoin-funds-flow/)
 - **Validators**: 
-  - [Validator Installation Guide](validator/INSTALLATION.md)
-
-## Server Hosting Options
-Consider these providers for server hosting:
-- [Contabo](https://contabo.com/en/dedicated-servers/)
-- [Hetzner](https://www.hetzner.com/dedicated-rootserver/matrix-ax)
+  - [Validator Installation Guide](validator/)
