@@ -60,8 +60,8 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
-      - CSV_FILE=${CSV_FILE:-/data_csv/tx_out-{START_HEIGHT}-{END_HEIGHT}.csv}
-      - TARGET_PATH=${TARGET_PATH:-/data_hashtable/{START_HEIGHT}-{END_HEIGHT}.pkl}
+      - CSV_FILE=${CSV_FILE}
+      - TARGET_PATH=${TARGET_PATH}
       - NEW=${NEW:-True}
       - INDEXING_THREADS=${INDEXING_THREADS:-64}
     volumes:

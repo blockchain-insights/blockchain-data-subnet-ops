@@ -117,7 +117,7 @@
 
     **2. Run vout hashtable builder to generate pickle file from csv:**
     ```bash
-    docker compose run --rm -e START_HEIGHT=700000 -e END_HEIGHT=830000 bitcoin-vout-hashtable-builder
+    docker compose run --rm -e CSV_FILE=/data_csv/tx_out-700000-830000.csv -e TARGET_PATH=/data_hashtable/700000-830000.pkl bitcoin-vout-hashtable-builder
     ```
     You can find `{START_HEIGHT}-{END_HEIGHT}.pkl` generated in `bitcoin-vout-hashtable` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-hashtable/_data` and run `ls` to see the generated files.
     
