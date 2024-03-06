@@ -4,7 +4,6 @@ services:
   ethereum-node:
     image: ethereum/client-go:latest
     container_name: geth-node
-    restart: unless-stopped
     ports:
       - 30303:30303
       - 30303:30303/udp
@@ -12,7 +11,7 @@ services:
       - 8546:8546
       - 8551:8551
     volumes:
-      - ./:/root/.ethereum
+      - /root/ethereum-node:/root/.ethereum
     healthcheck:
       test: [ "CMD-SHELL", "geth attach --exec eth.blockNumber" ]
       interval: 10s
@@ -50,7 +49,7 @@ services:
       - 3500:3500
     command:
       - --accept-terms-of-use
-      - --execution-endpoint=http://${ENDPOINT}
+      - --execution-endpoint=http://127.0.0.1:8551
       - --mainnet
       - --jwt-secret=/root/.ethereum/jwt.hex
       - --checkpoint-sync-url=https://beaconstate.info
