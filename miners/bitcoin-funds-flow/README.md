@@ -103,7 +103,7 @@
     docker compose up -d memgraph indexer
     ```
 
-#### Miner and IP blocker
+#### Miner
 **NOTE**: It's beneficial to register and run your miner hotkey ***only when*** the indexer is up to date, otherwise, the miner will have to wait for the indexer to sync. Additionally, if the miner is not operational for an extended period, there's a risk of the hotkey being deregistered.
 
 - **Register Miner Hotkey**
@@ -146,9 +146,9 @@
     ./version-script.sh
     ```
 
-    Start the Miner & IP blocker
+    Start the Miner
     ```
-    docker compose up -d miner ip-blocker
+    docker compose up -d miner
     ```
 
 #### Multiple miners
@@ -209,7 +209,7 @@ Then navigate to ```http://your_server_ip:9999```
     ```
 - restart containers
     ```bash
-    docker compose up -d indexer miner ip-blocker
+    docker compose up -d indexer miner
     ```
 - if needed restart other containers too
 - when additional changes are needed, they will be announced on Discord

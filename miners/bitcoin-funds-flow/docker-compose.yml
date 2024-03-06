@@ -191,19 +191,6 @@ services:
       file: miner-service.yml
       service: miner
 
-  ip-blocker:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_ip_blocker.sh" ]
-    environment:
-      - WALLET_NAME=${WALLET_NAME:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
-      - NETUID=15
-    volumes:
-      - miner_db:/data
-    network_mode: host
-    privileged: true
-    restart: unless-stopped
-
 volumes:
   bitcoin-vout-csv:
     name: bitcoin-vout-csv
