@@ -148,20 +148,20 @@
 
     Start the Miner
     ```
-    docker compose up -d miner
+    docker compose up -d miner1
     ```
 
 #### Multiple miners
 It's allowed to run a total of 9 miners on a single memgraph instance. You have to first create and register the hotkeys, the procedure is similar to the one for the default miner.
 
 - **Running Multiple Miners**
-    While creating bittensor wallet hotkeys, keep the following conventio: default1 ... default6
+    While creating bittensor wallet hotkeys, keep the following conventio: default1 ... default9
     
-    **NOTE**: It is not required to add all 6 miners, you can add less too.
+    **NOTE**: It is not required to add all 9 miners, you can add less too.
 
     Start the additional miners
     ```
-    docker compose up -d miner1 miner3 ... miner6
+    docker compose up -d miner2 miner3 ... miner9
     ```
     If you want to start them all, you can use the command:
     ```
@@ -209,7 +209,7 @@ Then navigate to ```http://your_server_ip:9999```
     ```
 - restart containers
     ```bash
-    docker compose up -d indexer miner
+    docker compose up -d indexer miner1
     ```
 - if needed restart other containers too
 - when additional changes are needed, they will be announced on Discord

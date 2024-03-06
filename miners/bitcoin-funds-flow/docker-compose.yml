@@ -191,6 +191,42 @@ services:
       file: miner-service.yml
       service: miner
 
+  miner7:
+    environment:
+      - WALLET_NAME=${WALLET_NAME7:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY7:-default7}
+    ports:
+      - 8097:8097
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner8:
+    environment:
+      - WALLET_NAME=${WALLET_NAME8:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY8:-default8}
+    ports:
+      - 8098:8098
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner9:
+    environment:
+      - WALLET_NAME=${WALLET_NAME9:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY9:-default9}
+    ports:
+      - 8099:8099
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
 volumes:
   bitcoin-vout-csv:
     name: bitcoin-vout-csv
