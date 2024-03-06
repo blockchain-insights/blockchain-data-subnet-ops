@@ -1,6 +1,28 @@
 version: '3.8'
 
 services:
+  node-subtensor:
+    image: opentensor/subtensor:latest
+    # Removed the ports section to prevent public exposure
+    expose:
+      - "9944"
+      - "30333"
+      - "9933"
+    environment:
+      - CARGO_HOME=/var/www/node-subtensor/.cargo
+    command:
+      - /bin/bash
+      - -c
+      - |
+        ./node-subtensor \
+          --base-path /tmp/blockchain \
+          --chain ./raw_spec.json \
+          --rpc-external --rpc-cors all \
+          --ws-external --no-mdns \
+          --ws-max-connections 10000 --in-peers 500 --out-peers 500 \
+          --bootnodes /dns/bootnode.finney.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC \
+          --sync warp
+
   bitcoin-core:
     image: ruimarinho/bitcoin-core:${VERSION-latest}
     command:
@@ -29,7 +51,7 @@ services:
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
-      - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://51.158.60.18:9944}
+      - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - VALIDATOR_REMOTE_CONFIG_URL=${VALIDATOR_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/validator3.json}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
