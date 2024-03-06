@@ -58,7 +58,6 @@
 
   **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
   ```ini
-  BITCOIN_CHEAT_FACTOR_SAMPLE_SIZE=256
   # If you want to use enternal Bitcoin node RPC.
   BITCOIN_NODE_RPC_URL=http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332
   # If you have custom bittensor path
