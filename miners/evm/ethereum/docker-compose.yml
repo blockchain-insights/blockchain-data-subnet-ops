@@ -11,7 +11,8 @@ services:
       - 8546:8546
       - 8551:8551
     volumes:
-      - /root/ethereum-node:/root/.ethereum
+      - /root/geth-node:/root/.ethereum
+      - ./jwt.hex:/root/.ethereum/jwt.hex
     healthcheck:
       test: [ "CMD-SHELL", "geth attach --exec eth.blockNumber" ]
       interval: 10s
@@ -49,7 +50,7 @@ services:
       - 3500:3500
     command:
       - --accept-terms-of-use
-      - --execution-endpoint=http://127.0.0.1:8551
+      - --execution-endpoint=http://ethereum-node:8551
       - --mainnet
       - --jwt-secret=/root/.ethereum/jwt.hex
       - --checkpoint-sync-url=https://beaconstate.info
