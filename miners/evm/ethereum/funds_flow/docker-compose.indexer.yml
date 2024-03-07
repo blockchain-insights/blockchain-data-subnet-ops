@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  ethereum-funds-flow-indexer:
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
+    command: [ "./scripts/run_indexer_ethereum_funds_flow.sh" ]
+    environment:
+      - WAIT_FOR_SYNC=${WAIT_FOR_SYNC}
+      - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph-funds-flow:7687}
+      - GRAPH_DB_USER=${GRAPH_DB_USER}
+      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
+      - ETHEREUM_NODE_RPC_URL=${ETHEREUM_NODE_RPC_URL}
+      - ETHEREUM_SUB_START_BLOCK_HEIGHT=${ETHEREUM_SUB_START_BLOCK_HEIGHT}
+      - ETHEREUM_SUB_END_BLOCK_HEIGHT=${ETHEREUM_SUB_END_BLOCK_HEIGHT}
+      - ETHEREUM_SUB_THREAD_CNT=${ETHEREUM_SUB_THREAD_CNT}
+
+    networks:
+      - shared-network
+    depends_on:
+      - memgraph-funds-flow
+    restart: unless-stopped
+
+  memgraph-funds-flow:
+    image: memgraph/memgraph-platform:2.13.0-memgraph2.13.0-lab2.10.0-mage1.13
+    ports:
+      - "7687:7687"
+      - "7444:7444"
+      - "3000:3000"
+    volumes:
+      - memgraph-funds-flow-data:/var/lib/memgraph
+      - ./memgraph/create_user.txt:/root/memgraph/create_user.txt
+    environment:
+      - MEMGRAPH_PASSFILE=/root/memgraph/create_user.txt
+      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --log-level=INFO --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=3600 --storage-snapshot-retention-count=6 --storage-wal-enabled=false --isolation-level=READ_COMMITTED
+    networks:
+      - shared-network
+    restart: unless-stopped
+
+volumes:
+  memgraph-funds-flow-data:
+
+networks:
+  shared-network:
+    external: true
