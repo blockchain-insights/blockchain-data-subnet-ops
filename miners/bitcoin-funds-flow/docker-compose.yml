@@ -46,11 +46,11 @@ services:
     build:
       context: ../shared/block-parser
       dockerfile: Dockerfile
-    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BITCOIN_START_BLOCK_HEIGHT} --end $${BITCOIN_END_BLOCK_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${TARGET_PATH} && find $${TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${TARGET_PATH}"
+    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${START_HEIGHT} --end $${END_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${TARGET_PATH} && find $${TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${TARGET_PATH}"
     environment:
       - TARGET_PATH=${TARGET_PATH:-/data_csv}
-      - BITCOIN_END_BLOCK_HEIGHT=${BITCOIN_END_BLOCK_HEIGHT:-1000}
-      - BITCOIN_START_BLOCK_HEIGHT=${BITCOIN_START_BLOCK_HEIGHT:-1}
+      - END_HEIGHT=${END_HEIGHT:-1000}
+      - START_HEIGHT=${START_HEIGHT:-1}
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
       - bitcoin-vout-csv:/data_csv
@@ -62,13 +62,11 @@ services:
     environment:
       - CSV_FILE=${CSV_FILE}
       - TARGET_PATH=${TARGET_PATH}
-      - NEW=${NEW}
+      - NEW=${NEW:-True}
       - INDEXING_THREADS=${INDEXING_THREADS:-64}
     volumes:
       - bitcoin-vout-csv:/data_csv
       - bitcoin-vout-hashtable:/data_hashtable
-    depends_on:
-      - bitcoin-core
     restart: no
 
   indexer:
@@ -191,18 +189,41 @@ services:
       file: miner-service.yml
       service: miner
 
-  ip-blocker:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
-    command: [ "./scripts/run_ip_blocker.sh" ]
+  miner7:
     environment:
-      - WALLET_NAME=${WALLET_NAME:-default}
-      - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
-      - NETUID=15
-    volumes:
-      - miner_db:/data
-    network_mode: host
-    privileged: true
-    restart: unless-stopped
+      - WALLET_NAME=${WALLET_NAME7:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY7:-default7}
+    ports:
+      - 8097:8097
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner8:
+    environment:
+      - WALLET_NAME=${WALLET_NAME8:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY8:-default8}
+    ports:
+      - 8098:8098
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
+
+  miner9:
+    environment:
+      - WALLET_NAME=${WALLET_NAME9:-default}
+      - WALLET_HOTKEY=${WALLET_HOTKEY9:-default9}
+    ports:
+      - 8099:8099
+    profiles:
+      - multiminers
+    extends:
+      file: miner-service.yml
+      service: miner
 
 volumes:
   bitcoin-vout-csv:

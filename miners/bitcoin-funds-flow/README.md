@@ -49,7 +49,12 @@
 
     sudo sysctl -p
     ```
-#### Bitcoin node, Memgraph and Indexer
+#### Local Subtensor, Bitcoin node, Memgraph and Indexer
+- **Running Local Subtensor (optional but recommended)**
+    Start the subtensor:
+    ```bash
+    docker compose up -d node-subtensor
+    ```
 
 - **Running Bitcoin node**
 
@@ -75,7 +80,7 @@
     docker compose up -d bitcoin-core
     ```
 
-- **Running Indexer and Memgraph**
+- **Running Memgraph**
 
     Open the ```.env``` file:
     ```
@@ -88,23 +93,94 @@
     GRAPH_DB_PASSWORD=your_secret_password
     ```
 
-    **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
+    Start the Memgraph
+    ```
+    docker compose up -d memgraph
+    ```
+
+- **Running Indexer**
+
+    Indexing is a slow process which can be accelerated by first generating pickle files for some of the blocks.
+    For recent blocks, pickle files with at least 100000 size help with indexing speed.
+    Below is an example procedure which does the following:
+     - Generate pickle files for the recent blocks
+     - Index them and start reverse indexing to block 1
+     - When reverse indexing is done, you start forward indexing
+
+    You can experiment with this process - the number of blocks, the reverse/forward indexing etc. Generating pickle files makes indexing faster, but takes a lot of memory, so keep an eye on the memory usage.
+    
+    **1. Run block parser to generate tx_out csv file:**
+    ```bash
+    docker compose run --rm -e START_HEIGHT=700000 -e END_HEIGHT=830000 block-parser
+    ```
+    You can find `tx_out-{START_HEIGHT}-{END_HEIGHT}.csv` generated in `bitcoin-vout-csv` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-csv/_data` and run `ls` to see the generated files.
+
+    **2. Run vout hashtable builder to generate pickle file from csv:**
+    ```bash
+    docker compose run --rm -e CSV_FILE=/data_csv/tx_out-700000-830000.csv -e TARGET_PATH=/data_hashtable/700000-830000.pkl bitcoin-vout-hashtable-builder
+    ```
+    You can find `{START_HEIGHT}-{END_HEIGHT}.pkl` generated in `bitcoin-vout-hashtable` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-hashtable/_data` and run `ls` to see the generated files.
+    
+    **3. Start reverse indexing:**
+
+    Open the ```.env``` file:
+    ```
+    nano .env
+    ```
+
+    Set the required variables in the ```.env``` file and save it:
     ```ini
-    # If you want to use enternal Bitcoin node RPC.
-    BITCOIN_NODE_RPC_URL=http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332
-    # If you want to use external Memgraph instance.
-    GRAPH_DB_URL=bolt://memgraph:7687
-    # From which block to start initial indexing. More blocks require more initial time but give better rewards. At least 50000 indexed blocks are preferable.
-    BITCOIN_START_BLOCK_HEIGHT=769787
+    BITCOIN_INDEXER_IN_REVERSE_ORDER=1
+    #In REVERSE ORDER, START_BLOCK should be greater than END_BLOCK
+    BITCOIN_INDEXER_START_BLOCK_HEIGHT=830000
+    BITCOIN_INDEXER_END_BLOCK_HEIGHT=1
+    #You can specify multiple pickle files with full path separated by comma
+    BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=/data_hashtable/700000-830000.pkl
     ```
 
-    Start the Indexer & Memgraph
+    Start the reverse indexer
     ```
-    docker compose up -d memgraph indexer
+    docker compose up -d indexer
     ```
 
-#### Miner and IP blocker
-**NOTE**: It's beneficial to register and run your miner hotkey ***only when*** the indexer is up to date, otherwise, the miner will have to wait for the indexer to sync. Additionally, if the miner is not operational for an extended period, there's a risk of the hotkey being deregistered.
+    You can monitor the progress using the following command:
+    ```
+    docker compose run --rm index-checker
+    ```
+
+    **4. Start forward indexing:**
+
+    When the reverse indexer is ready, stop it:
+
+    ```
+    docker compose down indexer
+    ```
+
+    Open the ```.env``` file:
+    ```
+    nano .env
+    ```
+
+    Set the required variables in the ```.env``` file and save it:
+    ```ini
+    BITCOIN_INDEXER_IN_REVERSE_ORDER=0
+    BITCOIN_INDEXER_START_BLOCK_HEIGHT=830000
+    #SET END_BLOCK to -1 so that indexer keeps indexing blocks in real-time 
+    BITCOIN_INDEXER_END_BLOCK_HEIGHT=-1
+    ```
+
+    Start the forward indexer
+    ```
+    docker compose up -d indexer
+    ```
+
+    You can monitor the progress using the following command:
+    ```
+    docker compose run --rm index-checker
+    ```
+
+#### Miner
+**NOTE**: It's beneficial to register and run your miner hotkey ***only when*** the indexer is up to date with recent blocks, otherwise, the miner will receive low score. Additionally, if the miner is not operational for an extended period, there's a risk of the hotkey being deregistered.
 
 - **Register Miner Hotkey**
 
@@ -146,22 +222,22 @@
     ./version-script.sh
     ```
 
-    Start the Miner & IP blocker
+    Start the Miner
     ```
-    docker compose up -d miner ip-blocker
+    docker compose up -d miner1
     ```
 
 #### Multiple miners
 It's allowed to run a total of 9 miners on a single memgraph instance. You have to first create and register the hotkeys, the procedure is similar to the one for the default miner.
 
 - **Running Multiple Miners**
-    While creating bittensor wallet hotkeys, keep the following conventio: default1 ... default6
+    While creating bittensor wallet hotkeys, keep the following conventio: default1 ... default9
     
-    **NOTE**: It is not required to add all 6 miners, you can add less too.
+    **NOTE**: It is not required to add all 9 miners, you can add less too.
 
     Start the additional miners
     ```
-    docker compose up -d miner1 miner3 ... miner6
+    docker compose up -d miner2 miner3 ... miner9
     ```
     If you want to start them all, you can use the command:
     ```
@@ -209,7 +285,7 @@ Then navigate to ```http://your_server_ip:9999```
     ```
 - restart containers
     ```bash
-    docker compose up -d indexer miner ip-blocker
+    docker compose up -d indexer miner1
     ```
 - if needed restart other containers too
 - when additional changes are needed, they will be announced on Discord
