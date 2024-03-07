@@ -81,8 +81,24 @@
 
 To easily monitor your containers, you can start Dozzle:
 ```bash
-docker run -d --name dozzle --restart unless-stopped --volume=/var/run/docker.sock:/var/run/docker.sock -p 9999:8080 amir20/dozzle:latest
+docker run -d --name dozzle --restart unless-stopped --volume=/var/run/docker.sock:/var/run/docker.sock --volume /root/dozzle:/data -p 9999:8080 amir20/dozzle:latest --auth-provider simple
 ```
+
+Then navigate to `/dozzle` directory and generate your password sha256 `echo -n 'secret-password' | sha256sum`
+In next step execute `nano users.yml` and paste following content:
+
+```
+users:
+  # "admin" here is username
+  admin:
+    name: "admin"
+    # Just sha-256 which can be computed with "echo -n password | shasum -a 256"
+    password: "YOUR_HASH_GOES_HERE"
+    email: some@email.net
+```
+
+At the end, restart the container by executing `docker container restart dozzle`
+
 Then navigate to ```http://your_server_ip:9999```
 
 ### Upgrading
