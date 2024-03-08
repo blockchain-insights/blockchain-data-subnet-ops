@@ -49,7 +49,7 @@
 
     sudo sysctl -p
     ```
-#### Local Subtensor, Bitcoin node, Memgraph and Indexer
+### Local Subtensor, Bitcoin node, Memgraph and Indexer
 - **Running Local Subtensor (optional but recommended)**
     Start the subtensor:
     ```bash
@@ -179,7 +179,7 @@
     docker compose run --rm index-checker
     ```
 
-#### Miner
+### Miner
 **NOTE**: It's beneficial to register and run your miner hotkey ***only when*** the indexer is up to date with recent blocks, otherwise, the miner will receive low score. Additionally, if the miner is not operational for an extended period, there's a risk of the hotkey being deregistered.
 
 - **Register Miner Hotkey**
@@ -208,13 +208,13 @@
     BITCOIN_NODE_RPC_URL=http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332
     # If you want to use external Memgraph instance.
     GRAPH_DB_URL=bolt://memgraph:7687
-    # Set to False if you want your miner to work without waiting for the Indexer to sync, but be aware that this might impact the miner's rewards.
-    WAIT_FOR_SYNC=True
+    # Set to True if you want your miner to work only when the Indexer is 100% in sync, but be aware that this might impact the miner's rewards.
+    WAIT_FOR_SYNC=False
     # If you have custom bittensor path
     BITTENSOR_VOLUME_PATH=~/.bittensor
-    # By default miners use the public SN15 subtensor, but you can use other too
+    # By default miners use local subtensor node, but you can specify a different one
     SUBTENSOR_NETWORK=local
-    SUBTENSOR_URL=ws://51.158.60.18:9944
+    SUBTENSOR_URL=ws://IP:PORT
     ```
 
     **Run the version-script.sh before starting the miner**
