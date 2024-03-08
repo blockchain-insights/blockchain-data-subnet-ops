@@ -11,50 +11,58 @@
 
 ### Setup
 - Clone the Repository
-    ```
-    git clone https://github.com/blockchain-insights/blockchain-data-subnet-ops
-    ```
+  ```bash
+  git clone https://github.com/blockchain-insights/blockchain-data-subnet-ops
+  ```
+- Navigate to ```blockchain-data-subnet-ops/validator``` and copy the example ```.env``` file:
+  ```bash
+  cp .env.example .env
+  ```
 
-#### Bitcoin Node
+### Subtensor, Bitcoin Node, Validator
+**Running Local Subtensor (optional but recommended)**
 
-- **Running Bitcoin node**
+- Start the subtensor:
+  ```bash
+  docker compose up -d node-subtensor
+  ```
 
-    Open the ```.env``` file:
-    ```bash
-    nano .env
-    ```
-    Set the required variables in the ```.env``` file and save it:
-    ```ini
-    RPC_USER=your_secret_user_name
-    RPC_PASSWORD=your_secret_password
-    ```
-    
-    **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
-    ```ini
-    RPC_ALLOW_IP=172.16.0.0/12
-    RPC_BIND=0.0.0.0
-    MAX_CONNECTIONS=512
-    ```
+**Running Bitcoin node**
 
-    Start the Bitcoin node:
-    ```bash
-    docker compose up -d bitcoin-core
-    ```
+- Open the ```.env``` file:
+  ```bash
+  nano .env
+  ```
+- Set the required variables in the ```.env``` file and save it:
+  ```ini
+  RPC_USER=your_secret_user_name
+  RPC_PASSWORD=your_secret_password
+  ```
 
-### Validator
+  **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
+  ```ini
+  RPC_ALLOW_IP=172.16.0.0/12
+  RPC_BIND=0.0.0.0
+  MAX_CONNECTIONS=512
+  ```
 
-- **Running Validator**
+- Start the Bitcoin node:
+  ```bash
+  docker compose up -d bitcoin-core
+  ```
 
-    Open the ```.env``` file:
-    ```
-    nano .env
-    ```
+**Running Validator**
 
-    Set the required variables in the ```.env``` file and save it:
-    ```ini
-    WALLET_NAME=default
-    WALLET_HOTKEY=default
-    ```
+- Open the ```.env``` file:
+  ```
+  nano .env
+  ```
+
+- Set the required variables in the ```.env``` file and save it:
+  ```ini
+  WALLET_NAME=default
+  WALLET_HOTKEY=default
+  ```
 
   **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
   ```ini
@@ -62,20 +70,20 @@
   BITCOIN_NODE_RPC_URL=http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332
   # If you have custom bittensor path
   BITTENSOR_VOLUME_PATH=~/.bittensor
-  # By default validators use the public SN15 subtensor, but you can use other too
+  # By default validators use local subtensor node, but you can specify a different one
   SUBTENSOR_NETWORK=local
-  SUBTENSOR_URL=ws://51.158.60.18:9944
+  SUBTENSOR_URL=ws://IP:PORT
   ```
 
-  Start Validator
+- Start Validator
   ```
   docker-compose up -d validator
   ```
 
-- **Whitelist Validator Hotkey**
+**Whitelist Validator Hotkey**
   
-  You should whitelist your validator hotkey by reaching aphex5 on Discord.
-  Currently whitelisted and blacklisted hotkeys can be found [here](https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json).
+You should whitelist your validator hotkey by reaching aphex5 on Discord.
+Currently whitelisted and blacklisted hotkeys can be found [here](https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json).
   
 ### Monitoring
 
@@ -112,6 +120,7 @@ Then navigate to ```http://your_server_ip:9999```
     ```bash
     docker compose pull
     ```
+- check the ```VERSION``` variable in your ```.env``` file and update it to match the new version if needed
 - restart containers
     ```bash
     docker compose up -d validator
