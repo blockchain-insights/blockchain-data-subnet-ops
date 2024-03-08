@@ -1,8 +1,8 @@
 ## Hardware Requirements
 - All in one: 
-  - 2TB+ SSD/nvme storage, 16+ CPU cores, 1.5TB+ RAM
+  - ~8TB+ SSD/nvme storage, 32+ CPU cores, 1.5TB+ RAM
 - Separate:
-  - Indexer and MemGraph: 1.5TB+ RAM, 16+ CPU cores, ~2TB+ SSD/nvme storage
+  - Indexer and MemGraph: 1.5TB+ RAM, 32+ CPU cores, ~7TB+ SSD/nvme storage
   - Bitcoin full node: 1TB+ SSD/nvme storage, 8+ CPU cores, 64GB+ RAM
   - Miner: ~32GB SSD storage, 8+ CPU cores, 64GB+ RAM
 - Custom:
@@ -111,15 +111,15 @@
     
     **1. Run block parser to generate tx_out csv file:**
     ```bash
-    docker compose run --rm -e START_HEIGHT=700000 -e END_HEIGHT=830000 block-parser
+    docker compose run --rm -e BLOCK_PARSER_START_HEIGHT=700000 -e BLOCK_PARSER_END_HEIGHT=830000 block-parser
     ```
-    You can find `tx_out-{START_HEIGHT}-{END_HEIGHT}.csv` generated in `bitcoin-vout-csv` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-csv/_data` and run `ls` to see the generated files.
+    You can find `tx_out-{BLOCK_PARSER_START_HEIGHT}-{BLOCK_PARSER_END_HEIGHT}.csv` generated in `bitcoin-vout-csv` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-csv/_data` and run `ls` to see the generated files.
 
     **2. Run vout hashtable builder to generate pickle file from csv:**
     ```bash
-    docker compose run --rm -e CSV_FILE=/data_csv/tx_out-700000-830000.csv -e TARGET_PATH=/data_hashtable/700000-830000.pkl bitcoin-vout-hashtable-builder
+    docker compose run --rm -e CSV_FILE=/data_csv/tx_out-700000-830000.csv -e CSV_TARGET_PATH=/data_hashtable/700000-830000.pkl bitcoin-vout-hashtable-builder
     ```
-    You can find `{START_HEIGHT}-{END_HEIGHT}.pkl` generated in `bitcoin-vout-hashtable` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-hashtable/_data` and run `ls` to see the generated files.
+    You can find `{BLOCK_PARSER_START_HEIGHT}-{BLOCK_PARSER_END_HEIGHT}.pkl` generated in `bitcoin-vout-hashtable` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-hashtable/_data` and run `ls` to see the generated files.
     
     **3. Start reverse indexing:**
 
