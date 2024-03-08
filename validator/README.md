@@ -120,6 +120,7 @@ Then navigate to ```http://your_server_ip:9999```
     ```bash
     docker compose pull
     ```
+- check the ```VERSION``` variable in your ```.env``` file and update it to match the new version if needed
 - restart containers
     ```bash
     docker compose up -d validator

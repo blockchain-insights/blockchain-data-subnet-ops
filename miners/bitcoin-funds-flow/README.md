@@ -279,6 +279,7 @@ Then navigate to ```http://your_server_ip:9999```
     ```bash
     docker compose pull
     ```
+- check the ```VERSION``` variable in your ```.env``` file and update it to match the new version if needed
 - **run the version-script.sh before restarting the miner**
     ```bash
     ./version-script.sh
