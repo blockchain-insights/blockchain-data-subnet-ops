@@ -46,11 +46,11 @@ services:
     build:
       context: ../shared/block-parser
       dockerfile: Dockerfile
-    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${START_HEIGHT} --end $${END_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${TARGET_PATH} && find $${TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${TARGET_PATH}"
+    command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BLOCK_PARSER_START_HEIGHT} --end $${BLOCK_PARSER_END_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${CSV_TARGET_PATH} && find $${CSV_TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${CSV_TARGET_PATH}"
     environment:
-      - TARGET_PATH=${TARGET_PATH:-/data_csv}
-      - END_HEIGHT=${END_HEIGHT:-1000}
-      - START_HEIGHT=${START_HEIGHT:-1}
+      - CSV_TARGET_PATH=${TARGET_PATH:-/data_csv}
+      - BLOCK_PARSER_END_HEIGHT=${END_HEIGHT:-1000}
+      - BLOCK_PARSER_START_HEIGHT=${START_HEIGHT:-1}
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
       - bitcoin-vout-csv:/data_csv
@@ -61,9 +61,9 @@ services:
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
       - CSV_FILE=${CSV_FILE}
-      - TARGET_PATH=${TARGET_PATH}
+      - CSV_TARGET_PATH=${CSV_TARGET_PATH}
       - NEW=${NEW:-True}
-      - INDEXING_THREADS=${INDEXING_THREADS:-64}
+      - PICKLE_INDEXING_THREADS=${PICKLE_INDEXING_THREADS:-64}
     volumes:
       - bitcoin-vout-csv:/data_csv
       - bitcoin-vout-hashtable:/data_hashtable
