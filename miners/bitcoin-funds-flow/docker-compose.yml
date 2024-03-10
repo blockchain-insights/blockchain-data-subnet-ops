@@ -48,7 +48,7 @@ services:
       dockerfile: Dockerfile
     command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BLOCK_PARSER_START_HEIGHT} --end $${BLOCK_PARSER_END_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${CSV_TARGET_PATH} && find $${CSV_TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${CSV_TARGET_PATH}"
     environment:
-      - CSV_TARGET_PATH=${TARGET_PATH:-/data_csv}
+      - CSV_TARGET_PATH=${CSV_TARGET_PATH:-/data_csv}
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
       - bitcoin-vout-csv:/data_csv
