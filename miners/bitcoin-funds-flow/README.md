@@ -107,7 +107,7 @@
      - Index them and start reverse indexing to block 1
      - When reverse indexing is done, you start forward indexing
 
-    You can experiment with this process - the number of blocks, the reverse/forward indexing etc. Generating pickle files makes indexing faster, but takes a lot of memory, so keep an eye on the memory usage.
+    You can experiment with this process - the number of blocks, the reverse/forward indexing etc. Generating pickle files makes indexing faster, but takes a lot of memory, so keep an eye on the memory usage. Note, you need a local Bitcoin node running and synced.
     
     **1. Run block parser to generate tx_out csv file:**
     ```bash
@@ -117,7 +117,7 @@
 
     **2. Run vout hashtable builder to generate pickle file from csv:**
     ```bash
-    docker compose run --rm -e CSV_FILE=/data_csv/tx_out-700000-830000.csv -e CSV_TARGET_PATH=/data_hashtable/700000-830000.pkl bitcoin-vout-hashtable-builder
+    docker compose run --rm -e CSV_FILE=/data_csv/tx_out-700000-830000.csv -e TARGET_PATH=/data_hashtable/700000-830000.pkl bitcoin-vout-hashtable-builder
     ```
     You can find `{BLOCK_PARSER_START_HEIGHT}-{BLOCK_PARSER_END_HEIGHT}.pkl` generated in `bitcoin-vout-hashtable` volume. For example, you can go to `/var/lib/docker/volumes/bitcoin-vout-hashtable/_data` and run `ls` to see the generated files.
     
