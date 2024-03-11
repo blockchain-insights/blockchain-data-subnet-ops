@@ -48,9 +48,7 @@ services:
       dockerfile: Dockerfile
     command: /bin/bash -c "ls -al /home/bitcoin/.bitcoin && rusty-blockparser --start $${BLOCK_PARSER_START_HEIGHT} --end $${BLOCK_PARSER_END_HEIGHT} --blockchain-dir /home/bitcoin/.bitcoin/blocks csvdump $${CSV_TARGET_PATH} && find $${CSV_TARGET_PATH} -type f ! -name 'tx_out*' -exec rm -f {} ';' && ls -al $${CSV_TARGET_PATH}"
     environment:
-      - CSV_TARGET_PATH=${TARGET_PATH:-/data_csv}
-      - BLOCK_PARSER_END_HEIGHT=${END_HEIGHT:-1000}
-      - BLOCK_PARSER_START_HEIGHT=${START_HEIGHT:-1}
+      - CSV_TARGET_PATH=${CSV_TARGET_PATH:-/data_csv}
     volumes:
       - bitcoin-data:/home/bitcoin/.bitcoin
       - bitcoin-vout-csv:/data_csv
@@ -60,8 +58,6 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
-      - CSV_FILE=${CSV_FILE}
-      - CSV_TARGET_PATH=${CSV_TARGET_PATH}
       - NEW=${NEW:-True}
       - PICKLE_INDEXING_THREADS=${PICKLE_INDEXING_THREADS:-64}
     volumes:
