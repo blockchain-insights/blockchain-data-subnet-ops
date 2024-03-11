@@ -1,10 +1,10 @@
 ## Hardware Requirements
 
 - All in one:
-  - 2TB+ SSD/nvme storage, 16+ CPU cores, 2TB RAM
+  - 5TB+ SSD/nvme storage, 16+ CPU cores, 2TB RAM
 - Separate:
-  - Indexer and MemGraph: 768GB-1TB+ RAM, 16+ CPU cores, ~1TB+ SSD/nvme storage
-  - Ethereum full node: 1TB+ SSD/nvme storage, 8+ CPU cores, 64GB+ RAM
+  - Indexer and MemGraph: 768GB-1TB+ RAM, 16+ CPU cores, ~3TB+ SSD/nvme storage
+  - Ethereum full node: 1.7TB+ SSD/nvme storage, 8+ CPU cores, 64GB+ RAM
   - Miner: ~32GB SSD storage, 8+ CPU cores, 64GB+ RAM
 - Custom:
   - Find your own best configuration ;)

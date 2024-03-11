@@ -31,7 +31,7 @@ services:
       - ./memgraph/create_user.txt:/root/memgraph/create_user.txt
     environment:
       - MEMGRAPH_PASSFILE=/root/memgraph/create_user.txt
-      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --log-level=INFO --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=3600 --storage-snapshot-retention-count=6 --storage-wal-enabled=false --isolation-level=READ_COMMITTED
+      - MEMGRAPH=--storage-mode ${GRAPH_DB_STORAGE_MODE:-IN_MEMORY_TRANSACTIONAL} --log-level=INFO --storage-snapshot-on-exit=true --storage-snapshot-interval-sec=3600 --storage-snapshot-retention-count=1 --storage-wal-enabled=false --isolation-level=READ_COMMITTED
     networks:
       - shared-network
     restart: unless-stopped
