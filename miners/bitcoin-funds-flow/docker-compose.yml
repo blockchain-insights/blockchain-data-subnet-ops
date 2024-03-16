@@ -8,6 +8,8 @@ services:
       - "9944"
       - "30333"
       - "9933"
+    volumes:
+      - node-subtensor:/tmp/blockchain
     environment:
       - CARGO_HOME=/var/www/node-subtensor/.cargo
     command:
@@ -232,6 +234,8 @@ services:
       service: miner
 
 volumes:
+  node-subtensor:
+    name: node-subtensor
   bitcoin-vout-csv:
     name: bitcoin-vout-csv
   bitcoin-vout-hashtable:
