@@ -16,7 +16,7 @@ services:
       - /bin/bash
       - -c
       - |
-        ./node-subtensor \
+        node-subtensor \
           --base-path /tmp/blockchain \
           --chain ./raw_spec.json \
           --rpc-external --rpc-cors all \
