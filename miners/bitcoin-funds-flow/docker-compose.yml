@@ -92,7 +92,7 @@ services:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-    restart: unless-stopped
+    restart: no
 
   memgraph:
     image: memgraph/memgraph-mage:1.15-memgraph-2.15
