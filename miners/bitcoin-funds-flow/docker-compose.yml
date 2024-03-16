@@ -131,7 +131,6 @@ services:
 
   miner2:
     environment:
-      - WALLET_NAME=${WALLET_NAME2:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY2:-default2}
       - BT_AXON_PORT=8092
     ports:
@@ -144,7 +143,6 @@ services:
 
   miner3:
     environment:
-      - WALLET_NAME=${WALLET_NAME3:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY3:-default3}
       - BT_AXON_PORT=8093
     ports:
@@ -157,7 +155,6 @@ services:
 
   miner4:
     environment:
-      - WALLET_NAME=${WALLET_NAME4:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY4:-default4}
       - BT_AXON_PORT=8094
     ports:
@@ -170,7 +167,6 @@ services:
   
   miner5:
     environment:
-      - WALLET_NAME=${WALLET_NAME5:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY5:-default5}
       - BT_AXON_PORT=8095
     ports:
@@ -183,7 +179,6 @@ services:
 
   miner6:
     environment:
-      - WALLET_NAME=${WALLET_NAME6:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY6:-default6}
       - BT_AXON_PORT=8096
     ports:
@@ -196,7 +191,6 @@ services:
 
   miner7:
     environment:
-      - WALLET_NAME=${WALLET_NAME7:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY7:-default7}
       - BT_AXON_PORT=8097
     ports:
@@ -209,7 +203,6 @@ services:
 
   miner8:
     environment:
-      - WALLET_NAME=${WALLET_NAME8:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY8:-default8}
       - BT_AXON_PORT=8098
     ports:
@@ -222,7 +215,6 @@ services:
 
   miner9:
     environment:
-      - WALLET_NAME=${WALLET_NAME9:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY9:-default9}
       - BT_AXON_PORT=8099
     ports:
