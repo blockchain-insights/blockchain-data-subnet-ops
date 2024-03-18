@@ -2,7 +2,7 @@ version: '3'
 
 services:
   node-subtensor:
-    image: opentensor/subtensor:latest
+    image: blockchain-insights/subtensor:latest:latest
     # Removed the ports section to prevent public exposure
     expose:
       - "9944"
