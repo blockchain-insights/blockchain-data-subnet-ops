@@ -37,7 +37,7 @@ services:
       -rpcworkqueue=4086
       -server=1
       -txindex=1
-    ports:
+    expose:
       - "8332:8332"
       - "8333:8333"
     volumes:
@@ -96,9 +96,9 @@ services:
 
   memgraph:
     image: memgraph/memgraph-mage:1.15-memgraph-2.15
-    ports:
-      - "7687:7687"
-      - "7444:7444"
+    expose:
+      - "7687"
+      - "7444"
     environment:
       - MEMGRAPH_USER=${GRAPH_DB_USER}
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
