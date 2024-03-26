@@ -179,6 +179,41 @@
     docker compose run --rm index-checker
     ```
 
+    **5. Start smart indexing (run forward and reverse indexer simultaneously):**
+
+    In smart mode, the indexer starts at START_HEIGHT and index forward to the latest block. If it reaches the latest block, it runs reverse indexing while waiting. If the new block is mined, it indexes the new block and runs reverse indexing again. If it finished reverse indexing, it just indexes latest blocks in real-time.
+
+    When the indexer is ready, stop it:
+
+    ```
+    docker compose down indexer
+    ```
+
+    Open the ```.env``` file:
+    ```
+    nano .env
+    ```
+
+    Set the required variables in the ```.env``` file and save it:
+    ```ini
+    BITCOIN_INDEXER_SMART_MODE=1
+    BITCOIN_INDEXER_START_BLOCK_HEIGHT=830000
+    #REVERSE_ORDER and END_BLOCK_HEIGHT are not required in smart mode
+    #BITCOIN_INDEXER_IN_REVERSE_ORDER=0
+    #BITCOIN_INDEXER_END_BLOCK_HEIGHT=-1
+    ```
+
+    Start the indexer again
+    ```
+    docker compose up -d indexer
+    ```
+
+    You can monitor the progress using the following command:
+    ```
+    docker compose run --rm index-checker
+    ```
+
+
 ### Miner
 **NOTE**: It's beneficial to register and run your miner hotkey ***only when*** the indexer is up to date with recent blocks, otherwise, the miner will receive low score. Additionally, if the miner is not operational for an extended period, there's a risk of the hotkey being deregistered.
 
