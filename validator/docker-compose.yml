@@ -24,7 +24,7 @@ services:
           --sync warp
           
   bitcoin-core:
-    image: ruimarinho/bitcoin-core:${VERSION-latest}
+    image: ruimarinho/bitcoin-core:latest
     command:
       -rpcuser=${RPC_USER}
       -rpcpassword=${RPC_PASSWORD}
