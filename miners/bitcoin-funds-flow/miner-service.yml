@@ -5,7 +5,6 @@ services:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/run_miner_bitcoin_funds_flow.sh" ]
     environment:
-      - DIGEST_CHARS=${DIGEST_CHARS:-0000}
       - NETUID=${NETUID:-15}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
@@ -18,6 +17,7 @@ services:
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
       - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
       - miner_db:/data
