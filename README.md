@@ -59,6 +59,11 @@ The easiest way to install bittensor is via the following command:
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/opentensor/bittensor/master/scripts/install.sh)"
 ```
+if "error: externally-managed-environment" occures to you
+run: 
+```bash
+sudo mv /usr/lib/python3.11/EXTERNALLY-MANAGED /usr/lib/python3.11/EXTERNALLY-MANAGED.old
+```
 You can then create new coldkey and hotkey:
 ```bash
 btcli w new_coldkey
