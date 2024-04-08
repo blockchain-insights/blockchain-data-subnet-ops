@@ -45,6 +45,8 @@ services:
   validator:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/run_validator_mainnet.sh" ]
+    ports:
+      - "${API_PORT:-8001}:8001"
     environment:
       - NETUID=${NETUID:-15}
       - WALLET_NAME=${WALLET_NAME:-default}
