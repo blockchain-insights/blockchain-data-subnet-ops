@@ -120,6 +120,17 @@ services:
       - QUICK_CONNECT_MG_HOST=memgraph
       - QUICK_CONNECT_MG_PORT=7687
 
+  postgres:
+    image: postgres:14-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
   miner1:
     environment:
       - BT_AXON_PORT=8091
@@ -240,4 +251,6 @@ volumes:
     name: memgraph-log
   memgraph-etc:
     name: memgraph-etc
+  postgres-data:
+    name: postgres-data
   miner_db:
