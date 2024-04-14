@@ -19,7 +19,7 @@
   cp .env.example .env
   ```
 
-### Subtensor, Bitcoin Node, Validator
+### Subtensor, Bitcoin Node, PGSql,Validator
 **Running Local Subtensor (optional but recommended)**
 
 - Start the subtensor:
@@ -51,6 +51,19 @@
   docker compose up -d bitcoin-core
   ```
 
+**Running postgresql**
+- Open the ```.env``` file:
+  ```
+  nano .env
+  ```
+
+- Set the required variables in the ```.env``` file and save it:
+  ```ini
+  POSTGRES_DB=validator
+  POSTGRES_USER=postgres
+  POSTGRES_PASSWORD=validatorsupersecretpassword()
+  ```
+  
 **Running Validator**
 
 - Open the ```.env``` file:
