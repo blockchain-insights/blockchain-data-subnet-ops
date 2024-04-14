@@ -3,7 +3,6 @@ version: '3.8'
 services:
   node-subtensor:
     image: opentensor/subtensor:latest
-    # Removed the ports section to prevent public exposure
     expose:
       - "9944"
       - "30333"
@@ -22,19 +21,19 @@ services:
           --ws-max-connections 10000 --in-peers 500 --out-peers 500 \
           --bootnodes /dns/bootnode.finney.chain.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC \
           --sync warp
-          
+
   bitcoin-core:
     image: ruimarinho/bitcoin-core:latest
     command:
-      -rpcuser=${RPC_USER}
-      -rpcpassword=${RPC_PASSWORD}
-      -rpcallowip=${RPC_ALLOW_IP:-172.16.0.0/12}
-      -rpcbind=${RPC_BIND:-0.0.0.0}
-      -maxconnections=${MAX_CONNECTIONS:-512}
-      -printtoconsole
-      -rpcworkqueue=4086
-      -server=1
-      -txindex=1
+      - -rpcuser=${RPC_USER}
+      - -rpcpassword=${RPC_PASSWORD}
+      - -rpcallowip=${RPC_ALLOW_IP:-172.16.0.0/12}
+      - -rpcbind=${RPC_BIND:-0.0.0.0}
+      - -maxconnections=${MAX_CONNECTIONS:-512}
+      - -printtoconsole
+      - -rpcworkqueue=4086
+      - -server=1
+      - -txindex=1
     ports:
       - "8332:8332"
       - "8333:8333"
@@ -56,10 +55,26 @@ services:
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - VALIDATOR_REMOTE_CONFIG_URL=${VALIDATOR_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/validator3.json}
+      - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER-postgres}:${POSTGRES_PASSWORD-changeit}@postgres:5432/${POSTGRES_DB-postgres}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
-    
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - "postgres-data:/var/lib/postgresql/data"
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit}
+
 volumes:
   bitcoin-data:
     name: "bitcoin_bitcoin-data"
+  postgres-data:
+    name: "postgres_postgres-data"
