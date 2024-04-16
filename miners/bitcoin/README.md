@@ -98,9 +98,27 @@
     docker compose up -d memgraph
     ```
 
-- **Running Indexer**
+- **Running Postgres**
 
-    Indexing is a slow process which can be accelerated by first generating pickle files for some of the blocks.
+    Open the ```.env``` file:
+    ```
+    nano .env
+    ```
+
+    Set the required variables in the ```.env``` file and save it:
+    ```ini
+    POSTGRES_USER=your_secret_user_name
+    POSTGRES_PASSWORD=your_secret_password
+    ```
+
+    Start the Postgres
+    ```
+    docker compose up -d postgres
+    ```
+
+- **Running Funds Flow Indexer**
+
+    Funds Flow Indexing is a slow process which can be accelerated by first generating pickle files for some of the blocks.
     For recent blocks, pickle files with at least 100000 size help with indexing speed.
     Below is an example procedure which does the following:
      - Generate pickle files for the recent blocks
@@ -140,12 +158,12 @@
 
     Start the reverse indexer
     ```
-    docker compose up -d indexer
+    docker compose up -d funds-flow-indexer
     ```
 
     You can monitor the progress using the following command:
     ```
-    docker compose run --rm index-checker
+    docker compose run --rm funds-flow-index-checker
     ```
 
     **4. Start forward indexing:**
@@ -153,7 +171,7 @@
     When the reverse indexer is ready, stop it:
 
     ```
-    docker compose down indexer
+    docker compose down funds-flow-indexer
     ```
 
     Open the ```.env``` file:
@@ -171,12 +189,12 @@
 
     Start the forward indexer
     ```
-    docker compose up -d indexer
+    docker compose up -d funds-flow-indexer
     ```
 
     You can monitor the progress using the following command:
     ```
-    docker compose run --rm index-checker
+    docker compose run --rm funds-flow-index-checker
     ```
 
     **5. Start smart indexing (run forward and reverse indexer simultaneously):**
@@ -186,7 +204,7 @@
     When the indexer is ready, stop it:
 
     ```
-    docker compose down indexer
+    docker compose down funds-flow-indexer
     ```
 
     Open the ```.env``` file:
@@ -205,14 +223,23 @@
 
     Start the indexer again
     ```
-    docker compose up -d indexer
+    docker compose up -d funds-flow-indexer
     ```
 
     You can monitor the progress using the following command:
     ```
-    docker compose run --rm index-checker
+    docker compose run --rm funds-flow-index-checker
     ```
 
+- **Running Balance Tracking Indexer**
+
+    Balance Tracking Indexer also takes long and requires loading pickle files like Funds Flow Indexer.
+
+    Start the indexer
+
+    ```
+    docker compose up -d balance-tracking-indexer
+    ```
 
 ### Miner
 **NOTE**: It's beneficial to register and run your miner hotkey ***only when*** the indexer is up to date with recent blocks, otherwise, the miner will receive low score. Additionally, if the miner is not operational for an extended period, there's a risk of the hotkey being deregistered.
