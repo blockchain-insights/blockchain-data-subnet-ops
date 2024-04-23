@@ -63,6 +63,11 @@
   POSTGRES_USER=postgres
   POSTGRES_PASSWORD=validatorsupersecretpassword()
   ```
+
+  - Start postgres
+  ```
+  docker-compose up -d postgres
+  ```
   
 **Running Validator**
 
