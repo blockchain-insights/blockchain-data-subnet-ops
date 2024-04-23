@@ -90,7 +90,7 @@
 
 - Start Validator
   ```
-  docker-compose up -d validator
+  nohup ./run.sh >2&1
   ```
 
 **Whitelist Validator Hotkey**
@@ -122,7 +122,10 @@ At the end, restart the container by executing `docker container restart dozzle`
 
 Then navigate to ```http://your_server_ip:9999```
 
-### Upgrading
+### Updating
+f the validator is started by nohup, it will update automatically once the new Docker image is published.
+
+### Manual Upgrading
 
 - check the latest base package version [here](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base)
 - update the repository
