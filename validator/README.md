@@ -94,8 +94,8 @@
   ```
 
 - Start Validator
-  ```
-  nohup ./run.sh >2&1
+  ```bash
+  nohup ./run.sh 2>&1 &
   ```
 
 **Whitelist Validator Hotkey**
