@@ -19,7 +19,7 @@ DOCKER_COMPOSE_CMD=$(get_docker_compose_cmd)
 while true; do
     # Start the Docker Compose service
     echo "Starting the services"
-    $DOCKER_COMPOSE_CMD up -d --set validator.restart=never
+    $DOCKER_COMPOSE_CMD up -d validator --set validator.restart=never
 
     # Wait for the container to exit and get the exit code
     exit_code=$(docker wait validator)
