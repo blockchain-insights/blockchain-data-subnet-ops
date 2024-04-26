@@ -67,7 +67,7 @@ services:
       - bitcoin-vout-hashtable:/data_hashtable
     restart: no
 
-  indexer:
+  funds-flow-indexer:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
@@ -85,7 +85,7 @@ services:
       - bitcoin-core
     restart: unless-stopped
 
-  index-checker:
+  funds-flow-index-checker:
     image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
     command: [ "./scripts/check_indexed_block_height_ranges.sh" ]
     environment:
@@ -93,6 +93,23 @@ services:
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
     restart: no
+
+  balance-tracking-indexer:
+    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    command: [ "./scripts/run_indexer_bitcoin_balance_tracking.sh" ]
+    environment:
+      - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
+      - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
+      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
+      - POSTGRES_DB=${POSTGRES_DB:-bitcoin}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=${BITCOIN_V2_TX_OUT_HASHMAP_PICKLES}
+    volumes:
+      - bitcoin-vout-hashtable:/data_hashtable
+    depends_on:
+      - bitcoin-core
+    restart: unless-stopped
 
   memgraph:
     image: memgraph/memgraph-mage:1.16-memgraph-2.16
@@ -119,6 +136,17 @@ services:
     environment:
       - QUICK_CONNECT_MG_HOST=memgraph
       - QUICK_CONNECT_MG_PORT=7687
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
   miner1:
     environment:
@@ -240,4 +268,6 @@ volumes:
     name: memgraph-log
   memgraph-etc:
     name: memgraph-etc
+  postgres-data:
+    name: postgres-data
   miner_db:
