@@ -144,9 +144,9 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB:-miner}
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit456$}
 
   miner1:
     environment:
@@ -269,5 +269,5 @@ volumes:
   memgraph-etc:
     name: memgraph-etc
   postgres-data:
-    name: postgres-data
+    name: "postgres-data"
   miner_db:

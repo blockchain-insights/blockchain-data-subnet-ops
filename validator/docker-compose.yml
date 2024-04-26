@@ -55,7 +55,7 @@ services:
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - VALIDATOR_REMOTE_CONFIG_URL=${VALIDATOR_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/validator3.json}
-      - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER-postgres}:${POSTGRES_PASSWORD-changeit}@postgres:5432/${POSTGRES_DB-postgres}
+      - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-postgres}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
@@ -69,9 +69,9 @@ services:
     volumes:
       - "postgres-data:/var/lib/postgresql/data"
     environment:
-      - POSTGRES_DB=${POSTGRES_DB:-postgres}
+      - POSTGRES_DB=${POSTGRES_DB:-validator}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit456$}
 
 volumes:
   bitcoin-data:
