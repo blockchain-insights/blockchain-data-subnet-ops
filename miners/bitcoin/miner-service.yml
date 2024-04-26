@@ -25,5 +25,4 @@ services:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
-      - miner_db:/data
     restart: unless-stopped
