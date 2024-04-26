@@ -66,7 +66,7 @@
 
   - Start postgres
   ```
-  docker-compose up -d postgres
+  docker compose up -d postgres
   ```
   
 **Running Validator**
@@ -94,8 +94,8 @@
   ```
 
 - Start Validator
-  ```
-  nohup ./run.sh >2&1
+  ```bash
+  nohup ./run.sh 2>&1 &
   ```
 
 **Whitelist Validator Hotkey**
@@ -128,7 +128,7 @@ At the end, restart the container by executing `docker container restart dozzle`
 Then navigate to ```http://your_server_ip:9999```
 
 ### Updating
-f the validator is started by nohup, it will update automatically once the new Docker image is published.
+If the validator is started by nohup, it will update automatically once the new Docker image is published.
 
 ### Manual Upgrading
 
