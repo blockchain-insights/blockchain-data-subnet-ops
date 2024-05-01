@@ -61,7 +61,7 @@
   ```ini
   POSTGRES_DB=validator
   POSTGRES_USER=postgres
-  POSTGRES_PASSWORD=validatorsupersecretpassword()
+  POSTGRES_PASSWORD=changeit456$
   ```
 
   - Start postgres
@@ -92,8 +92,12 @@
   SUBTENSOR_NETWORK=local
   SUBTENSOR_URL=ws://IP:PORT
   ```
-
 - Start Validator
+  ```bash
+  docker compose up -d validator
+  ```
+
+- Start Validator with automatic updates
   ```bash
   nohup ./run.sh 2>&1 &
   ```
