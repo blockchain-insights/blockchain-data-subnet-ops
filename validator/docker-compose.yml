@@ -42,7 +42,7 @@ services:
     restart: unless-stopped
 
   validator:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
     command: [ "./scripts/run_validator_mainnet.sh" ]
     ports:
       - "${API_PORT:-8001}:8001"

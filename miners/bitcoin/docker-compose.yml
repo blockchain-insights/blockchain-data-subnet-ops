@@ -57,7 +57,7 @@ services:
     restart: no
 
   bitcoin-vout-hashtable-builder:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
       - NEW=${NEW:-True}
@@ -68,7 +68,7 @@ services:
     restart: no
 
   funds-flow-indexer:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
     command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
@@ -86,7 +86,7 @@ services:
     restart: unless-stopped
 
   funds-flow-index-checker:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
     command: [ "./scripts/check_indexed_block_height_ranges.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
@@ -95,15 +95,11 @@ services:
     restart: no
 
   balance-tracking-indexer:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION-latest}
+    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
     command: [ "./scripts/run_indexer_bitcoin_balance_tracking.sh" ]
     environment:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
-      - POSTGRES_HOST=${POSTGRES_HOST:-postgres}
-      - POSTGRES_PORT=${POSTGRES_PORT:-5432}
-      - POSTGRES_DB=${POSTGRES_DB:-bitcoin}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-miner}
       - BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=${BITCOIN_V2_TX_OUT_HASHMAP_PICKLES}
     volumes:
       - bitcoin-vout-hashtable:/data_hashtable
