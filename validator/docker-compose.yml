@@ -61,6 +61,10 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
 
   postgres:
     image: postgres:latest
@@ -72,6 +76,10 @@ services:
       - POSTGRES_DB=${POSTGRES_DB:-validator}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit456$}
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
 
 volumes:
   bitcoin-data:

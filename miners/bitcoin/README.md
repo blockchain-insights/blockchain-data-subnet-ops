@@ -10,9 +10,7 @@
 
 ## System Configuration
 
-```diff
-- Most users need only what is explained in this documentation. Editing the docker-compose files and the optional variables may create problems and is for advanced users only!
-```
+> [!CAUTION] Most users need only what is explained in this documentation. Editing the docker-compose files and the optional variables may create problems and is for advanced users only!
 
 ### Setup
 
@@ -49,6 +47,36 @@
 
     sudo sysctl -p
     ```
+### Monitoring by Subnet 15 team
+
+To improve the subnet you can send telemery and logs accessible only to the subnet 15 team by installing the Docker Loki Pluging. We don't collect sensible information like usersname or passwords. By monitoring the subnet efficiency and errors we can be pro-active by detecting issues promptly.
+
+Reference: [Grafana Loki Plugin Documentation](https://grafana.com/docs/loki/latest/send-data/docker-driver/)
+
+1. Docker command to install Plugin
+
+```bash
+docker plugin install grafana/loki-docker-driver:2.9.8 --alias loki --grant-all-permissions
+```
+
+2. Verify that the Docker Plugin is installed
+
+```bash
+docker plugin ls
+```
+
+Expected output:
+```
+ID                  NAME         DESCRIPTION           ENABLED
+ac720b8fcfdb        loki         Loki Logging Driver   true
+```
+
+>[!WARNING] To take effect you need to restart the Docker daemon, this will shutdown all docker copose services and restart them.
+
+```bash
+sudo systemctl restart docker
+```
+
 ### Local Subtensor, Bitcoin node, Memgraph and Indexer
 - **Running Local Subtensor (optional but recommended)**
     Start the subtensor:
@@ -150,10 +178,10 @@
     ```ini
     BITCOIN_INDEXER_IN_REVERSE_ORDER=1
     #In REVERSE ORDER, START_BLOCK should be greater than END_BLOCK
-    BITCOIN_INDEXER_START_BLOCK_HEIGHT=830000
+    BITCOIN_INDEXER_START_BLOCK_HEIGHT=840000
     BITCOIN_INDEXER_END_BLOCK_HEIGHT=1
     #You can specify multiple pickle files with full path separated by comma
-    BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=/data_hashtable/700000-830000.pkl
+    BITCOIN_V2_TX_OUT_HASHMAP_PICKLES=/data_hashtable/700000-840000.pkl
     ```
 
     Start the reverse indexer
@@ -182,7 +210,7 @@
     Set the required variables in the ```.env``` file and save it:
     ```ini
     BITCOIN_INDEXER_IN_REVERSE_ORDER=0
-    BITCOIN_INDEXER_START_BLOCK_HEIGHT=830000
+    BITCOIN_INDEXER_START_BLOCK_HEIGHT=840000
     #SET END_BLOCK to -1 so that indexer keeps indexing blocks in real-time 
     BITCOIN_INDEXER_END_BLOCK_HEIGHT=-1
     ```
@@ -215,7 +243,7 @@
     Set the required variables in the ```.env``` file and save it:
     ```ini
     BITCOIN_INDEXER_SMART_MODE=1
-    BITCOIN_INDEXER_START_BLOCK_HEIGHT=830000
+    BITCOIN_INDEXER_START_BLOCK_HEIGHT=840000
     #REVERSE_ORDER and END_BLOCK_HEIGHT are not required in smart mode
     #BITCOIN_INDEXER_IN_REVERSE_ORDER=0
     #BITCOIN_INDEXER_END_BLOCK_HEIGHT=-1
@@ -254,7 +282,7 @@
 - **Running Miner**
 
     Open the ```.env``` file:
-    ```
+    ```bash
     nano .env
     ```
 
@@ -285,7 +313,7 @@
     ```
 
     Start the Miner
-    ```
+    ```bash
     docker compose up -d miner1
     ```
 
@@ -298,11 +326,12 @@ It's allowed to run a total of 9 miners on a single memgraph instance. You have 
     **NOTE**: It is not required to add all 9 miners, you can add less too.
 
     Start the additional miners
-    ```
+    
+    ```bash
     docker compose up -d miner2 miner3 ... miner9
     ```
     If you want to start them all, you can use the command:
-    ```
+    ```bash
     docker compose --profile multiminers up -d
     ```
 
