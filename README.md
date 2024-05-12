@@ -58,9 +58,11 @@ docker run hello-world
 
 ### Install Docker Loki Plugin
 
-To improve the subnet you can send telemery and logs accessible only to the subnet 15 team by installing the Docker Loki Pluging. We don't collect sensible information like usersname or passwords. By monitoring the subnet efficiency and errors we can be pro-active by detecting issues promptly.
+To improve the subnet you can send telemery and logs accessible only to the subnet 15 team by installing the Docker Loki Pluging. By monitoring the subnet efficiency and errors we can be pro-active by detecting issues promptly.
 
-Reference: [Grafana Loki Plugin Documentation](https://grafana.com/docs/loki/latest/send-data/docker-driver/)
+> [!NOTE] We don't collect sensible information like usersname or passwords.
+
+> Documentation Reference: [Grafana Loki Plugin Documentation](https://grafana.com/docs/loki/latest/send-data/docker-driver/)
 
 1. Docker command to install Plugin
 
@@ -99,7 +101,7 @@ docker plugin disable loki --force
 docker plugin upgrade loki grafana/loki-docker-driver:2.9.8 --grant-all-permissions
 docker plugin enable loki
 ```
->[!WARNING] To take effect you need to restart the Docker daemon, this will shutdown all services and restart them we suggest to do this only when there is a scheduled upgrade and the registration are disabled not to be affected by the down time scoring.
+>[!WARNING] To take effect you need to restart the Docker daemon, this will shutdown all services and restart them we suggest to do this only when there is a scheduled upgrade and the registrations are disabled not to be affected by the uptime time scoring.
 
 ```bash
 sudo systemctl restart docker

@@ -49,9 +49,11 @@
     ```
 ### Monitoring by Subnet 15 team
 
-To improve the subnet you can send telemery and logs accessible only to the subnet 15 team by installing the Docker Loki Pluging. We don't collect sensible information like usersname or passwords. By monitoring the subnet efficiency and errors we can be pro-active by detecting issues promptly.
+To improve the subnet you can send telemery and logs accessible only to the subnet 15 team by installing the Docker Loki Pluging. By monitoring the subnet efficiency and errors we can be pro-active by detecting issues promptly.
 
-Reference: [Grafana Loki Plugin Documentation](https://grafana.com/docs/loki/latest/send-data/docker-driver/)
+> [!NOTE] We don't collect sensible information like usersname or passwords.
+
+> Documentation Reference: [Grafana Loki Plugin Documentation](https://grafana.com/docs/loki/latest/send-data/docker-driver/)
 
 1. Docker command to install Plugin
 
