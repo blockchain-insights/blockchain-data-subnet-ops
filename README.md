@@ -82,7 +82,7 @@ ID                  NAME         DESCRIPTION           ENABLED
 ac720b8fcfdb        loki         Loki Logging Driver   true
 ```
 
->[!WARNING] To take effect you need to restart the Docker daemon, this will shutdown all docker copose services and restart them.
+>[!WARNING] To take effect you need to restart the Docker daemon, this will shutdown all docker compose services and restart them.
 
 ```bash
 sudo systemctl restart docker
@@ -90,7 +90,7 @@ sudo systemctl restart docker
    
 ### Docker Loki Plugin UPGRADE Procedure
 
-- When a new version of the plugin driver is availalbe you can use theses commands to upgrade the driver
+- When a new version of the plugin driver is available you can use theses commands to upgrade the driver
 >[!NOTE] Change the version number for the latest, use version number ie: 2.9.10 
 > DO NOT USE `main` is a development branch
 >
@@ -101,7 +101,7 @@ docker plugin disable loki --force
 docker plugin upgrade loki grafana/loki-docker-driver:2.9.8 --grant-all-permissions
 docker plugin enable loki
 ```
->[!WARNING] To take effect you need to restart the Docker daemon, this will shutdown all services and restart them we suggest to do this only when there is a scheduled upgrade and the registrations are disabled not to be affected by the uptime time scoring.
+> [!WARNING] To take effect you need to restart the Docker daemon, this will terminate all services and restart them. We suggest to do this only when there is a scheduled upgrade and the registrations is disabled not to be affected by the uptime time scoring.
 
 ```bash
 sudo systemctl restart docker
