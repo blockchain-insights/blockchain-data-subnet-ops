@@ -22,3 +22,7 @@ services:
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"

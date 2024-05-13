@@ -4,11 +4,14 @@
 Welcome to the Blockchain Data Subnet Operations repository. This repository hosts Docker configurations and scripts for running a variety of blockchain nodes, indexers, subnet miners and validators.
 
 ## Table of Contents
-- [Introduction](#introduction)
-- [System Prerequisites](#system-prerequisites)
-- [Installation Guides](#installation-guides) 
-- [Server Hosting Options](#server-hosting-options)
-- [Updating Container Images](#updating-container-images)
+- [Blockchain Data Subnet Operations](#blockchain-data-subnet-operations)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
+  - [System Prerequisites](#system-prerequisites)
+    - [Install Docker Loki Plugin](#install-docker-loki-plugin)
+    - [Docker Loki Plugin UPGRADE Procedure](#docker-loki-plugin-upgrade-procedure)
+  - [Bittensor and wallet creation](#bittensor-and-wallet-creation)
+  - [Installation Guides](#installation-guides)
 
 
 ## Introduction
@@ -52,6 +55,59 @@ newgrp docker
 ```bash
 docker run hello-world
 ```
+
+### Install Docker Loki Plugin
+
+To improve the subnet you can send telemery and logs accessible only to the subnet 15 team by installing the Docker Loki Pluging. By monitoring the subnet efficiency and errors we can be pro-active by detecting issues promptly.
+
+> [!NOTE] We don't collect sensible information like usersname or passwords.
+
+> Documentation Reference: [Grafana Loki Plugin Documentation](https://grafana.com/docs/loki/latest/send-data/docker-driver/)
+
+1. Docker command to install Plugin
+
+```bash
+docker plugin install grafana/loki-docker-driver:2.9.8 --alias loki --grant-all-permissions
+```
+
+2. Verify that the Docker Plugin is installed
+
+```bash
+docker plugin ls
+```
+
+Expected output:
+```
+ID                  NAME         DESCRIPTION           ENABLED
+ac720b8fcfdb        loki         Loki Logging Driver   true
+```
+
+>[!WARNING] To take effect you need to restart the Docker daemon, this will shutdown all docker compose services and restart them.
+
+```bash
+sudo systemctl restart docker
+```
+   
+### Docker Loki Plugin UPGRADE Procedure
+
+- When a new version of the plugin driver is available you can use theses commands to upgrade the driver
+>[!NOTE] Change the version number for the latest, use version number ie: 2.9.10 
+> DO NOT USE `main` is a development branch
+>
+>See the latest version on [Docker Hub Loki Pluging Repository](https://hub.docker.com/r/grafana/loki-docker-driver/tags)
+
+```bash
+docker plugin disable loki --force
+docker plugin upgrade loki grafana/loki-docker-driver:2.9.8 --grant-all-permissions
+docker plugin enable loki
+```
+> [!WARNING] To take effect you need to restart the Docker daemon, this will terminate all services and restart them. We suggest to do this only when there is a scheduled upgrade and the registrations is disabled not to be affected by the uptime time scoring.
+
+```bash
+sudo systemctl restart docker
+```
+
+---
 
 ## Bittensor and wallet creation
 You will also need to [install Bittensor](https://docs.bittensor.com/getting-started/installation) and create or import wallets.
