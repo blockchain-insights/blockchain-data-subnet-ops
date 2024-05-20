@@ -21,6 +21,10 @@ services:
           --ws-max-connections 10000 --in-peers 500 --out-peers 500 \
           --bootnodes /dns/bootnode.finney.chain.opentensor.ai/tcp/30333/ws/p2p/12D3KooWRwbMb85RWnT8DSXSYMWQtuDwh4LJzndoRrTDotTR5gDC \
           --sync warp
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
 
   bitcoin-core:
     image: ruimarinho/bitcoin-core:latest
@@ -40,6 +44,10 @@ services:
     volumes:
       - "bitcoin-data:/home/bitcoin/.bitcoin"
     restart: unless-stopped
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
 
   validator:
     image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
@@ -61,6 +69,10 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
 
   postgres:
     image: postgres:latest
@@ -72,6 +84,10 @@ services:
       - POSTGRES_DB=${POSTGRES_DB:-validator}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit456$}
+    logging:
+      driver: loki
+      options:
+        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
 
 volumes:
   bitcoin-data:

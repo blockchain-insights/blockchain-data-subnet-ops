@@ -19,6 +19,40 @@
   cp .env.example .env
   ```
 
+### Monitoring by Subnet 15 team
+
+To improve the subnet you can send telemery and logs accessible only to the subnet 15 team by installing the Docker Loki Pluging. By monitoring the subnet efficiency and errors we can be pro-active by detecting issues promptly.
+
+> [!NOTE] We don't collect sensible information like usersname or passwords.
+
+> Documentation Reference: [Grafana Loki Plugin Documentation](https://grafana.com/docs/loki/latest/send-data/docker-driver/)
+
+1. Docker command to install Plugin
+
+```bash
+docker plugin install grafana/loki-docker-driver:2.9.8 --alias loki --grant-all-permissions
+```
+
+2. Verify that the Docker Plugin is installed
+
+```bash
+docker plugin ls
+```
+
+Expected output:
+```
+ID                  NAME         DESCRIPTION           ENABLED
+ac720b8fcfdb        loki         Loki Logging Driver   true
+```
+
+>[!WARNING] To take effect you need to restart the Docker daemon, this will shutdown all docker copose services and restart them.
+
+```bash
+sudo systemctl restart docker
+```
+
+###### please reach subnet 15 team to whitelist your validator ip address
+
 ### Subtensor, Bitcoin Node, PGSql,Validator
 **Running Local Subtensor (optional but recommended)**
 
@@ -107,7 +141,7 @@
 You should whitelist your validator hotkey by reaching aphex5 on Discord.
 Currently whitelisted and blacklisted hotkeys can be found [here](https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json).
   
-### Monitoring
+### Monitoring with Dozzle (only for you)
 
 To easily monitor your containers, you can start Dozzle:
 ```bash
@@ -141,11 +175,14 @@ If the validator is started by nohup, it will update automatically once the new 
     ```bash 
     git pull
     ```
+- check the ```VERSION``` variable in your ```.env``` file and update it to match the new version if needed or `latest` will always pull the current version
+    ```bash
+    cat .env
+    ```
 - update the images
     ```bash
     docker compose pull
     ```
-- check the ```VERSION``` variable in your ```.env``` file and update it to match the new version if needed
 - restart containers
     ```bash
     docker compose up -d validator
