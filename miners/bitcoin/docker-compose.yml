@@ -144,6 +144,19 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit456$}
 
+  llm-engine:
+    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_llm_engine_base}:${VERSION_LLM_ENGINE-latest}
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    expose:
+      - "8000:8000"
+    environment:
+      - GRAPH_DB_URL=${GRAPH_DB_URL}
+      - GRAPH_DB_USER=${GRAPH_DB_USER}
+      - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - LLM_TYPE=${LLM_TYPE:-openai}
+    restart: unless-stopped
+
   miner1:
     environment:
       - BT_AXON_PORT=8091
