@@ -20,6 +20,7 @@ services:
       - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json}
       - OPEN_AI_KEY=${OPEN_AI_KEY}
       - LLM_ENGINE_URL=${LLM_ENGINE_URL:-http://llm-engine:8000}
+      - LLM_TYPE=${LLM_TYPE:-openai}
       - MINER_PASSWORD=${MINER_PASSWORD}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
