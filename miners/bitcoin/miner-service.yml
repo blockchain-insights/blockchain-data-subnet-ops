@@ -19,6 +19,7 @@ services:
       - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
       - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json}
       - MINER_PASSWORD=${MINER_PASSWORD}
+      - LLM_ENGINE_URL=${LLM_ENGINE_URL:-http://llm-engine:8000}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
