@@ -153,7 +153,7 @@ services:
       - GRAPH_DB_URL=${GRAPH_DB_URL}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - OPEN_AI_KEY=${OPEN_AI_KEY}
       - LLM_TYPE=${LLM_TYPE:-openai}
     restart: unless-stopped
 
