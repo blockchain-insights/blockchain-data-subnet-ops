@@ -45,9 +45,9 @@ services:
       - "bitcoin-data:/home/bitcoin/.bitcoin"
     restart: unless-stopped
     logging:
-      driver: loki
+      driver: ${LOGGING_DRIVER:-loki}
       options:
-        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
+        loki-url: ${LOKI_URL:-https://gateway.loki.hyperclouds.io/loki/api/v1/push}
 
   validator:
     image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
@@ -70,14 +70,14 @@ services:
     depends_on:
       - postgres
     logging:
-      driver: loki
+      driver: ${LOGGING_DRIVER:-none}
       options:
-        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
+        loki-url: ${LOKI_URL:-https://gateway.loki.hyperclouds.io/loki/api/v1/push}
 
   postgres:
     image: postgres:latest
-    expose:
-      - "5432"
+    ports:
+      - "5432:5432"
     volumes:
       - "postgres-data:/var/lib/postgresql/data"
     environment:
@@ -85,9 +85,9 @@ services:
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit456$}
     logging:
-      driver: loki
+      driver: ${LOGGING_DRIVER:-none}
       options:
-        loki-url: "https://gateway.loki.hyperclouds.io/loki/api/v1/push"
+        loki-url: ${LOKI_URL:-https://gateway.loki.hyperclouds.io/loki/api/v1/push}
 
 volumes:
   bitcoin-data:
