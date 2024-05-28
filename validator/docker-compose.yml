@@ -41,7 +41,7 @@ services:
       - "bitcoin-data:/home/bitcoin/.bitcoin"
     restart: unless-stopped
 
-  validator-remote-logger:
+  validator:
     logging:
       driver: loki
       options:
@@ -50,7 +50,7 @@ services:
       file: validator-service.yml
       service: validator-template
 
-  validator:
+  validator-no-logger:
     extends:
       file: validator-service.yml
       service: validator-template
