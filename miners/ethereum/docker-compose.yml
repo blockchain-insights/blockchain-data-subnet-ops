@@ -81,7 +81,7 @@ services:
       - --genesis-beacon-api-url=https://beaconstate.info
 
   indexer:
-    image: ghcr.io/blockchain-insights/blockchain_insights_base:${VERSION:-latest}
+    image: ghcr.io/blockchain-insights/blockchain_insights_indexer_ethereum:${VERSION:-latest}
     command: [ "./scripts/run_indexer_ethereum_funds_flow.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
