@@ -131,7 +131,12 @@ sudo systemctl restart docker
   docker compose up -d validator
   ```
 
-- Start Validator with automatic updates
+- [OPTIONAL] Start Validator without loki logging
+  ```bash
+  docker compose up -d validator-no-logger
+  ```
+
+- [OPTIONAL] Start Validator with automatic updates
   ```bash
   nohup ./run.sh 2>&1 &
   ```
