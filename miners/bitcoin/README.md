@@ -241,26 +241,6 @@
     docker compose up -d balance-tracking-indexer
     ```
 
-- **Running LLM Engine**
-
-    Miners have to run a LLM engine container.
-
-    Open the ```.env``` file:
-    ```
-    nano .env
-    ```
-
-    Set the required variables in the ```.env``` file and save it:
-    ```ini
-    LLM_TYPE=openai
-    OPEN_AI_KEY=your_api_key
-    ```
-
-    Start the LLM engine container
-    ```
-    docker compose up -d llm-engine
-    ```
-
 ### Miner
 **NOTE**: It's beneficial to register and run your miner hotkey ***only when*** the indexer is up to date with recent blocks, otherwise, the miner will receive low score. Additionally, if the miner is not operational for an extended period, there's a risk of the hotkey being deregistered.
 
