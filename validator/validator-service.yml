@@ -3,7 +3,7 @@ version: '3.8'
 services:
   validator-template:
     image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
-    command: [ "./scripts/run_validator_mainnet.sh" ]
+    command: [ "./scripts/run_validator.sh" ]
     ports:
       - "${API_PORT:-8001}:8001"
     environment:
