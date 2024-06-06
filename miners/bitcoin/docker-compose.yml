@@ -150,6 +150,7 @@ services:
     expose:
       - "8000:8000"
     environment:
+      - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-miner}
       - GRAPH_DB_URL=${GRAPH_DB_URL}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}

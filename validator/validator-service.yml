@@ -18,4 +18,6 @@ services:
       - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-validator}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
+      - ./config/api_key.json:/blockchain-data-subnet/api_key.json
+      - ./config/rate_limit.json:/blockchain-data-subnet/rate_limit.json
     restart: unless-stopped
