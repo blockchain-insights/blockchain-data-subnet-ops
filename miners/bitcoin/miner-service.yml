@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   miner:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
     command: [ "./scripts/run_miner.sh" ]
     environment:
       - NETUID=${NETUID:-15}

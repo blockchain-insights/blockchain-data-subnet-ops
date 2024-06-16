@@ -57,7 +57,7 @@ services:
     restart: no
 
   bitcoin-vout-hashtable-builder:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_indexer_bitcoin}:${VERSION_INDEXER-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
       - NEW=${NEW:-True}
@@ -68,7 +68,7 @@ services:
     restart: no
 
   funds-flow-indexer:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_indexer_bitcoin}:${VERSION_INDEXER-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
     command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
@@ -86,7 +86,7 @@ services:
     restart: unless-stopped
 
   funds-flow-index-checker:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_indexer_bitcoin}:${VERSION_INDEXER-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
     command: [ "./scripts/check_indexed_block_height_ranges.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
@@ -95,7 +95,7 @@ services:
     restart: no
 
   balance-tracking-indexer:
-    image: ${IMAGE-ghcr.io//blockchain-insights/blockchain_insights_indexer_bitcoin}:${VERSION_INDEXER-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
     command: [ "./scripts/run_indexer_bitcoin_balance_tracking.sh" ]
     environment:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
@@ -135,17 +135,17 @@ services:
 
   postgres:
     image: timescale/timescaledb:latest-pg14
-    ports:
+    expose:
       - "5432:5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-data-miner:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-miner}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit456$}
 
   llm-engine:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_llm_engine_base}:${VERSION_LLM_ENGINE-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-llm-engine}:${VERSION_LLM_ENGINE-latest}
     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
     expose:
       - "8000:8000"
@@ -278,6 +278,6 @@ volumes:
     name: memgraph-log
   memgraph-etc:
     name: memgraph-etc
-  postgres-data:
-    name: "postgres-data"
+  postgres-data-miner:
+    name: "postgres-data-miner"
   miner_db:

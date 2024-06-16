@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   validator-template:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
     command: [ "./scripts/run_validator.sh" ]
     ports:
       - "${API_PORT:-8001}:8001"
@@ -15,7 +15,7 @@ services:
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - VALIDATOR_REMOTE_CONFIG_URL=${VALIDATOR_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/validator3.json}
-      - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-validator}
+      - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5433/${POSTGRES_DB:-validator}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
       - ./config/api_key.json:/blockchain-data-subnet/api_key.json
