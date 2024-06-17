@@ -5,6 +5,7 @@ services:
     image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
     command: [ "./scripts/run_miner.sh" ]
     environment:
+      - NETWORK=${NETWORK:-bitcoin}
       - NETUID=${NETUID:-15}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
