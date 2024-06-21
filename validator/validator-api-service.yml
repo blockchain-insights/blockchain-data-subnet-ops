@@ -5,7 +5,7 @@ services:
       image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-validator-api}:${VERSION_VALIDATOR_API-latest}
       command: [ "./scripts/run_validator.sh" ]
       ports:
-        - "${API_PORT:-8001}:8000"
+        - "${API_PORT:-8001}:8001"
       environment:
         - NETUID=${NETUID:-15}
         - WALLET_NAME=${WALLET_NAME:-default}
