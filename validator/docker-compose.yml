@@ -57,6 +57,22 @@ services:
       file: validator-service.yml
       service: validator-template
 
+  validator-api:
+    logging:
+      driver: loki
+      options:
+        loki-url: ${LOKI_URL:-https://gateway.loki.hyperclouds.io/loki/api/v1/push}
+    extends:
+      file: validator-api-service.yml
+      service: validator-api-template
+
+  validator-api-no-logger:
+    profiles:
+      - no-logger
+    extends:
+      file: validator-api-service.yml
+      service: validator-api-template
+
   postgres:
     image: postgres:latest
     expose:

@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  validator-api-template:
+      image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-validator-api}:${VERSION_VALIDATOR_API-latest}
+      command: [ "./scripts/run_validator.sh" ]
+      ports:
+        - "${API_PORT:-8001}:8000"
+      environment:
+        - NETUID=${NETUID:-15}
+        - WALLET_NAME=${WALLET_NAME:-default}
+        - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
+        - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
+        - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
+      volumes:
+        - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
+        - ./config/api_key.json:/blockchain-data-subnet/api_key.json
+        - ./config/rate_limit.json:/blockchain-data-subnet/rate_limit.json
+      restart: unless-stopped

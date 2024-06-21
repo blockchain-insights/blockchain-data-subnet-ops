@@ -4,10 +4,7 @@ services:
   validator-template:
     image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
     command: [ "./scripts/run_validator.sh" ]
-    ports:
-      - "${API_PORT:-8001}:8001"
     environment:
-      - ENABLE_API=${ENABLE_API:-false}
       - NETUID=${NETUID:-15}
       - WALLET_NAME=${WALLET_NAME:-default}
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
@@ -18,6 +15,4 @@ services:
       - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-validator}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
-      - ./config/api_key.json:/blockchain-data-subnet/api_key.json
-      - ./config/rate_limit.json:/blockchain-data-subnet/rate_limit.json
     restart: unless-stopped
