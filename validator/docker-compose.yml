@@ -74,11 +74,12 @@ services:
       service: validator-api-template
 
   postgres:
-    image: postgres:latest
+    image: postgres:16.3-alpine3.20
     expose:
       - "5432"
     volumes:
       - "postgres-data-validator:/var/lib/postgresql/data"
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-validator}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
