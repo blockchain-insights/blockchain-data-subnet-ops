@@ -21,6 +21,6 @@ services:
       - ENABLE_API=${ENABLE_API:-true}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
-      - ./config/api_key.json:/blockchain-data-subnet/api_key.json
-      - ./config/rate_limit.json:/blockchain-data-subnet/rate_limit.json
+      - ./config/api_key.json:/app/api_key.json
+      - ./config/rate_limit.json:/app/rate_limit.json
     restart: unless-stopped
