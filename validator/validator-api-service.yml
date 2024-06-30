@@ -5,7 +5,7 @@ services:
     image: ${IMAGE:-blockchaininsights.azurecr.io/blockchain-data-subnet-validator-api}:${VERSION_VALIDATOR_API:-latest}
     command: [
       "sh", "-c",
-      "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet && \
+      "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet-validator-api && \
       python3 main.py \
         --wallet.name ${WALLET_NAME:-default} \
         --wallet.hotkey ${WALLET_HOTKEY:-default} \
