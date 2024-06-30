@@ -3,7 +3,13 @@ version: '3.8'
 services:
   validator-template:
     image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
-    command: [ "./scripts/run_validator.sh" ]
+    command: [ "python3", "neurons/validators/validator.py",
+               "--wallet.name", "${WALLET_NAME}",
+               "--wallet.hotkey", "${WALLET_HOTKEY}",
+               "--netuid", "${NETUID}",
+               "--subtensor.network", "${SUBTENSOR_NETWORK}",
+               "--subtensor.chain_endpoint", "${SUBTENSOR_URL}",
+               "--logging.trace" ]
     environment:
       - NETUID=${NETUID:-15}
       - WALLET_NAME=${WALLET_NAME:-default}
@@ -11,7 +17,7 @@ services:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
-      - VALIDATOR_REMOTE_CONFIG_URL=${VALIDATOR_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/validator3.json}
+      - VALIDATOR_REMOTE_CONFIG_URL=${VALIDATOR_REMOTE_CONFIG_URL:-https://chaininsightsaiprod.blob.core.windows.net/validatorcfg/validator.json}
       - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-validator}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor

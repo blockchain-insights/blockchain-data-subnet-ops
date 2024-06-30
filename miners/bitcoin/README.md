@@ -98,7 +98,7 @@
     docker compose up -d memgraph
     ```
 
-- **Running Postgres**
+- **Running Postgres with TimescaleDB extension**
 
     Open the ```.env``` file:
     ```
@@ -253,7 +253,11 @@
     Set the required variables in the ```.env``` file and save it:
     ```ini
     LLM_TYPE=openai
-    OPEN_AI_KEY=your_api_key
+    OPEN_AI_KEY=your_api_key  
+    NETWORK=bitcoin
+    GRAPH_DB_URL=your_memgraph_db_url
+    GRAPH_DB_USER=your_memgraph_user
+    GRAPH_DB_PASSWORD=your_db_password
     ```
 
     Start the LLM engine container

@@ -3,7 +3,16 @@ version: '3.8'
 services:
   miner:
     image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
-    command: [ "./scripts/run_miner.sh" ]
+    command: [ "python3", "neurons/miners/miner.py",
+               "--wallet.name", "${WALLET_NAME}",
+               "--wallet.hotkey", "${WALLET_HOTKEY}",
+               "--netuid", "${NETUID}",
+               "--network", "${NETWORK}",
+               "--miner_set_weights", "${MINER_SET_WEIGHTS}",
+               "--llm_engine_url", "${LLM_ENGINE_URL}",
+               "--subtensor.network", "${SUBTENSOR_NETWORK}",
+               "--subtensor.chain_endpoint", "${SUBTENSOR_URL}",
+               "--logging.trace" ]
     environment:
       - NETWORK=${NETWORK:-bitcoin}
       - NETUID=${NETUID:-15}
@@ -18,7 +27,7 @@ services:
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
-      - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json}
+      - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://chaininsightsaiprod.blob.core.windows.net/minercfg/miner.json}
       - MINER_PASSWORD=${MINER_PASSWORD}
       - LLM_ENGINE_URL=${LLM_ENGINE_URL:-http://llm-engine:8000}
     volumes:
