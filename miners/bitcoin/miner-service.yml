@@ -2,10 +2,11 @@ version: '3.8'
 
 services:
   miner:
-    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
+    image: ${IMAGE:-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET:-latest}
     command: [
       "sh", "-c",
-      "python3 neurons/miners/miner.py \
+      "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet && \
+      python3 neurons/miners/miner.py \
         --wallet.name ${WALLET_NAME:-miner} \
         --wallet.hotkey ${WALLET_HOTKEY:-default1} \
         --netuid ${NETUID:-15} \
