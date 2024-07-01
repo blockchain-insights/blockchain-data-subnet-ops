@@ -69,11 +69,7 @@ services:
 
   funds-flow-indexer:
     image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
-    command: [
-      "sh", "-c",
-      "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet-bitcoin-indexer && \
-          python3 models/funds_flow/indexer.py"
-    ]
+    command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
@@ -91,11 +87,7 @@ services:
 
   funds-flow-index-checker:
     image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
-    command: [
-      "sh", "-c",
-      "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet-bitcoin-indexer && \
-          python3 models/funds_flow/utils/find_indexed_block_height_ranges.py"
-    ]
+    command: [ "./scripts/check_indexed_block_height_ranges.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
@@ -104,11 +96,7 @@ services:
 
   balance-tracking-indexer:
     image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
-    command: [
-      "sh", "-c",
-      "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet-bitcoin-indexer && \
-          python3 models/balance_tracking/indexer.py"
-    ]
+    command: [ "./scripts/run_indexer_bitcoin_balance_tracking.sh" ]
     environment:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
       - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-miner}

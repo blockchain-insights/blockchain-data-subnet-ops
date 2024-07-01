@@ -2,21 +2,8 @@ version: '3.8'
 
 services:
   miner:
-    image: ${IMAGE:-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET:-latest}
-    command: [
-      "sh", "-c",
-      "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet && \
-      python3 neurons/miners/miner.py \
-        --wallet.name ${WALLET_NAME:-miner} \
-        --wallet.hotkey ${WALLET_HOTKEY:-default1} \
-        --netuid ${NETUID:-15} \
-        --network ${NETWORK:-bitcoin} \
-        --miner_set_weights ${MINER_SET_WEIGHTS:-True} \
-        --llm_engine_url ${LLM_ENGINE_URL:-http://llm-engine:8000} \
-        --subtensor.network ${SUBTENSOR_NETWORK:-local} \
-        --subtensor.chain_endpoint ${SUBTENSOR_URL:-ws://node-subtensor:9944} \
-        --logging.trace"
-    ]
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
+    command: [ "./scripts/run_miner.sh" ]
     environment:
       - NETWORK=${NETWORK:-bitcoin}
       - NETUID=${NETUID:-15}

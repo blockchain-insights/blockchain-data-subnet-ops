@@ -7,11 +7,11 @@ services:
       "sh", "-c",
       "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet-validator-api && \
       python3 main.py \
-        --wallet.name ${WALLET_NAME:-default} \
-        --wallet.hotkey ${WALLET_HOTKEY:-default} \
-        --netuid ${NETUID:-15} \
-        --subtensor.network ${SUBTENSOR_NETWORK:-local} \
-        --subtensor.chain_endpoint ${SUBTENSOR_URL:-ws://node-subtensor:9944} \
+        --wallet.name ${WALLET_NAME} \
+        --wallet.hotkey ${WALLET_HOTKEY} \
+        --netuid ${NETUID} \
+        --subtensor.network ${SUBTENSOR_NETWORK} \
+        --subtensor.chain_endpoint ${SUBTENSOR_URL} \
         --logging.trace"
     ]
     ports:
@@ -22,7 +22,6 @@ services:
       - WALLET_HOTKEY=${WALLET_HOTKEY:-default}
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
-      - ENABLE_API=${ENABLE_API:-true}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
       - ./config/api_key.json:/app/api_key.json

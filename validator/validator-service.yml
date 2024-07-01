@@ -2,19 +2,8 @@ version: '3.8'
 
 services:
   validator-template:
-    image: ${IMAGE:-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET:-latest}
-    command: [
-      "sh", "-c",
-      "echo $PWD && \
-      export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet && \
-      python3 neurons/validators/validator.py \
-        --wallet.name ${WALLET_NAME:-default} \
-        --wallet.hotkey ${WALLET_HOTKEY:-default} \
-        --netuid ${NETUID:-15} \
-        --subtensor.network ${SUBTENSOR_NETWORK:-local} \
-        --subtensor.chain_endpoint ${SUBTENSOR_URL:-ws://node-subtensor:9944} \
-        --logging.trace"
-    ]
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
+    command: [ "./scripts/run_validator.sh" ]
     environment:
       - NETUID=${NETUID:-15}
       - WALLET_NAME=${WALLET_NAME:-default}
