@@ -16,3 +16,4 @@ services:
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
+    

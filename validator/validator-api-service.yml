@@ -3,17 +3,7 @@ version: '3.8'
 services:
   validator-api-template:
     image: ${IMAGE:-blockchaininsights.azurecr.io/blockchain-data-subnet-validator-api}:${VERSION_VALIDATOR_API:-latest}
-    command: [
-      "sh", "-c",
-      "export PYTHONPATH=$PYTHONPATH:/blockchain-data-subnet-validator-api && \
-      python3 main.py \
-        --wallet.name ${WALLET_NAME} \
-        --wallet.hotkey ${WALLET_HOTKEY} \
-        --netuid ${NETUID} \
-        --subtensor.network ${SUBTENSOR_NETWORK} \
-        --subtensor.chain_endpoint ${SUBTENSOR_URL} \
-        --logging.trace"
-    ]
+    command: [ "./scripts/run_validator_api.sh" ]
     ports:
       - "${API_PORT:-8001}:8001"
     environment:
