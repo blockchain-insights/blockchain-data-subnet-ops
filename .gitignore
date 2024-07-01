@@ -160,3 +160,6 @@ cython_debug/
 create_user.txt
 
 **/.env
+
+ validator/config/api_key.json
+ validator/config/rate_limit.json
