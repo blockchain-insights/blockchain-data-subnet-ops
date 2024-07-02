@@ -20,6 +20,7 @@ services:
       - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
       - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://chaininsightsaiprod.blob.core.windows.net/minercfg/miner.json}
       - MINER_PASSWORD=${MINER_PASSWORD}
+      - LLM_TYPE=${LLM_TYPE:-corcel}
       - LLM_ENGINE_URL=${LLM_ENGINE_URL:-http://llm-engine:8000}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor

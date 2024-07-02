@@ -157,7 +157,6 @@ services:
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - OPEN_AI_KEY=${OPEN_AI_KEY}
       - CORCEL_API_KEY=${CORCEL_API_KEY}
-      - LLM_TYPE=${LLM_TYPE:-corcel}
       - LLM_PROMPTS_URL=${LLM_PROMPTS_URL:-https://chaininsightsaiprod.blob.core.windows.net/llm-prompts}
     restart: unless-stopped
 
