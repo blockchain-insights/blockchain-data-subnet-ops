@@ -252,8 +252,8 @@
 
     Set the required variables in the ```.env``` file and save it:
     ```ini
-    LLM_TYPE=openai
-    OPEN_AI_KEY=your_api_key  
+    OPEN_AI_KEY=your_open_ai_key
+    CORCEL_API_KEY=your_corcel_api_key 
     NETWORK=bitcoin
     GRAPH_DB_URL=your_memgraph_db_url
     GRAPH_DB_USER=your_memgraph_user
@@ -286,6 +286,7 @@
     ```ini
     WALLET_NAME=default
     WALLET_HOTKEY=default
+    LLM_TYPE=openai # or corcel if you have a Corcel API Key
     ```
 
     **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
@@ -376,3 +377,5 @@ Then navigate to ```http://your_server_ip:9999```
     ```
 - if needed restart other containers too
 - when additional changes are needed, they will be announced on Discord
+
+
