@@ -57,7 +57,7 @@ services:
     restart: no
 
   bitcoin-vout-hashtable-builder:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
     command: /bin/bash -c "ls -al /data_csv && ./scripts/run_indexer_bitcoin_vout_hashtable_builder.sh"
     environment:
       - NEW=${NEW:-True}
@@ -68,7 +68,7 @@ services:
     restart: no
 
   funds-flow-indexer:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_indexer_bitcoin}:${VERSION-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
     command: [ "./scripts/run_indexer_bitcoin_funds_flow.sh" ]
     environment:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
@@ -86,7 +86,7 @@ services:
     restart: unless-stopped
 
   funds-flow-index-checker:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_indexer_bitcoin}:${VERSION-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
     command: [ "./scripts/check_indexed_block_height_ranges.sh" ]
     environment:
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
@@ -95,7 +95,7 @@ services:
     restart: no
 
   balance-tracking-indexer:
-    image: ${IMAGE-ghcr.io//blockchain-insights/blockchain_insights_indexer_bitcoin}:${VERSION-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-bitcoin-indexer}:${VERSION_INDEXER-latest}
     command: [ "./scripts/run_indexer_bitcoin_balance_tracking.sh" ]
     environment:
       - BITCOIN_NODE_RPC_URL=${BITCOIN_NODE_RPC_URL:-http://${RPC_USER}:${RPC_PASSWORD}@bitcoin-core:8332}
@@ -108,10 +108,10 @@ services:
     restart: unless-stopped
 
   memgraph:
-    image: memgraph/memgraph-mage:1.16-memgraph-2.16
-    expose:
-      - "7687"
-      - "7444"
+    image: memgraph/memgraph-mage:1.17-memgraph-2.17
+    ports:
+      - "7687:7687"
+      - "7444:7444"
     environment:
       - MEMGRAPH_USER=${GRAPH_DB_USER}
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
@@ -134,27 +134,30 @@ services:
       - QUICK_CONNECT_MG_PORT=7687
 
   postgres:
-    image: postgres:latest
+    image: timescale/timescaledb:latest-pg16
     expose:
       - "5432"
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - postgres-data-miner:/var/lib/postgresql/data
+      - "./init.sql:/docker-entrypoint-initdb.d/init.sql"
     environment:
       - POSTGRES_DB=${POSTGRES_DB:-miner}
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-changeit456$}
 
   llm-engine:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_llm_engine_base}:${VERSION_LLM_ENGINE-latest}
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-llm-engine}:${VERSION_LLM_ENGINE-latest}
     command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
     expose:
       - "8000:8000"
     environment:
+      - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:5432/${POSTGRES_DB:-miner}
       - GRAPH_DB_URL=${GRAPH_DB_URL}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
       - GRAPH_DB_PASSWORD=${GRAPH_DB_PASSWORD}
       - OPEN_AI_KEY=${OPEN_AI_KEY}
-      - LLM_TYPE=${LLM_TYPE:-openai}
+      - CORCEL_API_KEY=${CORCEL_API_KEY}
+      - LLM_PROMPTS_URL=${LLM_PROMPTS_URL:-https://chaininsightsaiprod.blob.core.windows.net/llm-prompts}
     restart: unless-stopped
 
   miner1:
@@ -277,6 +280,6 @@ volumes:
     name: memgraph-log
   memgraph-etc:
     name: memgraph-etc
-  postgres-data:
-    name: "postgres-data"
+  postgres-data-miner:
+    name: "postgres-data-miner"
   miner_db:

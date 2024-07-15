@@ -2,9 +2,10 @@ version: '3.8'
 
 services:
   miner:
-    image: ${IMAGE-ghcr.io/blockchain-insights/blockchain_insights_base}:${VERSION-latest}
-    command: [ "./scripts/run_miner_bitcoin_funds_flow.sh" ]
+    image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet}:${VERSION_SUBNET-latest}
+    command: [ "./scripts/run_miner.sh" ]
     environment:
+      - NETWORK=${NETWORK:-bitcoin}
       - NETUID=${NETUID:-15}
       - GRAPH_DB_URL=${GRAPH_DB_URL:-bolt://memgraph:7687}
       - GRAPH_DB_USER=${GRAPH_DB_USER}
@@ -17,8 +18,9 @@ services:
       - SUBTENSOR_NETWORK=${SUBTENSOR_NETWORK:-local}
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - MINER_SET_WEIGHTS=${MINER_SET_WEIGHTS:-True}
-      - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://subnet-15-cfg.s3.fr-par.scw.cloud/miner.json}
+      - MINER_REMOTE_CONFIG_URL=${MINER_REMOTE_CONFIG_URL:-https://chaininsightsaiprod.blob.core.windows.net/minercfg/miner.json}
       - MINER_PASSWORD=${MINER_PASSWORD}
+      - LLM_TYPE=${LLM_TYPE:-corcel}
       - LLM_ENGINE_URL=${LLM_ENGINE_URL:-http://llm-engine:8000}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
