@@ -252,7 +252,6 @@
 
     Set the required variables in the ```.env``` file and save it:
     ```ini
-    OPEN_AI_KEY=your_open_ai_key
     CORCEL_API_KEY=your_corcel_api_key 
     NETWORK=bitcoin
     GRAPH_DB_URL=your_memgraph_db_url
