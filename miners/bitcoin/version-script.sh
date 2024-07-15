@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOCKER_IMAGE="ghcr.io/blockchain-insights/blockchain_insights_base"
+DOCKER_IMAGE="blockchaininsights.azurecr.io/blockchain-data-subnet"
 
 # Check if the Dockerfile image is present locally
 if ! docker image inspect "$DOCKER_IMAGE" > /dev/null 2>&1; then
@@ -10,7 +10,7 @@ else
     echo "$DOCKER_IMAGE found locally; saving version info."
 fi
 
-DIGEST=$(docker image inspect --format='{{index .RepoDigests 0}}' "ghcr.io/blockchain-insights/blockchain_insights_base")
+DIGEST=$(docker image inspect --format='{{index .RepoDigests 0}}' "blockchaininsights.azurecr.io/blockchain-data-subnet")
 
 SHA256_DIGEST=$(echo "$DIGEST" | cut -d "@" -f2)
 DIGEST_CHARS=${SHA256_DIGEST:7:4}${SHA256_DIGEST: -4}
