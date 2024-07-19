@@ -147,9 +147,10 @@ services:
 
   llm-engine:
     image: ${IMAGE-blockchaininsights.azurecr.io/blockchain-data-subnet-llm-engine}:${VERSION_LLM_ENGINE-latest}
-    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+    command: >
+      sh -c "uvicorn main:app --host 0.0.0.0 --port 8000 --workers ${WORKER_COUNT:-64}"
     expose:
-      - "8000:8000"
+      - "8000"
     environment:
       - DB_CONNECTION_STRING=${DB_CONNECTION_STRING:-postgresql://postgres:changeit456$@postgres:5432/miner}
       - GRAPH_DB_URL=${GRAPH_DB_URL}
@@ -159,6 +160,7 @@ services:
       - CORCEL_API_KEY=${CORCEL_API_KEY}
       - LLM_PROMPTS_URL=${LLM_PROMPTS_URL:-https://chaininsightsaiprod.blob.core.windows.net/llm-prompts}
     restart: unless-stopped
+
 
   miner1:
     environment:
