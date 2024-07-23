@@ -108,7 +108,7 @@ services:
     restart: unless-stopped
 
   memgraph:
-    image: memgraph/memgraph-mage:1.17-memgraph-2.17
+    image: memgraph/memgraph-mage:1.18-memgraph-2.18
     ports:
       - "7687:7687"
       - "7444:7444"
@@ -117,9 +117,9 @@ services:
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
     command: ["--storage-parallel-schema-recovery=true", "--storage-recovery-thread-count=60", "--storage-gc-cycle-sec=300", "--log-level=TRACE", "--also-log-to-stderr", "--storage-snapshot-on-exit=false", "--storage-snapshot-interval-sec=14400", "--storage-snapshot-retention-count=2", "--storage-wal-enabled=true", "--isolation-level=READ_COMMITTED", "--replication-restore-state-on-startup=true", "--query-execution-timeout-sec=0"]
     volumes:
-      - memgraph-data:/var/lib/memgraph
-      - memgraph-log:/var/log/memgraph
-      - memgraph-etc:/etc/memgraph
+      - bitcoin-memgraph-data:/var/lib/memgraph
+      - bitcoin-memgraph-log:/var/log/memgraph
+      - bitcoin-memgraph-etc:/etc/memgraph
     restart: unless-stopped
 
   memgraph-lab:
@@ -276,12 +276,12 @@ volumes:
     name: bitcoin-vout-hashtable
   bitcoin-data:
     name: bitcoin-data
-  memgraph-data:
-    name: memgraph-data
-  memgraph-log:
-    name: memgraph-log
-  memgraph-etc:
-    name: memgraph-etc
+  bitcoin-memgraph-data:
+    name: bitcoin-memgraph-data
+  bitcoin-memgraph-log:
+    name: bitcoin-memgraph-log
+  bitcoin-memgraph-etc:
+    name: bitcoin-memgraph-etc
   postgres-data-miner:
     name: "postgres-data-miner"
   miner_db:
