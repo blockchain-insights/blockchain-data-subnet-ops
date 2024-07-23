@@ -96,7 +96,7 @@ services:
     restart: unless-stopped
   
   memgraph:
-    image: memgraph/memgraph-mage:1.15-memgraph-2.15
+    image: memgraph/memgraph-mage:1.18-memgraph-2.18
     ports:
       - "7687:7687"
       - "7444:7444"
@@ -105,9 +105,9 @@ services:
       - MEMGRAPH_PASSWORD=${GRAPH_DB_PASSWORD}
     command: ["--storage-parallel-schema-recovery=true", "--storage-recovery-thread-count=60", "--storage-gc-cycle-sec=300", "--log-level=TRACE", "--also-log-to-stderr", "--storage-snapshot-on-exit=false", "--storage-snapshot-interval-sec=14400", "--storage-snapshot-retention-count=2", "--storage-wal-enabled=true", "--isolation-level=READ_COMMITTED", "--replication-restore-state-on-startup=true", "--query-execution-timeout-sec=0"]
     volumes:
-      - memgraph-data:/var/lib/memgraph
-      - memgraph-log:/var/log/memgraph
-      - memgraph-etc:/etc/memgraph
+      - ethereum-memgraph-data:/var/lib/memgraph
+      - ethereum-memgraph-log:/var/log/memgraph
+      - ethereum-memgraph-etc:/etc/memgraph
     restart: unless-stopped
 
   memgraph-lab:
@@ -231,10 +231,10 @@ volumes:
     name: node-subtensor
   ethereum-data:
     name: ethereum-data
-  memgraph-data:
-    name: memgraph-data
-  memgraph-log:
-    name: memgraph-log
-  memgraph-etc:
-    name: memgraph-etc
+  ethereum-memgraph-data:
+    name: ethereum-memgraph-data
+  ethereum-memgraph-log:
+    name: ethereum-memgraph-log
+  ethereum-memgraph-etc:
+    name: ethereum-memgraph-etc
   miner_db:
