@@ -13,6 +13,7 @@ services:
       - SUBTENSOR_URL=${SUBTENSOR_URL:-ws://node-subtensor:9944}
       - VALIDATOR_REMOTE_CONFIG_URL=${VALIDATOR_REMOTE_CONFIG_URL:-https://chaininsightsaiprod.blob.core.windows.net/validatorcfg/validator.json}
       - DB_CONNECTION_STRING=postgresql://${POSTGRES_USER:-postgres}:${POSTGRES_PASSWORD:-changeit456$}@postgres:${POSTGRES_PORT:-5432}/${POSTGRES_DB:-validator}
+      - VALIDATOR_API_IP=${VALIDATOR_API_IP}
     volumes:
       - ${BITTENSOR_VOLUME_PATH:-~/.bittensor}:/root/.bittensor
     restart: unless-stopped
