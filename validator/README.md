@@ -141,10 +141,9 @@ sudo systemctl restart docker
   nohup ./run.sh 2>&1 &
   ```
   
-- [OPTIONAL] API keys and rate limiting
+- [OPTIONAL] API keys
   
   - If you are running the validator query API, you can use the `api_key.json` file in the `config` folder to define API keys you want to secure your API with, in JSON format.
-    You can also define how many requests per minute per IP your API serves with the `rate_limit.json` file in the `config` folder.
 
 **Whitelist Validator Hotkey**
   
