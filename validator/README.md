@@ -51,14 +51,18 @@ ac720b8fcfdb        loki         Loki Logging Driver   true
 sudo systemctl restart docker
 ```
 
-###### please reach subnet 15 team to whitelist your validator ip address
+### PLEASE REACH SUBNET 15 TEAM ON DISCORD TO WHITELIST YOUR VALIDATOR IP AND HOTKEY
 
-### Subtensor, Bitcoin Node, PGSql,Validator
+### Subtensor, Bitcoin Node, PGSql, Validator, Redis, Validator API
 **Running Local Subtensor (optional but recommended)**
 
 - Start the subtensor:
   ```bash
   docker compose up -d node-subtensor
+  ```
+  **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
+  ```ini
+  VERSION_SUBTENSOR=latest
   ```
 
 **Running Bitcoin node**
@@ -140,10 +144,40 @@ sudo systemctl restart docker
   ```bash
   nohup ./run.sh 2>&1 &
   ```
-  
-- [OPTIONAL] API keys
-  
-  - If you are running the validator query API, you can use the `api_key.json` file in the `config` folder to define API keys you want to secure your API with, in JSON format.
+
+**Running Validator API**
+
+  - On top of the Validator, the Validator API is responsible for setting up messages between our Chat API, the Validator and miners.
+
+    **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
+    ```ini
+    API_PORT=8081
+    REDIS_URL=redis://redis:6379
+    WORKER_COUNT=16
+    TIMEOUT=60
+    RATE_LIMIT=1024
+    TOP_RATE=0.64
+    ```
+
+  - Start Redis, which is storing requests per minute for rate limits
+    ```bash
+    docker compose up -d redis
+    ```
+
+  - Start Validator API
+    ```bash
+    docker compose up -d validator-api
+    ```
+
+  - [OPTIONAL] API keys and rate limits
+  If you are running the validator query API, you can use the `api_key.json` file in the `config` folder to define API keys you want to secure your API with, in JSON format.
+  You can also use the `rate_limit.json` file in the `config` folder to define rate limits for the API.
+  Examples for both files are provided in this repository.
+
+  - [OPTIONAL] Start Validator-api without loki logging
+    ```bash
+    docker compose up -d validator-api-no-logger
+    ```
 
 **Whitelist Validator Hotkey**
   
@@ -179,12 +213,11 @@ If the validator is started by nohup, it will update automatically once the new 
 
 ### Manual Upgrading
 
-- check the latest base package version [here](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base)
 - update the repository
     ```bash 
     git pull
     ```
-- check the ```VERSION``` variable in your ```.env``` file and update it to match the new version if needed or `latest` will always pull the current version
+- check the ```VERSION_SUBNET``` and other ``VERSION`` variables in your ```.env``` file and update them to match the new versions if needed or use `latest` to always pull the current version
     ```bash
     cat .env
     ```

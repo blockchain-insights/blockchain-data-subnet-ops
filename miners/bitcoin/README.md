@@ -55,6 +55,10 @@
     ```bash
     docker compose up -d node-subtensor
     ```
+    **Optional ```.env``` variables with their defaults. Add them to your ```.env``` file ONLY if you are not satisfied with the defaults:**
+    ```ini
+    VERSION_SUBTENSOR=latest
+     ```
 
 - **Running Bitcoin node**
 
@@ -356,16 +360,18 @@ Then navigate to ```http://your_server_ip:9999```
 
 ### Upgrading
 
-- check the latest base package version [here](https://github.com/blockchain-insights/blockchain-data-subnet/pkgs/container/blockchain_insights_base)
 - update the repository
     ```bash 
     git pull
+    ```
+- check the ```VERSION_SUBNET``` and other ``VERSION`` variables in your ```.env``` file and update them to match the new versions if needed or use `latest` to always pull the current version
+    ```bash
+    cat .env
     ```
 - update the images
     ```bash
     docker compose pull
     ```
-- check the ```VERSION``` variable in your ```.env``` file and update it to match the new version if needed
 - **run the version-script.sh before restarting the miner**
     ```bash
     ./version-script.sh
